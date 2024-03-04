@@ -16,6 +16,16 @@ knitr::opts_chunk$set(
 # ReX
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/ReX.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/ReX)
+[![Bioc devel status](http://www.bioconductor.org/shields/build/devel/bioc/ReX.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/ReX)
+[![Bioc downloads rank](https://bioconductor.org/shields/downloads/release/ReX.svg)](http://bioconductor.org/packages/stats/bioc/ReX/)
+[![Bioc support](https://bioconductor.org/shields/posts/ReX.svg)](https://support.bioconductor.org/tag/ReX)
+[![Bioc history](https://bioconductor.org/shields/years-in-bioc/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
+[![Bioc last commit](https://bioconductor.org/shields/lastcommit/devel/bioc/ReX.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/ReX/)
+[![Bioc dependencies](https://bioconductor.org/shields/dependencies/release/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
+[![R-CMD-check-bioc](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml)
+[![Codecov test coverage](https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/ReX?branch=devel)
 <!-- badges: end -->
 
 The goal of `ReX` is to ...

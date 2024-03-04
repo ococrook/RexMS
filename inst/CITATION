@@ -1,0 +1,29 @@
+pkgVer <- function(pkg) {
+    if (!exists("meta") || is.null(meta)) meta <- packageDescription(pkg)
+    ver <- meta$Version
+    paste0('https://github.com/ococrook/ReX/', pkg, ' - R package version ', ver)
+}
+
+c(
+
+    bibentry(bibtype="manual",
+        title = "Inferring residue level hydrogen deuterium exchange with ReX",
+        author = personList(
+            as.person("ococrook")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        url = "http://www.bioconductor.org/packages/ReX",
+        note = pkgVer('ReX'),
+        doi = '10.18129/B9.bioc.ReX'
+    ),
+    bibentry(bibtype="article",
+        title = "Inferring residue level hydrogen deuterium exchange with ReX",
+        author = personList(
+            as.person("ococrook")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        journal = "bioRxiv",
+        doi = "10.1101/TODO",
+        url = "https://www.biorxiv.org/content/10.1101/TODO"
+    )
+)

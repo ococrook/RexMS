@@ -4,6 +4,26 @@
 # ReX
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Bioc release
+status](http://www.bioconductor.org/shields/build/release/bioc/ReX.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/ReX)
+[![Bioc devel
+status](http://www.bioconductor.org/shields/build/devel/bioc/ReX.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/ReX)
+[![Bioc downloads
+rank](https://bioconductor.org/shields/downloads/release/ReX.svg)](http://bioconductor.org/packages/stats/bioc/ReX/)
+[![Bioc
+support](https://bioconductor.org/shields/posts/ReX.svg)](https://support.bioconductor.org/tag/ReX)
+[![Bioc
+history](https://bioconductor.org/shields/years-in-bioc/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
+[![Bioc last
+commit](https://bioconductor.org/shields/lastcommit/devel/bioc/ReX.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/ReX/)
+[![Bioc
+dependencies](https://bioconductor.org/shields/dependencies/release/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
+[![R-CMD-check-bioc](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/ReX?branch=devel)
 <!-- badges: end -->
 
 The goal of `ReX` is to …
@@ -62,6 +82,40 @@ run this yourself to check for any updates on how to cite **ReX**.
 
 ``` r
 print(citation('ReX'), bibtex = TRUE)
+#> To cite package 'ReX' in publications use:
+#> 
+#>   ococrook (2024). _Inferring residue level hydrogen deuterium exchange
+#>   with ReX_. doi:10.18129/B9.bioc.ReX
+#>   <https://doi.org/10.18129/B9.bioc.ReX>,
+#>   https://github.com/ococrook/ReX/ReX - R package version 0.99.0,
+#>   <http://www.bioconductor.org/packages/ReX>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {Inferring residue level hydrogen deuterium exchange with ReX},
+#>     author = {{ococrook}},
+#>     year = {2024},
+#>     url = {http://www.bioconductor.org/packages/ReX},
+#>     note = {https://github.com/ococrook/ReX/ReX - R package version 0.99.0},
+#>     doi = {10.18129/B9.bioc.ReX},
+#>   }
+#> 
+#>   ococrook (2024). "Inferring residue level hydrogen deuterium exchange
+#>   with ReX." _bioRxiv_. doi:10.1101/TODO
+#>   <https://doi.org/10.1101/TODO>,
+#>   <https://www.biorxiv.org/content/10.1101/TODO>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Article{,
+#>     title = {Inferring residue level hydrogen deuterium exchange with ReX},
+#>     author = {{ococrook}},
+#>     year = {2024},
+#>     journal = {bioRxiv},
+#>     doi = {10.1101/TODO},
+#>     url = {https://www.biorxiv.org/content/10.1101/TODO},
+#>   }
 ```
 
 Please note that the `ReX` was only made possible thanks to many other R
