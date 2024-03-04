@@ -137,6 +137,7 @@ define_color_function <- function(dataset,
 ##' 
 ##' 
 ##' @rdname pdb-visualisation
+##' @export
 hdx_to_pdb_colours <- function(dataset,
                                pdb_filepath,
                                scale_limits = NULL,

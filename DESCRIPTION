@@ -18,6 +18,14 @@ biocViews: Software, MassSpectrometry, Proteomics, Bayesian, HDX-MS
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Imports:
+    bio3d,
+    scales,
+    comprehenr,
+    NGLVieweR,
+    rlog,
+    dplyr,
+    RColorBrewer
 Suggests: 
     BiocStyle,
     knitr,
