@@ -1,5 +1,5 @@
 Package: ReX
-Title: What the Package Does (One Line, Title Case)
+Title: Residue-level statistical analysis of HDX-MS data
 Version: 0.99.0
 Date: 2024-03-04
 Authors@R: 
@@ -14,7 +14,7 @@ Description: ReX is a user-friendly software designed for scientists studying
 License: Artistic-2.0
 URL: 
 BugReports: https://support.bioconductor.org/tag/ReX
-biocViews: Software
+biocViews: Software, MassSpectrometry, Proteomics, Bayesian, HDX-MS
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

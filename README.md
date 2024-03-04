@@ -26,7 +26,23 @@ dependencies](https://bioconductor.org/shields/dependencies/release/ReX.svg)](ht
 coverage](https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/ReX?branch=devel)
 <!-- badges: end -->
 
-The goal of `ReX` is to …
+The goal of `ReX` is to analyse hydrogen deuterium exchange mass
+spectrometry (HDX-MS) data at the residue level. The package is designed
+to be used with data from various platforms that have already been
+process at Spectrum-level. `ReX` takes the processed peptide-level data
+and infers the residue level deuterium uptake. The underlying model is a
+Bayesian non-parametric model that recasts HDX-MS data analysis as a
+(latent) change-point detection problem. The unique benefits of this
+model are the following: (1) It can provide statistical confidence at
+the level of residues (e.g. a probability of change) (2) Borrow
+statistical power from overlapping peptides (3) Infer uptakes patterns
+that are hidden at the peptide-level because of averaging (4) Provide
+global and pre-residue resolution metrics (5) It can perform single
+protein analysis, differential analysis and confrontational signature
+analysis (many states/compounds) (6) You can build predictive models
+with the inferred uptakes using partial least squares discriminant
+analysis (PLS-DA). (7) You can costumize the model to your specific
+needs.
 
 ## Installation instructions
 
@@ -34,12 +50,25 @@ Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install `ReX` from
 [Bioconductor](http://bioconductor.org/) using the following code:
 
+Note that you cannot currently install from Bioconductor
+
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
 BiocManager::install("ReX")
+```
+
+To install the development version of `ReX`, it’s easiest to use the
+`remotes` package.
+
+``` r
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
+
+remotes::install_github("ococrook/ReX")
 ```
 
 ## Example
@@ -50,30 +79,6 @@ This is a basic example which shows you how to solve a common problem:
 library("ReX")
 ## basic example code
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub!
 
 ## Citation
 

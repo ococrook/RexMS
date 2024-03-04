@@ -28,11 +28,30 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/ReX?branch=devel)
 <!-- badges: end -->
 
-The goal of `ReX` is to ...
+The goal of `ReX` is to analyse hydrogen deuterium exchange mass spectrometry
+(HDX-MS) data at the residue level. The package is designed to be used with
+data from various platforms that have already been process at Spectrum-level.
+`ReX` takes the processed peptide-level data and infers the residue level
+deuterium uptake. The underlying model is a Bayesian non-parametric model that
+recasts HDX-MS data analysis as a (latent) change-point detection problem.
+The unique benefits of this model are the following: 
+(1) It can provide statistical confidence at the level of residues (e.g.
+a probability of change)
+(2) Borrow statistical power from overlapping peptides
+(3) Infer uptakes patterns that are hidden at the peptide-level because of
+averaging
+(4) Provide global and pre-residue resolution metrics
+(5) It can perform single protein analysis, differential analysis and
+confrontational signature analysis (many states/compounds)
+(6) You can build predictive models with the inferred uptakes using partial 
+least squares discriminant analysis (PLS-DA).
+(7) You can costumize the model to your specific needs.
 
 ## Installation instructions
 
-Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then install `ReX` from [Bioconductor](http://bioconductor.org/) using the following code:
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then install `ReX` from [Bioconductor](http://bioconductor.org/) using the following code: 
+
+Note that you cannot currently install from Bioconductor
 
 ```{r 'install', eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
@@ -40,6 +59,18 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 }
 
 BiocManager::install("ReX")
+```
+
+To install the development version of `ReX`, it's easiest to use the
+`remotes` package.
+
+
+```{r 'install_dev', eval = FALSE}
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
+
+remotes::install_github("ococrook/ReX")
 ```
 
 ## Example
@@ -51,21 +82,6 @@ library("ReX")
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
 
 ## Citation
 
@@ -76,18 +92,29 @@ run this yourself to check for any updates on how to cite __ReX__.
 print(citation("ReX"), bibtex = TRUE)
 ```
 
-Please note that the `ReX` was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.
+Please note that the `ReX` was only made possible thanks to many other
+R and bioinformatics software authors, which are cited either
+in the vignettes and/or the paper(s) describing this package.
 
 ## Code of Conduct
 
-Please note that the `ReX` project is released with a [Contributor Code of Conduct](http://bioconductor.org/about/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
+Please note that the `ReX` project is released with a
+[Contributor Code of Conduct](http://bioconductor.org/about/code-of-conduct/). 
+By contributing to this project, you agree to abide by its terms.
 
 ## Development tools
 
-* Continuous code testing is possible thanks to [GitHub actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/)  through `r BiocStyle::CRANpkg('usethis')`, `r BiocStyle::CRANpkg('remotes')`, and `r BiocStyle::CRANpkg('rcmdcheck')` customized to use [Bioconductor's docker containers](https://www.bioconductor.org/help/docker/) and `r BiocStyle::Biocpkg('BiocCheck')`.
-* Code coverage assessment is possible thanks to [codecov](https://codecov.io/gh) and `r BiocStyle::CRANpkg('covr')`.
+* Continuous code testing is possible thanks to
+[GitHub actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/) 
+through `r BiocStyle::CRANpkg('usethis')`, `r BiocStyle::CRANpkg('remotes')`, 
+and `r BiocStyle::CRANpkg('rcmdcheck')` customized to 
+use [Bioconductor's docker containers](https://www.bioconductor.org/help/docker/) 
+and `r BiocStyle::Biocpkg('BiocCheck')`.
+* Code coverage assessment is possible thanks
+to [codecov](https://codecov.io/gh) and `r BiocStyle::CRANpkg('covr')`.
 * The code is styled automatically thanks to `r BiocStyle::CRANpkg('styler')`.
-* The documentation is formatted thanks to `r BiocStyle::CRANpkg('devtools')` and `r BiocStyle::CRANpkg('roxygen2')`.
+* The documentation is formatted thanks to `r BiocStyle::CRANpkg('devtools')` 
+and `r BiocStyle::CRANpkg('roxygen2')`.
 
 For more details, check the `dev` directory.
 
