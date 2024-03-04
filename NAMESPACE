@@ -2,7 +2,11 @@ exportPattern("^[[:alpha:]]+")
 
 importFrom(bio3d, read.pdb, pdbseq)
 importFrom(rlog, log_info)
-importFrom(dplyr, intersect)
+importFrom(dplyr, intersect, "%>%")
 importFrom(comprehenr, to_list)
-importFrom(RcolorBrewer, brewer.pal)
-imprtFrom(scales, col_bin)
+importFrom(RColorBrewer, brewer.pal)
+importFrom(scales, col_bin)
+importFrom(NGLVieweR, stageParameters,
+           addRepresentation,
+           seqQuality)
+

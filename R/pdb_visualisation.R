@@ -128,10 +128,10 @@ define_color_function <- function(dataset,
 ##' v2 <- v[,seq.int(344, 477), drop = FALSE]
 ##' colnames(v2) <- seq.int(ncol(v2)) 
 ##' 
-##' pdbfile_path <- system.file("extdata", "test_BRD4.pdb", mustwork = TRUE,
+##' pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustwork = TRUE,
 ##'  package = "ReX")
 ##'
-##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdbfile_path,
+##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath,
 ##'  cmap_name = "ProtDeprot")
 ##'
 ##' 
@@ -192,4 +192,58 @@ hdx_to_pdb_colours <- function(dataset,
     c(df$x[i], df$y[i]))
   
   return(color_parameters)
+}
+
+##' Function to view HDX data onto a pdb structure
+##' 
+##' 
+##' @param pdb_filepath The path to the PDB file that you wish to view
+##' @param representation A character representing the representation.
+##'  Default is "cartoon".
+##' @param quality The quality of the plot (default is "high").
+##' @param color_parameters A list of colours and residue numbers to be inputted
+##'  into NGLViewer. This is the output of the `hdx_to_pdb_colours` function.
+##' @return Returns a structure in the viewer panel
+##' @md
+##' 
+##' @example
+##' 
+##' v <- matrix(rnorm(n = 477), nrow = 1)
+##' colnames(v) <- seq.int(ncol(v))
+##' 
+##' v2 <- v[,seq.int(344, 477), drop = FALSE]
+##' colnames(v2) <- seq.int(ncol(v2)) 
+##' 
+##' pdb)filepath <- system.file("extdata", "test_BRD4.pdb", mustwork = TRUE,
+##'  package = "ReX")
+##'
+##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath,
+##'  cmap_name = "ProtDeprot")
+##'
+##' view_structure(pdb_filepath = pdb_filepath,
+##'  color_parameters = mycolor_parameters)
+##' 
+##' @export
+##' @rdname pdb-visualisation
+##' 
+view_structure <- function(pdb_filepath,
+                           representation = "cartoon",
+                           quality = "high",
+                           color_parameters){
+  
+  if (!file.exists(pdb_filepath)){
+    stop(paste(" PDB filepath does not exist:", pdb_filepath))
+  }
+  
+  # Set up the viewer ---
+  
+  graphics <- NGLVieweR(pdb_filepath) %>%
+    stageParameters(backgroundColor = "white", zoomSpeed = 1) %>%
+    addRepresentation(representation) %>%   
+    setQuality(quality) %>% 
+    addRepresentation(representation,
+                      param = list(color=color_parameters,
+                                   backgroundColor="white"))
+  
+  return(graphics)
 }
