@@ -81,7 +81,7 @@ Below is the citation output from using `citation('ReX')` in R. Please
 run this yourself to check for any updates on how to cite **ReX**.
 
 ``` r
-print(citation('ReX'), bibtex = TRUE)
+print(citation("ReX"), bibtex = TRUE)
 #> To cite package 'ReX' in publications use:
 #> 
 #>   ococrook (2024). _Inferring residue level hydrogen deuterium exchange

@@ -73,7 +73,7 @@ Below is the citation output from using `citation('ReX')` in R. Please
 run this yourself to check for any updates on how to cite __ReX__.
 
 ```{r 'citation', eval = requireNamespace('ReX')}
-print(citation('ReX'), bibtex = TRUE)
+print(citation("ReX"), bibtex = TRUE)
 ```
 
 Please note that the `ReX` was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.
