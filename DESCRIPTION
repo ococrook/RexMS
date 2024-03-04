@@ -1,0 +1,20 @@
+Package: ReX
+Title: What the Package Does (One Line, Title Case)
+Version: 0.99.0
+Date: 2024-03-04
+Authors@R: 
+    person("Oliver", "Crook", , "ococrook@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5669-8506"))
+Description: ReX is a user-friendly software designed for scientists studying
+  proteins and their dynamics. It uses Bayesian methods to analyze data 
+  from HDX-MS experiments, which helps in understanding how protein dynamics
+  at the levle of residues. ReX makes it easier to get detailed insights into
+  protein behaviors, It's a powerful tool if you wish to study differences
+  in protein dynamics with statistical rigour at the level of residues.
+License: Artistic-2.0
+URL: 
+BugReports: https://support.bioconductor.org/tag/ReX
+biocViews: Software
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1

@@ -1,1 +1,3 @@
 ^dev$
+^README\.Rmd$
+^\.github$
