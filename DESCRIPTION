@@ -3,7 +3,7 @@ Title: Residue-level statistical analysis of HDX-MS data
 Version: 0.99.0
 Date: 2024-03-04
 Authors@R: 
-    person("Oliver", "Crook", , "ococrook@gmail.com", role = c("aut", "cre"),
+    person("Oliver", "Crook", , "oliver.crook@stats.ox.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5669-8506"))
 Description: ReX is a user-friendly software designed for scientists studying
   proteins and their dynamics. It uses Bayesian methods to analyze data 
