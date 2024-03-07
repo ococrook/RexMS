@@ -79,7 +79,7 @@ remotes::install_github("ococrook/ReX")
 ReX has structure visualisation at part of its core functionality.
 Below is an example of how to use the `hdx_to_pdb_colours` function to map HDX-MS data onto a PDB file. 
 
-```{r example, eval = requireNamespace('ReX')}
+```{r example, eval = requireNamespace('ReX'), eval = FALSE}
 library("ReX")
 library(NGLVieweR)
 
