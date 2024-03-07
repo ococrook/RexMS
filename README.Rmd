@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -78,7 +79,7 @@ remotes::install_github("ococrook/ReX")
 ReX has structure visualisation at part of its core functionality.
 Below is an example of how to use the `hdx_to_pdb_colours` function to map HDX-MS data onto a PDB file. 
 
-```{r example, eval = requireNamespace('ReX'), eval = FALSE}
+```{r example, eval = requireNamespace('ReX')}
 library("ReX")
 library(NGLVieweR)
 
@@ -94,9 +95,14 @@ pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE, package
 # generate a protection-deprotection colour mapping
 mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath, cmap_name = "ProtDeprot")
 
+# Note this will open in a view
 view_structure(pdb_filepath = pdb_filepath, color_parameters = mycolor_parameters)
 ```
 
+The expected output is a 3D structure of the protein with the HDX-MS data mapped
+onto it. The colouring is based on the protection-deprotection scale.The
+following image is indicative and may not be the same as the output you will see.
+![Caption for the picture.](man/figures/pdb_hdx.png)
 
 ## Citation
 
