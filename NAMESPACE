@@ -8,5 +8,5 @@ importFrom(RColorBrewer, brewer.pal)
 importFrom(scales, col_bin)
 importFrom(NGLVieweR, stageParameters,
            addRepresentation,
-           seqQuality)
+           setQuality)
 

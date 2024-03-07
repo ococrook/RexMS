@@ -73,11 +73,27 @@ remotes::install_github("ococrook/ReX")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+ReX has structure visualisation at part of its core functionality. Below
+is an example of how to use the `hdx_to_pdb_colours` function to map
+HDX-MS data onto a PDB file.
 
 ``` r
 library("ReX")
-## basic example code
+library(NGLVieweR)
+
+# generate random HDX data
+v <- matrix(rnorm(n = 477), nrow = 1)
+colnames(v) <- seq.int(ncol(v)) # residue numbering
+
+v2 <- v[, seq.int(344, 477), drop = FALSE]
+colnames(v2) <- seq.int(ncol(v2))
+
+pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE, package = "ReX")
+
+# generate a protection-deprotection colour mapping
+mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath, cmap_name = "ProtDeprot")
+
+view_structure(pdb_filepath = pdb_filepath, color_parameters = mycolor_parameters)
 ```
 
 ## Citation

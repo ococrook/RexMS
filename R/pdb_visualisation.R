@@ -120,7 +120,7 @@ define_color_function <- function(dataset,
 ##' with protection values in Red and deprotection values in Blue, and NA values in Grey.
 ##' @md
 ##' 
-##' @example
+##' @examples
 ##' 
 ##' v <- matrix(rnorm(n = 477), nrow = 1)
 ##' colnames(v) <- seq.int(ncol(v))
@@ -206,15 +206,16 @@ hdx_to_pdb_colours <- function(dataset,
 ##' @return Returns a structure in the viewer panel
 ##' @md
 ##' 
-##' @example
+##' @examples
 ##' 
+##' library(NGLVieweR)
 ##' v <- matrix(rnorm(n = 477), nrow = 1)
 ##' colnames(v) <- seq.int(ncol(v))
 ##' 
 ##' v2 <- v[,seq.int(344, 477), drop = FALSE]
 ##' colnames(v2) <- seq.int(ncol(v2)) 
 ##' 
-##' pdb)filepath <- system.file("extdata", "test_BRD4.pdb", mustwork = TRUE,
+##' pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE,
 ##'  package = "ReX")
 ##'
 ##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath,
