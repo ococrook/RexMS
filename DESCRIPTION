@@ -14,7 +14,7 @@ Description: ReX is a user-friendly software designed for scientists studying
 License: Artistic-2.0
 URL: 
 BugReports: https://support.bioconductor.org/tag/ReX
-biocViews: Software, MassSpectrometry, Proteomics, Bayesian, HDX-MS
+biocViews: Software, MassSpectrometry, Proteomics, Bayesian
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
@@ -25,7 +25,8 @@ Imports:
     NGLVieweR,
     rlog,
     dplyr,
-    RColorBrewer
+    RColorBrewer,
+    grDevices
 Suggests: 
     BiocStyle,
     knitr,

@@ -51,7 +51,7 @@ define_color_function <- function(dataset,
     rlog::log_info(" Your values will be coloured using Viridis")
     
     n_values <- length(unique(sort(dataset)))
-    col_pal = c("white", viridis(n_values))
+    col_pal <- c("white", viridis(n_values))
     output_function <- col_bin(col_pal, scale_limits, na.color="#808080")
     
     rlog::log_warn("NA values will be coloured in grey")
