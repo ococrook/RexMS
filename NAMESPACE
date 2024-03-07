@@ -9,4 +9,4 @@ importFrom(scales, col_bin)
 importFrom(NGLVieweR, stageParameters,
            addRepresentation,
            setQuality)
-
+importFrom("grDevices", "colorRamp")
