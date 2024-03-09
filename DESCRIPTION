@@ -18,6 +18,9 @@ biocViews: Software, MassSpectrometry, Proteomics, Bayesian
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Depends:
+    R (>= 4.3.0),
+    S4Vectors
 Imports:
     bio3d,
     scales,
@@ -26,7 +29,8 @@ Imports:
     rlog,
     dplyr,
     RColorBrewer,
-    grDevices
+    grDevices,
+    dbplyr (>= 2.3.4)
 Suggests: 
     BiocStyle,
     knitr,
@@ -36,3 +40,6 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+LazyData: true
