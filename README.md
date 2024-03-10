@@ -100,8 +100,12 @@ view_structure(pdb_filepath = pdb_filepath, color_parameters = mycolor_parameter
 The expected output is a 3D structure of the protein with the HDX-MS
 data mapped onto it. The colouring is based on the
 protection-deprotection scale.The following image is indicative and may
-not be the same as the output you will see. ![Caption for the
-picture.](man/figures/pdb_hdx.png)
+not be the same as the output you will see.
+
+<figure>
+<img src="man/figures/pdb_hdx.png" alt="Caption for the picture." />
+<figcaption aria-hidden="true">Caption for the picture.</figcaption>
+</figure>
 
 ## Citation
 
