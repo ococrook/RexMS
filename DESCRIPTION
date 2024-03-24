@@ -30,7 +30,17 @@ Imports:
     dplyr,
     RColorBrewer,
     grDevices,
-    dbplyr (>= 2.3.4)
+    dbplyr (>= 2.3.4),
+    methods,
+    stats,
+    minpack.lm,
+    BiocParallel,
+    LaplacesDemon,
+    MASS,
+    Biobase,
+    genlasso,
+    coda,
+    matrixStats
 Suggests: 
     BiocStyle,
     knitr,
@@ -40,4 +50,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-LazyData: true
+LazyData: false

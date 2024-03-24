@@ -10,3 +10,18 @@ importFrom(NGLVieweR, stageParameters,
            addRepresentation,
            setQuality)
 importFrom("grDevices", "colorRamp")
+importFrom(S4Vectors, DataFrame)
+importFrom("graphics", "image")
+    importFrom("methods", "is", "new")
+    importFrom("stats", "C", "approxfun", "coef", "complete.cases",
+               "dbeta", "dgamma", "dlnorm", "dnorm", "dpois",
+               "nls.control", "predict", "quantile", "rbeta", "rgamma",
+               "rnorm", "runif", "na.omit","stepfun")
+importFrom("minpack.lm", "nlsLM", "nls.lm.control")
+importFrom("BiocParallel", "bplapply", "bpparam")
+importFrom("LaplacesDemon", "dlaplace")
+importFrom("MASS", "fitdistr", "ginv")
+importFrom("genlasso", "trendfilter", "cv.trendfilter")
+importFrom("Biobase", "validMsg")
+importFrom("coda", "gelman.diag", "as.mcmc.list", "as.mcmc")
+importFrom("matrixStats", "colProds")
