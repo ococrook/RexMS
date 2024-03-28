@@ -31,6 +31,11 @@ require(ReX)
 require(dplyr)
 data(BRD4_apo)
 data(BRD4_ibet)
+BRD4_apo <- BRD4_apo \%>\% filter(End < 100)
+BRD4_ibet <- BRD4_ibet \%>\% filter(End < 100)
+numTimepoints <- length(unique(BRD4_apo$Exposure))
+Timepoints <- unique(BRD4_apo$Exposure)
+numPeptides <- length(unique(BRD4_apo$Sequence))
 
 rex_example <- rex(HdxData = DataFrame(BRD4_ibet),
                 numIter = 100,

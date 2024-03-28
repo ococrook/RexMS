@@ -40,7 +40,8 @@ Imports:
     Biobase,
     genlasso,
     coda,
-    matrixStats
+    matrixStats,
+    ggplot2
 Suggests: 
     BiocStyle,
     knitr,

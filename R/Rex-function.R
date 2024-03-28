@@ -71,37 +71,37 @@
 ##' @rdname rex
 ##' @export
 rex <- function(HdxData,
-    numIter = 1000,
-    R = 379,
-    numtimepoints = 3,
-    multivariate = FALSE,
-    timepoints = c(0, 30, 300),
-    tCoef = 1,
-    density = "Gaussian",
-    R_lower = 1,
-    R_upper = R,
-    priors = list(
-        lambda = 100 / (R - 1),
-        meanlog = -3,
-        sdlog = 1,
-        rho = 0.5,
-        shape1 = 1,
-        shape2 = 5,
-        shape = 1,
-        b_alpha = 1,
-        b_beta = 200,
-        dshape = 1,
-        d_alpha = 1,
-        d_beta = 1,
-        sigma_sd = 0.5,
-        pishape1 = 1,
-        pishape2 = 10
-    ),
-    phi = 0.92,
-    init_param = "d",
-    numChains = 2L,
-    seed = NULL,
-    BPPARAM = BiocParallel::bpparam()) {
+                numIter = 1000,
+                R = 379,
+                numtimepoints = 3,
+                multivariate = FALSE,
+                timepoints = c(0, 30, 300),
+                tCoef = 1,
+                density = "Gaussian",
+                R_lower = 1,
+                R_upper = R,
+                priors = list(
+                    lambda = 100 / (R - 1),
+                    meanlog = -3,
+                    sdlog = 1,
+                    rho = 0.5,
+                    shape1 = 1,
+                    shape2 = 5,
+                    shape = 1,
+                    b_alpha = 1,
+                    b_beta = 200,
+                    dshape = 1,
+                    d_alpha = 1,
+                    d_beta = 1,
+                    sigma_sd = 0.5,
+                    pishape1 = 1,
+                    pishape2 = 10
+                ),
+                phi = 0.92,
+                init_param = "d",
+                numChains = 2L,
+                seed = NULL,
+                BPPARAM = BiocParallel::bpparam()) {
     # checks
     stopifnot(exprs = {
         "HdxData must be a DataFrame" <- is(HdxData, "DFrame")
@@ -224,10 +224,10 @@ rex <- function(HdxData,
 ##' @rdname rex-process
 ##' @export
 RexProcess <- function(HdxData,
-    params,
-    thin = 1,
-    range = seq.int(4000, 5000, by = thin),
-    whichChains = c(1, 2)) {
+                       params,
+                       thin = 1,
+                       range = seq.int(4000, 5000, by = thin),
+                       whichChains = c(1, 2)) {
     ## get required slots
     numChains <- length(params@chains)
     R <- params@chains[[1]]@R

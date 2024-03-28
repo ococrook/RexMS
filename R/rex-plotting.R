@@ -7,10 +7,12 @@
 ##' @md
 ##' 
 ##' @examples
-##' require(Rex)
+##' require(ReX)
 ##' require(dplyr)
+##' require(ggplot2)
 ##' 
 ##' data("BRD4_apo")
+##' data("BRD4_ibet")
 ##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
 ##' BRD4_ibet <- BRD4_ibet %>% filter(End < 100)
 ##' numTimepoints <- length(unique(BRD4_apo$Exposure))
@@ -144,10 +146,12 @@ plotVolcano <- function(diff_params,
 ##' @md
 ##' 
 ##' @examples
-##' require(Rex)
+##' require(ReX)
 ##' require(dplyr)
+##' require(ggplot2)
 ##' 
 ##' data("BRD4_apo")
+##' data("BRD4_ibet")
 ##' 
 ##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
 ##' BRD4_ibet <- BRD4_ibet %>% filter(End < 100)
@@ -284,10 +288,12 @@ plotButterfly <- function(diff_params,
 ##' @md
 ##' 
 ##' @examples
-##' require(Rex)
+##' require(ReX)
 ##' require(dplyr)
+##' require(ggplot2)
 ##' 
 ##' data("BRD4_apo")
+##' data("BRD4_ibet")
 ##' 
 ##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
 ##' BRD4_ibet <- BRD4_ibet %>% filter(End < 100)

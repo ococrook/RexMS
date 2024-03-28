@@ -18,6 +18,13 @@
 ##' require(dplyr)
 ##' data(BRD4_apo)
 ##' data(BRD4_ibet)
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' BRD4_ibet <- BRD4_ibet %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
+##' 
 ##'
 ##' rex_example <- rex(HdxData = DataFrame(BRD4_ibet),
 ##'                  numIter = 100,
@@ -219,7 +226,12 @@ EFDR <- function(prob, threshold = 0.90) {
 ##' require(dplyr)
 ##' data(BRD4_apo)
 ##' data(BRD4_ibet)
-##'
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' BRD4_ibet <- BRD4_ibet %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
 ##' rex_example <- rex(HdxData = DataFrame(BRD4_ibet),
 ##'                 numIter = 100,
 ##'                 R = max(BRD4_apo$End),
@@ -244,9 +256,9 @@ EFDR <- function(prob, threshold = 0.90) {
 ##'
 ##' @export
 processTREuncertainty <- function(HdxData,
-    params,
-    whichChain = 1,
-    num_montecarlo = 5000) {
+                                  params,
+                                  whichChain = 1,
+                                  num_montecarlo = 5000) {
     # global quantities of itnerest
     R <- params@chains[[whichChain]]@R
     phi <- params@chains@chains[[whichChain]]@phi
@@ -268,7 +280,7 @@ processTREuncertainty <- function(HdxData,
         dlong <- params@chains@chains[[whichChain]]@dlong[, i]
 
         err <- error_prediction(
-            res = res,
+            res = HdxData,
             blong = blong,
             phi = phi,
             qlong = qlong,

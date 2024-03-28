@@ -22,10 +22,12 @@ Returns a ggplot object
 Rex butterfly plots for differential analysis
 }
 \examples{
-require(Rex)
+require(ReX)
 require(dplyr)
+require(ggplot2)
 
 data("BRD4_apo")
+data("BRD4_ibet")
 
 BRD4_apo <- BRD4_apo \%>\% filter(End < 100)
 BRD4_ibet <- BRD4_ibet \%>\% filter(End < 100)
