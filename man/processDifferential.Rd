@@ -14,6 +14,8 @@ apo data.}
 \item{params}{An object of class \code{RexParams} containing a fitted ReX model
 typically to the differential of interest (e.g. ligand binding)}
 
+\item{whichChain}{A numeric value indicating the chain to use. Default is 1.}
+
 \item{num_montecarlo}{A numeric value indicating the number of montecarlo
 samples to use for the error analysis. Default is 5000.}
 }

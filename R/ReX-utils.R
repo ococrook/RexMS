@@ -145,8 +145,9 @@ cleanHDX <- function(res, clean = TRUE) {
         res <- res[-which(duplicated_rows), ]
 
         # remove missing values
-        res_omitted <- DataFrame(BRD4_apo) %>% na.omit()
-        missing_seqs <- res_omitted[, "Sequence"]
+        res_which_complete <- data.frame(res) %>% complete.cases() %>% which()
+        res_omitted <- res[-res_which_complete, ]
+        missing_seqs <- res_omitted[, "Sequence"] %>% unique()
 
         res <- res[!res$Sequence %in% missing_seqs, ]
     }

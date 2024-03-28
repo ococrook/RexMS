@@ -5,6 +5,7 @@
 ##'  apo data.
 ##' @param params An object of class `RexParams` containing a fitted ReX model
 ##'  typically to the differential of interest (e.g. ligand binding)
+##' @param whichChain A numeric value indicating the chain to use. Default is 1. 
 ##' @param num_montecarlo A numeric value indicating the number of montecarlo
 ##'  samples to use for the error analysis. Default is 5000.
 ##'
@@ -78,11 +79,11 @@ processDifferential <- function(HdxData,
 
     err <- error_prediction(
         res = HdxData,
-        b = blong,
+        blong = blong,
         phi = phi,
-        q = qlong,
-        pi = pilong,
-        d = dlong
+        qlong = qlong,
+        pilong = pilong,
+        dlong = dlong
     )
 
     for (i in seq_len(numTimepoints)[-1]) {
@@ -268,11 +269,11 @@ processTREuncertainty <- function(HdxData,
 
         err <- error_prediction(
             res = res,
-            b = blong,
+            blong = blong,
             phi = phi,
-            q = qlong,
-            pi = pilong,
-            d = dlong
+            qlong = qlong,
+            pilong = pilong,
+            dlong = dlong
         )
 
         for (k in seq_len(numTimepoints)[-1]) {
