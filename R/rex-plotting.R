@@ -365,7 +365,265 @@ plotTimeAveragedButterfly <- function(diff_params,
   return(gg3)
 
 }
+##' Plot Residue level error rates to identify points where modelling is poor
+##' 
+##' @param rex_params An object of class RexParams
+##' @param nrow The number of rows in the facet (to seperate timepoints)
+##' @param interval The interval to plot (Residues)
+##' @return Returns a ggplot object
+##' 
+##' @examples
+##' require(ReX)
+##' require(dplyr)
+##' require(ggplot2)
+##' 
+##' data("BRD4_apo")
+##' 
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
+##' rex_test <- rex(HdxData = DataFrame(BRD4_apo),
+##'                numIter = 10,
+##'                R = max(BRD4_apo$End),
+##'                numtimepoints = numTimepoints,
+##'                timepoints = Timepoints,
+##'                seed = 1L,
+##'                tCoef = c(0, rep(1, 5)),
+##'                BPPARAM = SerialParam())
+##'                
+##' rex_test <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                       params = rex_test,
+##'                       range = 5:10,
+##'                       thin = 1, whichChains = c(1,2))
+##' 
+##' gg1 <- plotResidueResolution(rex_params = rex_test, nrow = 5)
+##'                                                                    
+##' print(gg1)
+##' 
+##' @export  
+plotResidueResolution <- function(rex_params, 
+                                  nrow = 1,
+                                  interval = NULL) {
+  
+  if (is.null(interval)) {
+    interval <- seq.int(1, nrow(rex_params@summary@posteriorEstimates))
+  } else if(max(interval) > max(nrow(rex_params@summary@posteriorEstimates))){
+    interval <- seq.int(min(interval), max(rex_params@summary@Rex.resolution$Resdiues))
+  }     
+  
+  numTimepoints <- rex_params@chains@chains[[1]]@numTimepoints
+  timepoints <- rex_params@chains@chains[[1]]@timepoints
+  
+  ARE <- Rex.resolution(rex_params)[interval, grep("ARE", colnames(Rex.resolution(rex_params)))]
+  ARE <- ARE[,-seq.int(numTimepoints - 1)]
+  timepoints <- as.numeric(gsub(".*?([0-9]+).*", "\\1", colnames(ARE)))
   
   
-    
+  df_butterfly <- data.frame(
+    ARE = unlist(ARE),
+    residues = rep(Rex.resolution(rex_params)$Resdiues[interval],
+                   times = length(timepoints)
+    ),
+    timepoints = rep(timepoints,
+                     each = length(Rex.resolution(rex_params)$Resdiues[interval]))
+  )
+  
+  gg3 <- df_butterfly %>%
+    ggplot(aes(x = residues, y = ARE, group = 1)) +
+    geom_point(alpha = 0.9, size = 2) + 
+    theme_bw() + 
+    geom_line() + 
+    ylim(0, max(abs(df_butterfly$ARE))*1.1) +
+    ylab("ARE") + 
+    facet_wrap(.~timepoints, nrow = nrow) +
+    scale_alpha_continuous(range = c(0,1)) + 
+    scale_color_manual(values = c("darkgreen")) +
+    labs(color = "") + 
+    guides(alpha = guide_legend(override.aes = list(size = 5)),
+           color = guide_legend(override.aes = list(size = 5))) + 
+    theme(text = element_text(size = 20),
+          panel.spacing = unit(1, "lines"),
+          strip.background = element_rect(fill = "steelblue")) + 
+    scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
+
+  return(gg3)
+
+}
+##' Plot Peptide level error rates
+##' 
+##' @param rex_params An object of class RexParams
+##' @param HdxData An object of class DataFrame, containing the HDX-MS data used.
+##' @param relative Logical, if TRUE the error rates are normalised
+##'  by the maximum uptake
+##' @return Returns a pheatmap object 
+##' 
+##' @examples
+##' require(ReX)
+##' require(dplyr)
+##'
+##' data("BRD4_apo")
+##' 
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
+##' rex_test <- rex(HdxData = DataFrame(BRD4_apo),
+##'               numIter = 10,
+##'               R = max(BRD4_apo$End),
+##'               numtimepoints = numTimepoints,
+##'               timepoints = Timepoints,
+##'               seed = 1L,
+##'               tCoef = c(0, rep(1, 5)),
+##'               BPPARAM = SerialParam())
+##'               
+##' rex_test <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                     params = rex_test,
+##'                     range = 5:10,
+##'                     thin = 1, whichChains = c(1,2))
+##'                     
+##' plotPeptideError(rex_params = rex_test, HdxData = DataFrame(BRD4_apo))
+##' 
+##' @export
+plotPeptideError <- function(rex_params,
+                             HdxData,
+                             relative = FALSE){
+  
+  
+  df <- as.matrix(Rex.peptideError(rex_params)[,-1])
+  rownames(df) <- Rex.peptideError(rex_params)[,1] 
+  
+  if (relative) {
+    df <- df / maxUptakes(res = HdxData)
+  }
+  
+  pp <- pheatmap(df, 
+                 cluster_rows = FALSE,
+                 cluster_cols = FALSE,
+                 show_rownames = TRUE)
+  
+  
+  return(pp)
+}
+
+##' plot loglikelihoods across chains
+##' 
+##' @param rex_params An object of class RexParams
+##' @return Returns a ggplot object
+##' 
+##' 
+##' @examples
+##' require(ReX)
+##' require(dplyr)
+##' require(ggplot2)
+##' 
+##' data("BRD4_apo")
+##' 
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
+##' rex_test <- rex(HdxData = DataFrame(BRD4_apo),
+##'              numIter = 10,
+##'              R = max(BRD4_apo$End),
+##'              numtimepoints = numTimepoints,
+##'              timepoints = Timepoints,
+##'              seed = 1L,
+##'              tCoef = c(0, rep(1, 5)),
+##'              BPPARAM = SerialParam())
+##'
+##' rex_test <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                    params = rex_test,
+##'                    range = 5:10,
+##'                    thin = 1, whichChains = c(1,2))
+##'                    
+##' plotLogLikelihoods(rex_params = rex_test)
+##' 
+##' @export
+plotLogLikelihoods <- function(rex_params){
+  
+  
+  logLikelihoods <- lapply(rex_params@chains@chains, function(x)
+                                    x@loglikelihood)
+  
+  df <- data.frame(
+    logLikelihoods = unlist(logLikelihoods),
+    chain = as.factor(rep(seq.int(length(rex_params@chains@chains)),
+                each = rex_params@chains@chains[[1]]@numIter)),
+    iter = rep(seq.int(rex_params@chains@chains[[1]]@numIter),
+               times = length(rex_params@chains@chains)))
+  
+  gg <- ggplot(df, aes(x = iter, y = logLikelihoods, group = chain, col = chain)) +
+    geom_point(size = 2, alpha = 0.7) +
+    geom_line() +
+    theme_bw() +
+    ylab("log Likelihood") +
+    xlab("iteration") +
+    theme(text = element_text(size = 20)) + 
+    scale_color_manual(values = brewer.pal(n = max(3, length(unique(df$chain))), 
+                                           name = "Set2"))
+  
+  return(gg)
+}
+
+##' plot sigmas across chains
+##' 
+##' @param rex_params An object of class RexParams
+##' @return Returns a ggplot object
+##' 
+##' @examples
+##' 
+##' require(ReX)
+##' require(dplyr)
+##' require(ggplot2)
+##' 
+##' data("BRD4_apo")
+##' 
+##' BRD4_apo <- BRD4_apo %>% filter(End < 100)
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+##' numPeptides <- length(unique(BRD4_apo$Sequence))
+##' 
+##' rex_test <- rex(HdxData = DataFrame(BRD4_apo),
+##'              numIter = 10,
+##'              R = max(BRD4_apo$End),
+##'              numtimepoints = numTimepoints,
+##'              timepoints = Timepoints,
+##'              seed = 1L,
+##'              tCoef = c(0, rep(1, 5)),
+##'              BPPARAM = SerialParam())
+##'
+##' rex_test <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                    params = rex_test,
+##'                    range = 5:10,
+##'                    thin = 1, whichChains = c(1,2))
+##'                    
+##' plotSigma(rex_params = rex_test)
+plotSigma <- function(rex_params){
+  
+  sigmas <- lapply(rex_params@chains@chains, function(x)
+                     x@Sigma)
+  
+  df <- data.frame(
+    sigmas = unlist(sigmas),
+    chain = as.factor(rep(seq.int(length(rex_params@chains@chains)),
+                          each = rex_params@chains@chains[[1]]@numIter)),
+    iter = rep(seq.int(rex_params@chains@chains[[1]]@numIter),
+               times = length(rex_params@chains@chains)))
+  
+  gg <- ggplot(df, aes(x = iter, y = log(sigmas), group = chain, col = chain)) +
+    geom_point(size = 2, alpha = 0.7) +
+    geom_line() +
+    theme_bw() +
+    ylab("log sigma") +
+    xlab("iteration") +
+    theme(text = element_text(size = 20)) + 
+    scale_color_manual(values = brewer.pal(n = max(3, length(unique(df$chain))), 
+                                           name = "Set2"))
+  
+  return(gg)
+}
 

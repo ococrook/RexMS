@@ -146,7 +146,7 @@ rex <- function(HdxData,
     HdxData <- cleanHDX(res = HdxData, clean = FALSE)
 
     # check missing values
-    if (sum(is.na(HdxData)) > 0) {
+    if (sum(is.na(HdxData$Uptake)) > 0) {
         stop("The dataset contains missing values. Please examine the dataset first")
     }
 

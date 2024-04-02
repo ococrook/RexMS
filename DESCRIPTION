@@ -41,9 +41,16 @@ Imports:
     genlasso,
     coda,
     matrixStats,
-    ggplot2
+    ggplot2,
+    pheatmap,
+    graphics,
+    vegan,
+    plyr,
+    ropls,
+    tidyr
 Suggests: 
     BiocStyle,
+    ggfortify,
     knitr,
     RefManageR,
     rmarkdown,

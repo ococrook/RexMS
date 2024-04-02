@@ -4,7 +4,13 @@
 \alias{processTREuncertainty}
 \title{Function to obtain uncertainty estimates for the total relative error (TRE)}
 \usage{
-processTREuncertainty(HdxData, params, whichChain = 1, num_montecarlo = 5000)
+processTREuncertainty(
+  HdxData,
+  params,
+  whichChain = 1,
+  whichSamples = seq.int(50),
+  num_montecarlo = 5000
+)
 }
 \arguments{
 \item{HdxData}{A data frame containing the HDX-MS data for which you want
@@ -15,6 +21,9 @@ apo data.}
 typically to the differential of interest (e.g. ligand binding)}
 
 \item{whichChain}{A numeric value indicating the chain to use. Default is 1.}
+
+\item{whichSamples}{A numeric vector indicating which samples to use. Default
+is seq.int(50).}
 
 \item{num_montecarlo}{A numeric value indicating the number of montecarlo
 samples to use for the error analysis. Default is 5000.}

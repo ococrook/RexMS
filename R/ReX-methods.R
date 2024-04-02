@@ -156,8 +156,6 @@ setMethod(
     function(object) Rex.globals(object@summary)
 )
 
-
-
 ##' @param x Object to be subset.
 ##' @param i An `integer()`. Should be of length 1 for `[[`.
 ##' @param j Missing.
@@ -168,18 +166,6 @@ setMethod(
 setMethod(
     "[[", "RexChains",
     function(x, i, j = "missing", drop = "missing") x@chains[[i]]
-)
-
-##' @param x Object to be subset.
-##' @param i An `integer()`. Should be of length 1 for `[[`.
-##' @param j Missing.
-##' @param drop Missing.
-##'
-##' @md
-##' @rdname RexParams
-setMethod(
-    "[[", "RexParams",
-    function(x, i, j = "missing", drop = "missing") params(x)[[i]]
 )
 
 ##' @param x Object to be subset.

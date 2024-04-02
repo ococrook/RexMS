@@ -33,8 +33,7 @@
 \alias{Rex.resolution,RexParams-method}
 \alias{Rex.peptideError,RexParams-method}
 \alias{Rex.globals,RexParams-method}
-\alias{[[,RexChains-method}
-\alias{[[,RexParams-method}
+\alias{[[,RexChains,ANY,ANY-method}
 \alias{[,RexChains,ANY,ANY,ANY-method}
 \alias{[,RexParams,ANY,ANY,ANY-method}
 \alias{show,RexChains-method}
@@ -91,9 +90,7 @@ Rex.globals(object)
 
 \S4method{Rex.globals}{RexParams}(object)
 
-\S4method{[[}{RexChains}(x, i, j = "missing", drop = "missing")
-
-\S4method{[[}{RexParams}(x, i, j = "missing", drop = "missing")
+\S4method{[[}{RexChains,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
 \S4method{[}{RexChains,ANY,ANY,ANY}(x, i, j = "missing", drop = "missing")
 

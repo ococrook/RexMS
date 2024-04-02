@@ -1,22 +1,22 @@
-exportPattern("^[[:alpha:]]+")
+import(ggplot2)
 
 importFrom(bio3d, read.pdb, pdbseq)
 importFrom(rlog, log_info)
-importFrom(dplyr, intersect, "%>%")
+importFrom(dplyr, intersect, "%>%", "reframe", "group_by")
 importFrom(comprehenr, to_list)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(scales, col_bin)
 importFrom(NGLVieweR, stageParameters,
            addRepresentation,
            setQuality)
-importFrom("grDevices", "colorRamp")
+importFrom("grDevices", "colorRamp", "colorRampPalette")
 importFrom(S4Vectors, DataFrame)
 importFrom("graphics", "image")
     importFrom("methods", "is", "new")
     importFrom("stats", "C", "approxfun", "coef", "complete.cases",
                "dbeta", "dgamma", "dlnorm", "dnorm", "dpois",
                "nls.control", "predict", "quantile", "rbeta", "rgamma",
-               "rnorm", "runif", "na.omit","stepfun")
+               "rnorm", "runif", "na.omit","stepfun", "prcomp")
 importFrom("minpack.lm", "nlsLM", "nls.lm.control")
 importFrom("BiocParallel", "bplapply", "bpparam")
 importFrom("LaplacesDemon", "dlaplace")
@@ -25,3 +25,57 @@ importFrom("genlasso", "trendfilter", "cv.trendfilter")
 importFrom("Biobase", "validMsg")
 importFrom("coda", "gelman.diag", "as.mcmc.list", "as.mcmc")
 importFrom("matrixStats", "colProds")
+importFrom("pheatmap", "pheatmap")
+importFrom("dbplyr", "sql")
+importFrom("vegan", "procrustes")
+importFrom("plyr", "ldply")
+importFrom("ropls", "opls")
+importFrom("tidyr", "pivot_wider", "pivot_longer")
+
+exportClasses("RexChains",
+              "RexSummary",
+              "RexParams",
+              "RexChain",
+              "RexDifferential")
+
+exportMethods("posteriorEstimates",
+              "Rex.quantiles",
+              "Rex.resolution",
+              "Rex.peptideError",
+              "Rex.globals",
+              "Rex.predictionError",
+              "Rex.estimates",
+              "Rex.probs",
+              "Rex.eFDR")
+
+export(prepareIndexes,
+       maxUptakes,
+       coverageHeatmap,
+       cleanHDX,
+       cleanLong,
+       doublelogisticFunction,
+       logisticFunction,
+       processDifferential,
+       EFDR,
+       processTREuncertainty,
+       rex,
+       RexProcess,
+       uptakeGuess,
+       define_color_function,
+       hdx_to_pdb_colours,
+       view_structure,
+       plotVolcano,
+       plotButterfly,
+       plotTimeAveragedButterfly,
+       plotSigma,
+       plotLogLikelihoods,
+       plotPeptideError,
+       plotResidueResolution,
+       UnsupervisedCSA,
+       plotUCSA,
+       supervisedCSA,
+       plotSCSA,
+       plotLoadingSCSA,
+       sampleTREuncertainty,
+       plotTREuncertainty,
+       plotTREuncertaintyLoadings)

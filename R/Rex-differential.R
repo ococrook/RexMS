@@ -217,7 +217,8 @@ EFDR <- function(prob, threshold = 0.90) {
 ##' @param num_montecarlo A numeric value indicating the number of montecarlo
 ##' samples to use for the error analysis. Default is 5000.
 ##' @param whichChain A numeric value indicating the chain to use. Default is 1.
-##'
+##' @param whichSamples A numeric vector indicating which samples to use. Default
+##' is seq.int(50).
 ##' @return An array of the total relative error (TRE) for each residue at each
 ##' timepoint represnting uncertainty in the distribution
 ##'
@@ -258,6 +259,7 @@ EFDR <- function(prob, threshold = 0.90) {
 processTREuncertainty <- function(HdxData,
                                   params,
                                   whichChain = 1,
+                                  whichSamples = seq.int(50),
                                   num_montecarlo = 5000) {
     # global quantities of itnerest
     R <- params@chains[[whichChain]]@R
@@ -269,11 +271,10 @@ processTREuncertainty <- function(HdxData,
     interval <- params@interval
     Residues <- seq.int(interval[1], interval[2], by = 1)
     C <- matrix(NA, nrow = R, ncol = numPeptides)
-    numIter <- params@chains@chains[[whichChain]]@numIter
-    TRE <- array(NA, c(length(range), numTimepoints - 1, R))
+    TRE <- array(NA, c(length(whichSamples), numTimepoints - 1, R))
 
 
-    for (i in numIter) {
+    for (i in whichSamples) {
         blong <- params@chains@chains[[whichChain]]@blong[, i]
         pilong <- params@chains@chains[[whichChain]]@pilong[, i]
         qlong <- params@chains@chains[[whichChain]]@qlong[, i]
@@ -298,13 +299,13 @@ processTREuncertainty <- function(HdxData,
                 abs(rowSums(matrix(
                     LaplacesDemon::rlaplace(
                         n = num_montecarlo * redundancy[x],
-                        scale = sqrt(rex_test@chains@chains[[whichChain]]@Sigma[i])
+                        scale = sqrt(params@chains@chains[[whichChain]]@Sigma[i])
                     ),
                     ncol = redundancy[x]
                 )))
             })
 
-            TRE[which(numIter == i), k - 1, ] <- rowSums(C2, na.rm = TRUE)
+            TRE[which(whichSamples == i), k - 1, ] <- rowSums(C2, na.rm = TRUE)
         }
     }
 
