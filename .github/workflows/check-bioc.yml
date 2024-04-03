@@ -19,10 +19,11 @@
 ## Acronyms:
 ## * GHA: GitHub Action
 ## * OS: operating system
-
 on:
   push:
   pull_request:
+
+
 
 name: R-CMD-check-bioc
 
@@ -42,6 +43,15 @@ env:
   run_docker: 'false'
 
 jobs:
+
+  clear:
+    name: Clear cache
+    runs-on: ubuntu-latest
+    steps:
+    - uses: MyAlbum/purge-cache@v1
+      with:
+      max-age: 1 # Cache max 7 days since last use (this is the default)
+
   build-check:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
