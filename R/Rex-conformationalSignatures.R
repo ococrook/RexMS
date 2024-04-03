@@ -13,7 +13,7 @@
 ##' @return A list containing the PCA object and the TRE values in wide format
 ##' 
 ##' @examples
-##' 
+##' library("RexMS")
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
 ##' 
@@ -88,7 +88,7 @@ UnsupervisedCSA <- function(RexDifferentialList,
 ##' @return A ggplot object
 ##' 
 ##' @examples
-##' 
+##' library("RexMS")
 ##' library(ggfortify)
 ##' # Construct labels carefully using known properties of the states (Ligands)
 ##' 
@@ -200,7 +200,7 @@ plotUCSA <- function(pca_states,
 ##' 
 ##' # Construct labels carefully using known properties of the states (Ligands)
 ##' # first a catagorical example
-##' 
+##' library("RexMS")
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
 ##' 
@@ -352,7 +352,7 @@ supervisedCSA <- function(RexDifferentialList,
 ##' 
 ##' # Construct labels carefully using known properties of the states (Ligands)
 ##' # first a catagorical example
-##' 
+##' library("RexMS")
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
 ##' 
@@ -472,7 +472,7 @@ plotSCSA <- function(states.plsda,
 ##' @examples
 ##' # Construct labels carefully using known properties of the states (Ligands)
 ##' # first a catagorical example
-##' 
+##' library("RexMS")
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
 ##' 
@@ -574,7 +574,7 @@ plotLoadingSCSA <- function(states.plsda,
 ##' 
 ##'   
 ##' \dontrun{
-##' 
+##' library("RexMS")
 ##' data("LXRalpha_processed")
 ##' data("rex_lxr")
 ##' data("LXRalpha_compounds")
@@ -644,7 +644,7 @@ sampleTREuncertainty <- function(HdxData,
 ##' @return A ggplot object
 ##' 
 ##' @examples
-##' 
+##' library("RexMS")
 ##' data(TRE_dist)
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
@@ -744,7 +744,7 @@ plotTREuncertainty <- function(df_all,
 ##' 
 ##' @examples
 ##' 
-##' 
+##' library("RexMS")
 ##' data(TRE_dist)
 ##' data("out_lxr_compound_proccessed")
 ##' data("LXRalpha_compounds")
