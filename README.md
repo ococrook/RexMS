@@ -33,16 +33,34 @@ process at Spectrum-level. `RexMS` takes the processed peptide-level
 data and infers the residue level deuterium uptake. The underlying model
 is a Bayesian non-parametric model that recasts HDX-MS data analysis as
 a (latent) change-point detection problem. The unique benefits of this
-model are the following: (1) It can provide statistical confidence at
-the level of residues (e.g. a probability of change) (2) Borrow
-statistical power from overlapping peptides (3) Infer uptakes patterns
-that are hidden at the peptide-level because of averaging (4) Provide
-global and pre-residue resolution metrics (5) It can perform single
-protein analysis, differential analysis and confrontational signature
-analysis (many states/compounds) (6) You can build predictive models
-with the inferred uptakes using partial least squares discriminant
-analysis (PLS-DA). (7) You can costumize the model to your specific
-needs.
+model are the following:
+
+1)  It can provide statistical confidence at the level of residues (e.g.
+    a probability of change)
+
+2)  Borrow statistical power from overlapping peptides
+
+3)  Infer uptake patterns that are hidden at the peptide-level because
+    of averaging
+
+4)  Provide global and per-residue resolution metrics
+
+5)  It can perform single protein analysis, differential analysis and
+    conformational signature analysis (many states/compounds), linking
+    results to downstream functional outcomes
+
+6)  You can build predictive models with the inferred uptakes using
+    partial least squares discriminant analysis (PLS-DA).
+
+7)  You can costumize the model to your specific needs.
+
+## Documentation
+
+The official documentation is available at
+[ococrook.github.io/RexMS](https://ococrook.github.io/RexMS/). We
+encourage use to look there and in particular the vignettes. We suggest
+reading through all of the vignettes first so you understand which part
+of `RexMS` you need to use.
 
 ## Installation instructions
 
@@ -103,8 +121,10 @@ protection-deprotection scale.The following image is indicative and may
 not be the same as the output you will see.
 
 <figure>
-<img src="man/figures/pdb_hdx.png" alt="Caption for the picture." />
-<figcaption aria-hidden="true">Caption for the picture.</figcaption>
+<img src="man/figures/pdb_hdx.png"
+alt="An example figure generated from the RexMS package" />
+<figcaption aria-hidden="true">An example figure generated from the
+RexMS package</figcaption>
 </figure>
 
 ## Citation

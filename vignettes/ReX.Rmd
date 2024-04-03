@@ -45,7 +45,7 @@ bib <- c(
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
     testthat = citation("testthat")[1],
-    ReX = citation("ReX")[1]
+    RexMS = citation("RexMS")[1]
 )
 ```
 
@@ -53,7 +53,13 @@ bib <- c(
 
 ## Install `RexMS`
 
-`R` is an open-source statistical environment which can be easily modified to enhance its functionality via packages. `r Biocpkg("ReX")` is a `R` package available via the [Bioconductor](http://bioconductor.org) repository for packages. `R` can be installed on any operating system from [CRAN](https://cran.r-project.org/) after which you can install `r Biocpkg("ReX")` by using the following commands in your `R` session:
+`R` is an open-source statistical environment which can be easily modified
+to enhance its functionality via packages. `r Biocpkg("RexMS")` is an `R` 
+package available via the [Bioconductor](http://bioconductor.org) repository
+for packages. `R` can be installed on any operating
+system from [CRAN](https://cran.r-project.org/) after which you
+can install `r Biocpkg("RexMS")` by using the following commands in
+your `R` session:
 
 ```{r "install", eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
@@ -66,15 +72,47 @@ BiocManager::install("RexMS")
 BiocManager::valid()
 ```
 
+or from installed from github
+
+```{r "install2", eval = FALSE}
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
+
+remotes::install_github("ococrook/RexMS")
+```
+
 ## Required knowledge
 
-`r Biocpkg("RexMS")` is based on many other packages and in particular in those that have implemented the infrastructure needed for dealing with RNA-seq data (EDIT!). That is, packages like `r Biocpkg("SummarizedExperiment")` (EDIT!).
+`r Biocpkg("RexMS")` is based on many other packages 
+and in particular in those that have 
+implemented the infrastructure needed for dealing with protein structure. 
+That is, packages like `r Biocpkg("Bio3D")`.
 
-If you are asking yourself the question "Where do I start using Bioconductor?" you might be interested in [this blog post](http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU).
+If you are asking yourself the question "Where do I start using Bioconductor?"
+you might be interested in 
+[this blog post](http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU).
+
+We expect you to have a working understanding of HDX-MS and its application.
+Verifying your data is important as `r Biocpkg("RexMS")` won't fix problem with
+data acquisition or poor experiment design. If you run into problem using
+`r Biocpkg("RexMS")` first check syntex of your command but also the data.
 
 ## Asking for help
 
-As package developers, we try to explain clearly how to use our packages and in which order to use the functions. But `R` and `Bioconductor` have a steep learning curve so it is critical to learn where to ask for help. The blog post quoted above mentions some but we would like to highlight the [Bioconductor support site](https://support.bioconductor.org/) as the main resource for getting help: remember to use the `RexMS` tag and check [the older posts](https://support.bioconductor.org/tag/RexMS/). Other alternatives are available such as creating GitHub issues and tweeting. However, please note that if you want to receive help you should adhere to the [posting guidelines](http://www.bioconductor.org/help/support/posting-guide/). It is particularly critical that you provide a small reproducible example and your session information so package developers can track down the source of the error.
+As package developers, we try to explain clearl
+y how to use our packages and in which order to use the functions.
+But `R` and `Bioconductor` have a steep learning curve so it is critical
+to learn where to ask for help. The blog post quoted above mentions some
+but we would like to highlight the
+[Bioconductor support site](https://support.bioconductor.org/) as the main
+resource for getting help: remember to use the `RexMS` tag and
+check [the older posts](https://support.bioconductor.org/tag/RexMS/). Other
+alternatives are available such as creating GitHub issues and tweeting. However,
+please note that if you want to receive help you should adhere to the [posting guidelines](http://www.bioconductor.org/help/support/posting-guide/). It is
+particularly critical that you provide a small reproducible example
+and your session information so package developers can track down 
+the source of the error.
 
 ## Citing `RexMS`
 
@@ -91,7 +129,6 @@ citation("RexMS")
 library("RexMS")
 ```
 
-Edit this as you see fit =)
 
 Here is an example of you can cite your package inside the vignette:
 
@@ -141,6 +178,13 @@ totalTime <- diff(c(startTime, Sys.time()))
 round(totalTime, digits = 3)
 ```
 
+
+
+
+
+
+
+
 `R` session information.
 
 ```{r reproduce3, echo=FALSE}
@@ -155,7 +199,8 @@ session_info()
 # Bibliography
 
 This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
-with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and
+`r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
 
 Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
 

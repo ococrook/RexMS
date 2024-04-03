@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(ReX)
+library(RexMS)
 
-test_check("ReX")
+test_check("RexMS")
