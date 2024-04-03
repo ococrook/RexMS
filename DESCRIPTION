@@ -1,6 +1,6 @@
 Package: RexMS
 Title: Residue-level statistical analysis of HDX-MS data
-Version: 0.99.1
+Version: 0.99.2
 Date: 2024-03-04
 Authors@R: 
     person("Oliver", "Crook", , "oliver.crook@stats.ox.ac.uk", role = c("aut", "cre"),

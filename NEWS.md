@@ -1,3 +1,8 @@
+# RexMS 0.99.2
+
+* change package name
+* attempt to fix github actions
+
 # Rex-MS 0.99.1
 
 * change package name
