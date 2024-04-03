@@ -44,13 +44,27 @@ env:
 
 jobs:
 
-  clear:
-    name: Clear cache
+  clear-cache:
     runs-on: ubuntu-latest
     steps:
-    - uses: MyAlbum/purge-cache@v1
-      with:
-      max-age: 1 # Cache max 7 days since last use (this is the default)
+      - name: Clear cache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log("About to clear")
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            for (const cache of caches.data.actions_caches) {
+              console.log(cache)
+              github.rest.actions.deleteActionsCacheById({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                cache_id: cache.id,
+              })
+            }
+            console.log("Clear completed")
 
   build-check:
     runs-on: ${{ matrix.config.os }}
