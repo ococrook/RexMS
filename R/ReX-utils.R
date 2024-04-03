@@ -12,7 +12,7 @@
 ##'
 ##' @export
 prepareIndexes <- function(res) {
-    stopifnot("res must be a DataFrame" = is(HdxData, "DFrame"))
+    stopifnot("res must be a DataFrame" = is(res, "DFrame"))
 
 
     index <- vector(mode = "list", length = length(unique(res$Sequence)))
@@ -42,7 +42,7 @@ prepareIndexes <- function(res) {
 ##'
 ##' @export
 maxUptakes <- function(res) {
-  stopifnot("res must be a DataFrame" = is(HdxData, "DFrame"))
+  stopifnot("res must be a DataFrame" = is(res, "DFrame"))
 
     .out <- vapply(seq_along(unique(res$Sequence)),
         function(z) res$MaxUptake[res$Sequence == unique(res$Sequence)[z]][1],
@@ -67,7 +67,7 @@ maxUptakes <- function(res) {
 ##'
 ##' @export
 coverageHeatmap <- function(res, plot = TRUE) {
-  stopifnot("res must be a DataFrame" = is(HdxData, "DFrame"))
+  stopifnot("res must be a DataFrame" = is(res, "DFrame"))
 
     # Get the maximum residue number
     R <- max(res$End)
@@ -119,7 +119,7 @@ coverageHeatmap <- function(res, plot = TRUE) {
 ##'
 ##'
 cleanHDX <- function(res, clean = TRUE) {
-  stopifnot("res must be a DataFrame" = is(HdxData, "DFrame"))
+  stopifnot("res must be a DataFrame" = is(res, "DFrame"))
 
     # define the needed columns
     neccessaryColumns <- c("State", "Sequence", "Start", "End", "MaxUptake", "Exposure", "replicate", "Uptake")
