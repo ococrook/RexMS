@@ -126,7 +126,7 @@ The 'ReX' function generates the sample from the joint posterior distribution
 summary data for further analysis and visualisation
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 data("BRD4_apo")
 BRD4_apo <- BRD4_apo \%>\% filter(End < 40)

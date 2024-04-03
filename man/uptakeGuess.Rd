@@ -30,7 +30,7 @@ Function to help find good initial parameters by guessing the initial uptake
 using a generalised inverse appraoach
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 data(BRD4_apo)
 

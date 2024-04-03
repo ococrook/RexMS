@@ -22,7 +22,7 @@ Returns a ggplot object
 Rex butterfly plots for differential analysis
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 require(ggplot2)
 

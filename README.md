@@ -1,38 +1,38 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ReX
+# RexMS
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Bioc release
-status](http://www.bioconductor.org/shields/build/release/bioc/ReX.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/ReX)
+status](http://www.bioconductor.org/shields/build/release/bioc/RexMS.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/RexMS)
 [![Bioc devel
-status](http://www.bioconductor.org/shields/build/devel/bioc/ReX.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/ReX)
+status](http://www.bioconductor.org/shields/build/devel/bioc/RexMS.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/RexMS)
 [![Bioc downloads
-rank](https://bioconductor.org/shields/downloads/release/ReX.svg)](http://bioconductor.org/packages/stats/bioc/ReX/)
+rank](https://bioconductor.org/shields/downloads/release/RexMS.svg)](http://bioconductor.org/packages/stats/bioc/RexMS/)
 [![Bioc
-support](https://bioconductor.org/shields/posts/ReX.svg)](https://support.bioconductor.org/tag/ReX)
+support](https://bioconductor.org/shields/posts/RexMS.svg)](https://support.bioconductor.org/tag/RexMS)
 [![Bioc
-history](https://bioconductor.org/shields/years-in-bioc/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
+history](https://bioconductor.org/shields/years-in-bioc/RexMS.svg)](https://bioconductor.org/packages/release/bioc/html/RexMS.html#since)
 [![Bioc last
-commit](https://bioconductor.org/shields/lastcommit/devel/bioc/ReX.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/ReX/)
+commit](https://bioconductor.org/shields/lastcommit/devel/bioc/RexMS.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/RexMS/)
 [![Bioc
-dependencies](https://bioconductor.org/shields/dependencies/release/ReX.svg)](https://bioconductor.org/packages/release/bioc/html/ReX.html#since)
-[![R-CMD-check-bioc](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml)
+dependencies](https://bioconductor.org/shields/dependencies/release/RexMS.svg)](https://bioconductor.org/packages/release/bioc/html/RexMS.html#since)
+[![R-CMD-check-bioc](https://github.com/ococrook/RexMS/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/ococrook/RexMS/actions/workflows/R-CMD-check-bioc.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/ReX?branch=devel)
+coverage](https://codecov.io/gh/ococrook/RexMS/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/ococrook/RexMS?branch=devel)
 <!-- badges: end -->
 
-The goal of `ReX` is to analyse hydrogen deuterium exchange mass
+The goal of `RexMS` is to analyse hydrogen deuterium exchange mass
 spectrometry (HDX-MS) data at the residue level. The package is designed
 to be used with data from various platforms that have already been
-process at Spectrum-level. `ReX` takes the processed peptide-level data
-and infers the residue level deuterium uptake. The underlying model is a
-Bayesian non-parametric model that recasts HDX-MS data analysis as a
-(latent) change-point detection problem. The unique benefits of this
+process at Spectrum-level. `RexMS` takes the processed peptide-level
+data and infers the residue level deuterium uptake. The underlying model
+is a Bayesian non-parametric model that recasts HDX-MS data analysis as
+a (latent) change-point detection problem. The unique benefits of this
 model are the following: (1) It can provide statistical confidence at
 the level of residues (e.g. a probability of change) (2) Borrow
 statistical power from overlapping peptides (3) Infer uptakes patterns
@@ -47,7 +47,7 @@ needs.
 ## Installation instructions
 
 Get the latest stable `R` release from
-[CRAN](http://cran.r-project.org/). Then install `ReX` from
+[CRAN](http://cran.r-project.org/). Then install `RexMS` from
 [Bioconductor](http://bioconductor.org/) using the following code:
 
 Note that you cannot currently install from Bioconductor
@@ -57,10 +57,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
-BiocManager::install("ReX")
+BiocManager::install("RexMS")
 ```
 
-To install the development version of `ReX`, it’s easiest to use the
+To install the development version of `RexMS`, it’s easiest to use the
 `remotes` package.
 
 ``` r
@@ -68,17 +68,17 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
     install.packages("remotes")
 }
 
-remotes::install_github("ococrook/ReX")
+remotes::install_github("ococrook/RexMS")
 ```
 
 ## Example
 
-ReX has structure visualisation at part of its core functionality. Below
-is an example of how to use the `hdx_to_pdb_colours` function to map
-HDX-MS data onto a PDB file.
+RexMS has structure visualisation at part of its core functionality.
+Below is an example of how to use the `hdx_to_pdb_colours` function to
+map HDX-MS data onto a PDB file.
 
 ``` r
-library("ReX")
+library("RexMS")
 library(NGLVieweR)
 
 # generate random HDX data
@@ -88,7 +88,7 @@ colnames(v) <- seq.int(ncol(v)) # residue numbering
 v2 <- v[, seq.int(344, 477), drop = FALSE]
 colnames(v2) <- seq.int(ncol(v2))
 
-pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE, package = "ReX")
+pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE, package = "RexMS")
 
 # generate a protection-deprotection colour mapping
 mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath, cmap_name = "ProtDeprot")
@@ -109,12 +109,12 @@ not be the same as the output you will see.
 
 ## Citation
 
-Below is the citation output from using `citation('ReX')` in R. Please
-run this yourself to check for any updates on how to cite **ReX**.
+Below is the citation output from using `citation('RexMS')` in R. Please
+run this yourself to check for any updates on how to cite **RexMS**.
 
 ``` r
-print(citation("ReX"), bibtex = TRUE)
-#> To cite package 'ReX' in publications use:
+print(citation("RexMS"), bibtex = TRUE)
+#> To cite package 'RexMS' in publications use:
 #> 
 #>   ococrook (2024). _Inferring residue level hydrogen deuterium exchange
 #>   with ReX_. doi:10.18129/B9.bioc.ReX
@@ -150,14 +150,14 @@ print(citation("ReX"), bibtex = TRUE)
 #>   }
 ```
 
-Please note that the `ReX` was only made possible thanks to many other R
-and bioinformatics software authors, which are cited either in the
+Please note that the `RexMS` was only made possible thanks to many other
+R and bioinformatics software authors, which are cited either in the
 vignettes and/or the paper(s) describing this package.
 
 ## Code of Conduct
 
-Please note that the `ReX` project is released with a [Contributor Code
-of Conduct](http://bioconductor.org/about/code-of-conduct/). By
+Please note that the `RexMS` project is released with a [Contributor
+Code of Conduct](http://bioconductor.org/about/code-of-conduct/). By
 contributing to this project, you agree to abide by its terms.
 
 ## Development tools
@@ -169,7 +169,7 @@ contributing to this project, you agree to abide by its terms.
   *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)* customized
   to use [Bioconductor’s docker
   containers](https://www.bioconductor.org/help/docker/) and
-  *[BiocCheck](https://bioconductor.org/packages/3.17/BiocCheck)*.
+  *[BiocCheck](https://bioconductor.org/packages/3.18/BiocCheck)*.
 - Code coverage assessment is possible thanks to
   [codecov](https://codecov.io/gh) and
   *[covr](https://CRAN.R-project.org/package=covr)*.
@@ -182,4 +182,4 @@ contributing to this project, you agree to abide by its terms.
 For more details, check the `dev` directory.
 
 This package was developed using
-*[biocthis](https://bioconductor.org/packages/3.17/biocthis)*.
+*[biocthis](https://bioconductor.org/packages/3.18/biocthis)*.

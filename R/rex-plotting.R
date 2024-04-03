@@ -7,7 +7,7 @@
 ##' @md
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 
@@ -146,7 +146,7 @@ plotVolcano <- function(diff_params,
 ##' @md
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 
@@ -288,7 +288,7 @@ plotButterfly <- function(diff_params,
 ##' @md
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 
@@ -373,7 +373,7 @@ plotTimeAveragedButterfly <- function(diff_params,
 ##' @return Returns a ggplot object
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 
@@ -460,7 +460,7 @@ plotResidueResolution <- function(rex_params,
 ##' @return Returns a pheatmap object 
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##'
 ##' data("BRD4_apo")
@@ -515,7 +515,7 @@ plotPeptideError <- function(rex_params,
 ##' 
 ##' 
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 
@@ -576,7 +576,7 @@ plotLogLikelihoods <- function(rex_params){
 ##' 
 ##' @examples
 ##' 
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' require(ggplot2)
 ##' 

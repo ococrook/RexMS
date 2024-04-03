@@ -48,7 +48,7 @@
 ##' @return `Rex` returns an object of class `RexParams` containing the results
 ##' @md
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' data("BRD4_apo")
 ##' BRD4_apo <- BRD4_apo %>% filter(End < 40)
@@ -197,7 +197,7 @@ rex <- function(HdxData,
 ##' @return An object of class `RexParams` with its summary slot populated
 ##'
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' data("BRD4_apo")
 ##' BRD4_apo <- BRD4_apo %>% filter(End < 40)

@@ -20,7 +20,7 @@ Returns a ggplot object
 Rex volcano plots for differential analysis
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 require(ggplot2)
 

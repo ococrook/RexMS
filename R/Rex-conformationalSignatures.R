@@ -611,6 +611,7 @@ sampleTREuncertainty <- function(HdxData,
                           whichChain = whichChain,
                           whichSamples = whichSamples,
                           num_montecarlo = num_montecarlo))
+  R <- max(HdxData$End)
   
   df <- vector(mode = "list", length = length(RexParamsList))
   for (i in seq_along(out_sample_uncertainty)){
@@ -670,7 +671,7 @@ plotTREuncertainty <- function(df_all,
                                states,
                                whichSamples = seq.int(1, 50)){
   ## Create coordinates
-  d = 2
+  d <- 2
   dims <- c(1,2)
   coords <- matrix(NA, nrow = length(states), ncol = 2)
   res0 <- pca_states
@@ -770,7 +771,7 @@ plotTREuncertaintyLoadings <- function(df_all,
                                        whichSamples = seq.int(1, 50)){
   
   ## Create coordinates
-  d = 2
+  d <- 2
   dims <- c(1,2)
   coords <- matrix(NA, nrow = length(states), ncol = 2)
   res0 <- pca_states

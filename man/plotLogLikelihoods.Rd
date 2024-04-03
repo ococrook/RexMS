@@ -16,7 +16,7 @@ Returns a ggplot object
 plot loglikelihoods across chains
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 require(ggplot2)
 

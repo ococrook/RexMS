@@ -95,7 +95,7 @@ initialiser <- function(uptake_guess,
 ##' @return A matrix of intial uptake guesses
 ##'
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' data(BRD4_apo)
 ##'

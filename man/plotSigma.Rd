@@ -17,7 +17,7 @@ plot sigmas across chains
 }
 \examples{
 
-require(ReX)
+require(RexMS)
 require(dplyr)
 require(ggplot2)
 

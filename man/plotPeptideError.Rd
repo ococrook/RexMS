@@ -21,7 +21,7 @@ Returns a pheatmap object
 Plot Peptide level error rates
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 
 data("BRD4_apo")

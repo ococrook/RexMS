@@ -129,7 +129,7 @@ define_color_function <- function(dataset,
 ##' colnames(v2) <- seq.int(ncol(v2)) 
 ##' 
 ##' pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE,
-##'  package = "ReX")
+##'  package = "RexMS")
 ##'
 ##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath,
 ##'  cmap_name = "ProtDeprot")
@@ -216,7 +216,7 @@ hdx_to_pdb_colours <- function(dataset,
 ##' colnames(v2) <- seq.int(ncol(v2)) 
 ##' 
 ##' pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE,
-##'  package = "ReX")
+##'  package = "RexMS")
 ##'
 ##' mycolor_parameters <- hdx_to_pdb_colours(v2, pdb = pdb_filepath,
 ##'  cmap_name = "ProtDeprot")

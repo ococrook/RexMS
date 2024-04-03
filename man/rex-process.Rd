@@ -30,7 +30,7 @@ An object of class \code{RexParams} with its summary slot populated
 proccess Rex results
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 data("BRD4_apo")
 BRD4_apo <- BRD4_apo \%>\% filter(End < 40)

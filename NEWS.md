@@ -1,3 +1,8 @@
+# Rex-MS 0.99.1
+
+* change package name
+* stable release of github.io website
+
 # ReX 0.99.0
 
 NEW FEATURES

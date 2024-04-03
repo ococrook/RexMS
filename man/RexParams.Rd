@@ -143,7 +143,7 @@ can be accessed with the \code{chains()} function. A summary of the \code{RexCha
 (or class \code{RexSummary}) can be further computed with the \code{RexProcess}
 function.
 
-see the \emph{Rex-MS} vignette for examples
+see the \emph{RexMS} vignette for examples
 }
 \section{Slots}{
 

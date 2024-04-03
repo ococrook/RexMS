@@ -36,7 +36,7 @@ timepoint represnting uncertainty in the distribution
 Function to obtain uncertainty estimates for the total relative error (TRE)
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 data(BRD4_apo)
 data(BRD4_ibet)

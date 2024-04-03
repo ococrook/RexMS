@@ -58,7 +58,7 @@
 ##' (or class `RexSummary`) can be further computed with the `RexProcess`
 ##' function.
 ##'
-##' see the *Rex-MS* vignette for examples
+##' see the *RexMS* vignette for examples
 ##' @title Infrastructure to to store and process MCMC results
 ##'
 ##' @slot method A `character()` storing the Rex method name

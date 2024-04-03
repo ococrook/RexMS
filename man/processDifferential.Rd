@@ -28,7 +28,7 @@ Functions for differential analysis of HDX-MS data
 }
 \examples{
 
-require(ReX)
+require(RexMS)
 require(dplyr)
 data(BRD4_apo)
 data(BRD4_ibet)

@@ -20,7 +20,7 @@ Returns a ggplot object
 Plot Residue level error rates to identify points where modelling is poor
 }
 \examples{
-require(ReX)
+require(RexMS)
 require(dplyr)
 require(ggplot2)
 

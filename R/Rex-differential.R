@@ -14,7 +14,7 @@
 ##'
 ##' @examples
 ##'
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' data(BRD4_apo)
 ##' data(BRD4_ibet)
@@ -223,7 +223,7 @@ EFDR <- function(prob, threshold = 0.90) {
 ##' timepoint represnting uncertainty in the distribution
 ##'
 ##' @examples
-##' require(ReX)
+##' require(RexMS)
 ##' require(dplyr)
 ##' data(BRD4_apo)
 ##' data(BRD4_ibet)
