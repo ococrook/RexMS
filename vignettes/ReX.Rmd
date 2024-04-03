@@ -134,6 +134,58 @@ Here is an example of you can cite your package inside the vignette:
 
 * `r Biocpkg("RexMS")` `r Citep(bib[["RexMS"]])`
 
+Let's start with a simple use cases for `r Biocpkg("RexMS")`. We have a protein
+with peptide-level HDX-MS data and we wish to gain more granular information
+about the HDX pattern at the level of individual residues. We can use RexMS to
+perform this analysis. Let's first load some simple HDX-MS data from the 
+package.
+
+```{r "simple"}
+library(dplyr)
+
+data("BRD4_apo")
+BRD4_apo
+```
+
+The data is a data frame with the following columns:
+
+```{r,}
+colnames(BRD4_apo)
+```
+
+The data must contain the following columns: 
+
+"State",
+"Sequence",
+"Start",
+"End",
+"MaxUptake",
+"Exposure",
+"replicate",
+"Uptake"
+
+The function `cleanHDX` can be used to clean the data and remove any missing values
+but also check that all the required columns exist. The function will output an
+error if this simple check fails. The RexMS package needs you to convert
+data to a `DataFrame` object.
+
+```{r "clean"}
+BRD4_apo <- DataFrame(BRD4_apo)
+
+BRD4_apo <- cleanHDX(res = BRD4_apo, clean = TRUE)
+
+```
+
+The data is now ready to take a closer look. Be careful at this point you
+may have lost a large number of peptidesif you had lots of missing values.
+At this point it will be useful to check the redundancy of the data. The
+following code chunk will perform heatmap of the peptide map.
+
+```{r "heatmap"}
+
+C <- coverageHeatmap(res = BRD4_apo)
+```
+
 
 
 # Reproducibility
