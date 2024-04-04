@@ -120,12 +120,18 @@ data mapped onto it. The colouring is based on the
 protection-deprotection scale.The following image is indicative and may
 not be the same as the output you will see.
 
-<figure>
-<img src="man/figures/pdb_hdx.png"
-alt="An example figure generated from the RexMS package" />
-<figcaption aria-hidden="true">An example figure generated from the
-RexMS package</figcaption>
-</figure>
+![An example figure generated from the RexMS
+package](man/figures/pdb_hdx.png) \## Shiny Application
+
+You may be interested in interesting ways to display your data or
+interact with our results. Here are links to some shiny applications
+that use `RexMS`:
+
+<https://olivercrook.shinyapps.io/BRD4-ReX/>
+
+and
+
+<https://olivercrook.shinyapps.io/ConformationalSignatureAnalysis/>
 
 ## Citation
 
@@ -139,7 +145,7 @@ print(citation("RexMS"), bibtex = TRUE)
 #>   ococrook (2024). _Inferring residue level hydrogen deuterium exchange
 #>   with ReX_. doi:10.18129/B9.bioc.ReX
 #>   <https://doi.org/10.18129/B9.bioc.ReX>,
-#>   https://github.com/ococrook/ReX/ReX - R package version 0.99.0,
+#>   https://github.com/ococrook/ReX/ReX - R package version 0.99.2,
 #>   <http://www.bioconductor.org/packages/ReX>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -149,7 +155,7 @@ print(citation("RexMS"), bibtex = TRUE)
 #>     author = {{ococrook}},
 #>     year = {2024},
 #>     url = {http://www.bioconductor.org/packages/ReX},
-#>     note = {https://github.com/ococrook/ReX/ReX - R package version 0.99.0},
+#>     note = {https://github.com/ococrook/ReX/ReX - R package version 0.99.2},
 #>     doi = {10.18129/B9.bioc.ReX},
 #>   }
 #> 

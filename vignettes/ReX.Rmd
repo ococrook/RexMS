@@ -100,8 +100,8 @@ data acquisition or poor experiment design. If you run into problem using
 
 ## Asking for help
 
-As package developers, we try to explain clearl
-y how to use our packages and in which order to use the functions.
+As package developers, we try to explain clearly how to use our packages
+and in which order to use the functions.
 But `R` and `Bioconductor` have a steep learning curve so it is critical
 to learn where to ask for help. The blog post quoted above mentions some
 but we would like to highlight the
@@ -164,6 +164,8 @@ The data must contain the following columns:
 "replicate",
 "Uptake"
 
+If you only have 1 replicate you can simply set `1` for this column. 
+
 The function `cleanHDX` can be used to clean the data and remove any missing values
 but also check that all the required columns exist. The function will output an
 error if this simple check fails. The RexMS package needs you to convert
@@ -176,16 +178,307 @@ BRD4_apo <- cleanHDX(res = BRD4_apo, clean = TRUE)
 
 ```
 
+If you do not have a `MaxUptake` column you can use the following function. You
+may need to use the `rep` function to repeat for time points.
+
+```{r,}
+maxUptakes(BRD4_apo)
+```
+
+
 The data is now ready to take a closer look. Be careful at this point you
-may have lost a large number of peptidesif you had lots of missing values.
+may have lost a large number of peptides if you had lots of missing values.
 At this point it will be useful to check the redundancy of the data. The
-following code chunk will perform heatmap of the peptide map.
+following code chunk will perform heatmap of the peptide map. As we can see
+from the peptide below, there are two regions that are well convered linked
+by a region that is not well covered. This is a common problem in HDX-MS
+as the region between the two tandem bromodomains is proline rich and hence
+not amenable to standard digestion.
 
 ```{r "heatmap"}
 
 C <- coverageHeatmap(res = BRD4_apo)
 ```
 
+To simplify the analysis, we only examine the first 100 residues of the protein.
+This will speed up the results in this vignette. Furthermore, we would recommend
+analysis the bromodomains separately.
+
+```{r "subset"}
+BRD4_apo <- data.frame(BRD4_apo) %>% filter(End < 100)
+```
+
+Rex requires you to switch make to a `DataFrame` if you used the last line
+
+```{r,}
+BRD4_apo <- DataFrame(BRD4_apo)
+```
+
+The next step is to calculate some simple quantities from the data. The first
+is the number of timepoints, the second the numerical values of the timepoints
+and the number of peptides in the analysis.
+
+```{r,}
+numTimepoints <- length(unique(BRD4_apo$Exposure))
+Timepoints <- unique(BRD4_apo$Exposure)
+numPeptides <- length(unique(BRD4_apo$Sequence))
+```
+
+We already at the point were we can apply Rex to the data. The first step is to
+understand the necessary components of the `rex` function. The `rex` function
+has a lot of possible arguments which are explain in the documentation. The most 
+important are the following
+
+- `HdxData` which is the DataFrame containing the HDX-MS data.
+- `numIter` which is the number of iterations to run the algorithm. Typically 
+this will be in the thousands - 5000 would be reasonable but is 100 below to 
+speed up the algorithm.
+- `R` which is the maximum residue number in the protein.
+- `numtimepoints` which is the number of timepoints in the data.
+- `timepoints` which is the numerical values of the timepoints.
+- `seed` which is the seed for the random number generator.
+- `tCoef` which is the coefficients for the timepoints. This account for the 
+fact that the variance at the 0 timepoint might be 0 (measured without error).
+This value is multiplied by the variance across timepoints to scale the variance.
+We recommend that the first value is 0 and the rest are 1. However, if you have
+a good reason to change this value you can do so.
+- `BPPARAM` which is the parallel backend to use. We recommend using the `BiocParallel`
+package and the `SerialParam` function. This will allow you to run the algorithm
+in parallel on a single machine. If you have multiple cores available you can 
+run the algorithm in parrallel to speed up the analysis. To do this use
+the `bpparam()` function from the `BiocParallel` package. This will allow you to 
+register the default backend. For more advanced approaches you can see the
+`BiocParallel` documentation.
+- `numChains` which is the number of chains to run in the algorithm. We recommend
+running at least 2 chains, which is the default. This will allow you to check
+the convergence of the algorithm. If the chains do not converge you can
+increase the number of chains and/or the number of iterations.
+
+
+The less important parameters are the following but still worth knowing about:
+
+- `density` which is the density of the likelihood function, whilst `Gaussian` is
+the default we have found better results when using the `laplace` density. These
+are the only two options available.
+- `R_lower` which is the lower bound of the residues to consider. This is useful
+if you have a protein with a signal peptide or a tag that you do not want to
+consider in the analysis. Or you have a construct starting at a residue other
+than 1.
+- `R_upper` which is the upper bound of the residues to consider. This is useful
+if you want to contrain the analysis to a specific region of the protein.
+- `priors` which is the priors for the analysis. This list is elaborated on later
+and we refer to manuscript for more details. We dont recommend changing this
+unless you have a good reason to do so.
+- `phi` this is the max uptake you allow per residue in the analysis. This might
+be the deuterium content of the buffer or the maximum uptake you expect to see.
+- `init_param` this is the parameter that used to help initialise the algorithm.
+The default is `d`. This is mostly for development purposes and we recommend
+leaving this as the default.
+
+Now, you can run the algorithm. The following code chunk will run the algorithm
+on the data. The algorithm will take a few minutes to run. The algorithm
+may output a warning about a package not being available, you can safely
+ignore this warning.
+
+We typically recommend running a short number of iterations first to check 
+how long the analysis will take and then running the full analysis. 
+
+
+```{r "apply Rex", cache=TRUE}
+set.seed(1)
+rex_test <- rex(HdxData = BRD4_apo,
+                numIter = 100,
+                R = max(BRD4_apo$End), 
+                density = "laplace",
+                numtimepoints = numTimepoints,
+                timepoints = Timepoints,
+                seed = 1L,
+                tCoef = c(0, rep(1, numTimepoints - 1)),
+                phi = 1,
+                BPPARAM = SerialParam())
+
+```
+Once the algorithm has finished running you can view the results. First, note
+that `rex` produces an object of type `RexParams`. Just printing the object
+will give you a summary of the object. 
+
+
+```{r,}
+rex_test
+```
+
+The object contains the following slots:
+
+- `interval` which is the interval of the analysis. This is the interval
+of the residues that were analysed.
+- `chains` which stores all the MCMC iterations of the analysis
+- `summary` which is a summary of the chains and the most interesting for 
+user. It is currently empty
+- `seed` which is the seed used in the analysis.
+- `priors` which are the priors used in the analysis.
+- `method` which is the method used in the analysis. This will be `ReX` and is
+used to track development of the package.
+
+We do not recommend access the slots directly but if you are interested you can
+use the `@` . For example:
+
+```{r,}
+rex_test@interval
+```
+
+The summary slot is currently empty as it has not yet been processed. The 
+function `RexProcess` takes a number of arguments and will populate the `summary`
+slot. The most important arguments are the following:
+
+- `HdxData` which is the DataFrame containing the HDX-MS data.
+- `params` which is the `RexParams` object produced by the `rex` function.
+- `range` which is the range of MCMC iterations to consider.
+This is useful if you want to remove the burn-in period of the MCMC chain.
+- `thin` which is the thinning of the MCMC chain. This is useful if you want
+to reduce the size of the MCMC chain. A thin equal to 1 will keep all the 
+iterations. A thin equal to 5 will keep every 5th iteration. 
+- `whichChains` which is the chains to consider. This is useful if you want to
+consider only a subset of the chains. The default is to consider the first two 
+chains. You may wish to remove unconverged chains.
+
+
+```{r,}
+rex_test <- RexProcess(HdxData = DataFrame(BRD4_apo), 
+                        params = rex_test,
+                        range = 50:100,
+                        thin = 1,
+                        whichChains = c(1,2))
+
+```
+
+
+The `summary` slot is now populated and you can view the results. We breifly
+access the slot using `@` to show the results but again we recommend using
+accessor functions.
+
+```{r,}
+rex_test@summary
+
+```
+A number of functions are available to access the results. The first
+is `Rex.globals` which will give you access to the model log likelihood and the
+sigma parameter which is a measure of the variance of the data. The lower the 
+value of sigma the more resolved tha data is. The model likelihood is a measure
+of how well the model fits the data. The higher the value the better the fit.
+As we can see from the results below in the first chain the model has fit better
+but the results between the two chains a similar. We suggest to examine this
+first to check that the chains are behaving similarly.
+
+```{r,}
+Rex.globals(rex_test)
+```
+We next consider the peptide error distribution. This allows us to understand
+the modelling error for each peptide. The function `Rex.peptideError` will
+give you the error distribution for each peptide i.e. the residual of the fitted
+model. This benifit here is two fold. First, making sure that the 
+model is performing well and secondly any peptides that may have data that
+is inconsistent
+
+
+```{r,}
+Rex.peptideError(rex_test)
+
+```
+We can produce a heatmap to quickly examine the residuals. The heatmap show
+some important features. First, there is a mixture of `blue` and `red` suggesting
+that the model is not biased. If the heatmap is completely red or blue this
+indicates some modelling issue. Secondly, the heatmap shows that the errors
+are larger for longer peptides. This is expected as the model is more uncertain
+about the uptake of longer peptides and the model allows for this is part of
+the fitting. The errors will also reduce by running the algorithm for more
+iterations. We suggest reporting this figure in manuscript or supplementary 
+material.
+
+
+```{r,}
+plotPeptideError(rex_test)
+
+```
+It maybe informative view the results in a different way by scaling the
+error with peptide length. This will allow you to see if the error is
+proportional to the length of the peptide. This is useful as the model
+is more uncertain about the uptake of longer peptides. This gives a different
+view of the data and suggest that error are mostly 10% of the uptake values but
+it some cases close to 20%.
+
+```{r,}
+plotPeptideError(HdxData = BRD4_apo,
+                 rex_params = rex_test,
+                 relative = TRUE)
+
+
+
+```
+The next step is to examine the residue error distribution. This allows us to
+gain a more granular understanding of the error distribution. The function
+`Rex.resolution` will give you the error distribution for each residue. This 
+completements the global resolution metric sigma and the peptide level error metrics
+
+
+```{r,}
+Rex.resolution(rex_test)
+```
+
+To visualise these results, we can use the following function. This will
+allow us to quickly examine the results. We suggest not be cautious of 
+data outside of 3*sqrt(sigma) as the model is likely struggling or yet to have
+converged at this point. As we can see the error distribution is very
+high at around residue 68. This corresponds to the peptide which had high
+error at peptide-level error distribution. This is expected and the model
+is correctly reporting where it is struggling to model that data either because
+of lack of convergence or the data is unusual at the point.
+
+```{r, fig.height=8}
+# calculate a threshold for the data
+sqrt(Rex.globals(rex_test)$sigma)*3
+
+# virualise the residue errors
+plotResidueResolution(rex_test, nrow  =5)
+
+```
+
+Further analysis of `rex` outputs is possible. In the diagnostics slots
+of the `RexSummary` object, we get an estimator of convergence using parrallel
+chains. We recommend running iterations until the estimate is below 1.2 with 
+results closer to 1 being generally more stable.
+
+```{r,}
+rex_test@summary@diagnostics
+```
+
+You can plot both sigma and the model log likelihood as a function of iterations
+to diagnose convergence issues. The plots below show that sigma is still decreasing
+and the log likelihood still increasing but the chains are tracking each other 
+well. We note that all (except heatmaps) are object from `ggplot` and so you
+can customise them using gramamatical construction in the same way as
+ggplot.
+
+```{r,}
+
+plotSigma(rex_test)
+plotLogLikelihoods(rex_test)
+
+# example costumisation
+library(ggplot2)
+library(RColorBrewer)
+plotSigma(rex_test) + scale_colour_manual(values = brewer.pal(n = 3, name = "Pastel1"))
+
+```
+The `posteriorEstimates` for the parameters and their 95% confidence can be 
+found using the following accessors
+
+```{r,}
+posteriorEstimates(rex_test)
+Rex.quantiles(rex_test)
+colnames(Rex.quantiles(rex_test))
+```
+
+<!-Need to write a function to output uptake and uncertainty with plots->
 
 
 # Reproducibility

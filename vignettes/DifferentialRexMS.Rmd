@@ -1,0 +1,361 @@
+---
+title: "Differential HDX-MS with RexMS"
+author: 
+  - name: Oliver Crook
+    affiliation:
+    - University of Oxford
+    email: ococrook@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('RexMS')`"
+vignette: >
+  %\VignetteIndexEntry{Differential HDX-MS with RexMS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html
+)
+```
+
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## Track time spent on making the vignette
+startTime <- Sys.time()
+
+## Bib setup
+library("RefManageR")
+
+## Write bibliography information
+bib <- c(
+    R = citation(),
+    BiocStyle = citation("BiocStyle")[1],
+    knitr = citation("knitr")[1],
+    RefManageR = citation("RefManageR")[1],
+    rmarkdown = citation("rmarkdown")[1],
+    sessioninfo = citation("sessioninfo")[1],
+    testthat = citation("testthat")[1],
+    RexMS = citation("RexMS")[1]
+)
+```
+
+
+# Introduction
+
+This vignette demonstrates how to use the `RexMS` package to perform 
+differential HDX-MS analysis. We recommend that you start with the introduction
+to RexMS vignette first so that you cover the basics. We skip some of those
+initial steps here to focus on the aspects inmportant for differential analysis.
+
+# Loading data
+
+We will load the data from the `RexMS` package. This data is a subset of the 
+data used in the original publication and focuses on `BRD4` apo and in complex
+with I-BET151 both datasets are available as part of the package. Here, we 
+are interested in the changes in HD exchange as a results of ligand binding.
+To speed up the analysis we filter the data to only include the first 100
+residues and again calculate a number of valuable quantities.
+
+
+```{r load_data}
+require(RexMS)
+require(dplyr)
+
+data("BRD4_apo")
+data("BRD4_ibet")
+
+BRD4_apo <- BRD4_apo %>% filter(End < 100)
+BRD4_ibet <- BRD4_ibet %>% filter(End < 100)
+numTimepoints <- length(unique(BRD4_apo$Exposure))
+Timepoints <- unique(BRD4_apo$Exposure)
+numPeptides <- length(unique(BRD4_apo$Sequence))
+```
+
+We actually only need to run `rex` explicitly on condition we are primarily
+interested in e.g. 'ligand' vs 'apo', we can only need to model the first 
+dataset initially. If you swap the analysis around are start with `apo` first
+your results will be inverted (e.g. report protection instead of deprotection)
+as a consequence of the data. If you need to seperate our conditions from
+one `csv` file it maybe useful to use `filter(State == "my protein state")`,
+where `"my protein state"` would be replace by the state you wishes to extract
+from the data. The syntax is similar to the filter line used to extract
+the first 100 residues. 
+
+
+The following function will run the `rex` function on the data in the
+ligand bound state and then `RexProcess` will populate the object as in the 
+original analysis. Again we would recommend running this function for a much
+large number of iterations.
+
+```{r, cache = TRUE}
+set.seed(1)
+rex_ibet <- rex(HdxData = DataFrame(BRD4_ibet),
+                numIter = 100,
+                R = max(BRD4_ibet$End), 
+                numtimepoints = numTimepoints,
+                timepoints = Timepoints,
+                seed = 1L,
+                tCoef = c(0, rep(1, 5)),
+                BPPARAM = SerialParam())
+
+rex_ibet <- RexProcess(HdxData = DataFrame(BRD4_ibet), 
+                        params = rex_ibet,
+                        range = 50:100,
+                        thin = 1,
+                        whichChains = c(1,2))
+
+```
+
+We recommend checking the results as you would in the case of a single-protein
+analysis but to simplify the analysis we will skip this step here. We plot the
+sigmas and log-likelihoods for the ligand bound state below.
+
+```{r plot_results}
+library(ggplot2)
+plotSigma(rex_ibet)
+
+# zoom in on results a bit but adding the lim arguements
+plotLogLikelihoods(rex_ibet) + xlim(c(25,100)) + ylim(c(-500,-250))
+
+```
+To obtain differential results as compared to the apo (or some other state)
+use the following function carefully. In the `params` argument you want
+to pass the object that was created by the `rex` function for the ibet state. 
+In the `HdxData` argument you want to pass the data for the apo state (or the
+state you wish to compare to). The `whichChain` argument is used to specify
+which chain you are interested in using to calculate the differential results.
+Chain 1 had a higher log-likelihood in the ligand bound state so we will use
+this chain to calculate the differential results. 
+
+```{r,}
+rex_diff <- processDifferential(params = rex_ibet, 
+                                HdxData = DataFrame(BRD4_apo),
+                                whichChain = c(1))
+```
+
+This results in an object of class `RexDifferential` which has five slots:
+
+1. Rex.predictionError - the prediction error for the differential analysis at 
+the level of peptides
+2. Rex.estimates - the estimates for the differential analysis at the level of
+residues
+3. Rex.probs - the probabilities for the differential analysis at the level of
+residues
+4. Rex.eFDR - the estimated false discovery rate for the differential analysis
+at various probability thresholds.
+
+We can access these slots as follows and inspect the object
+
+```{r,}
+rex_diff
+Rex.predictionError(rex_diff)
+Rex.estimates(rex_diff)
+Rex.probs(rex_diff)
+Rex.eFDR(rex_diff)
+
+```
+
+
+
+We can plot the results for the differential analysis as follows. The following
+will produce a volcano plot of the results. The `nrow` argument specifies the
+number of row to facet over. The `quantity` argument specifies the quantity
+to plot on the y-axis. The options are `TRE`, or `ARE`. TRE account for the
+redundancy at the residue and so is the recommended option. As we can 
+see from the plot it is very simple to observe the generaly trend toward
+protection/stablisation as the small molecules binds to the protien it will
+reduce its flexibility.
+
+```{r plot_diff_results, fig.height=8}
+gg1 <- plotVolcano(diff_params = rex_diff,
+                   nrow = 5,
+                   quantity = "TRE")
+gg1
+```
+For the ARE:
+
+```{r plot_diff_results2, fig.height=8}
+
+gg2 <- plotVolcano(diff_params = rex_diff,
+                   nrow = 5,
+                   quantity = "ARE")
+gg2
+```
+To add in the spatial context we suggest a line/butterfly plot:
+
+```{r plot_diff_results3, fig.height=8}
+gg3 <- plotButterfly(diff_params = rex_diff,
+                     nrow = 5,
+                     quantity = "TRE")
+
+gg3
+gg3 <- plotButterfly(diff_params = rex_diff,
+                     nrow = 5,
+                     quantity = "signedARE")
+gg3
+
+```
+If you wish to average over time then we suggest using the following function.
+This will average the results over time and produce a line plot. This is usually
+a good way to see that some effects are time dependent and not supported at 
+all timepoints, whilst for some residues the effect is consistent across all
+timepoints.
+
+```{r,}
+gg4 <- plotTimeAveragedButterfly(diff_params = rex_diff)
+gg4
+```
+`RexMS` supports transferring these results to protien structures using the
+NGLVieweR package. This is a very powerful tool for visualising the results
+in the context of the protein structure. The following code will produce a
+plot of the protein structure with the residues coloured by the differential
+(TRE) results at 15 seconds. The `pdb_filepath` argument specifies the path
+to the pdb file. The `cmap_name` argument specifies the name of the colour
+map to use. The `v` argument specifies the values to use for the colouring.
+You must provide a local `pdb_filepath` to use this function it will not
+extract the pdb file from the internet. 
+
+
+```{r,}
+library(NGLVieweR)
+v <- matrix(Rex.estimates(rex_diff)$TRE_15, nrow = 1)
+colnames(v) <- seq.int(ncol(v))
+v2 <- v[,seq.int(1, 99), drop = FALSE]
+colnames(v2) <- seq.int(ncol(v2)) 
+
+# This complex line is used to get the path to the pdb file from the RexMS package
+# yours will probably look like
+# pdb_filepath <- "path/to/your/pdb/file.pdb"
+pdb_filepath <- system.file("extdata", "test_BRD4.pdb", mustWork = TRUE, package = "RexMS")
+
+mycolor_parameters <- hdx_to_pdb_colours(v2,
+                                         pdb = pdb_filepath,
+                                         cmap_name = "ProtDeprot")
+view_structure(pdb_filepath = pdb_filepath,
+               color_parameters = mycolor_parameters)
+```
+You can change the representation if you wish:
+
+```{r,}
+view_structure(pdb_filepath = pdb_filepath,
+               color_parameters = mycolor_parameters,
+               representation = "spacefill")
+```
+You can provide any values you would like to colour the structure by. For example
+using the timeaveraged probabilities.
+
+
+```{r,}
+v <- matrix(Rex.probs(rex_diff)$totalprobs, nrow = 1)
+colnames(v) <- seq.int(ncol(v))
+v2 <- v[,seq.int(1, 99), drop = FALSE]
+colnames(v2) <- seq.int(ncol(v2)) 
+
+mycolor_parameters <- hdx_to_pdb_colours(v2,
+                                         pdb = pdb_filepath,
+                                         cmap_name = "ProtDeprot")
+view_structure(pdb_filepath = pdb_filepath,
+               color_parameters = mycolor_parameters)
+
+
+```
+
+You can also use the `viridis` colour map if you wish and plot random colours.
+The things to remember carefully are match the residue numbering to your pdb
+file. If the residue numberings is not the same as the pdb file you will get
+incorrect results. This is typical when expressing a construct of a protein or
+the structure is only a small part of the protein.
+
+```{r,}
+require(viridis)
+# random colours
+v <- matrix(rnorm(100), nrow = 1)
+colnames(v) <- seq.int(ncol(v))
+v2 <- v[,seq.int(1, 99), drop = FALSE]
+colnames(v2) <- seq.int(ncol(v2)) 
+
+mycolor_parameters <- hdx_to_pdb_colours(v2,
+                                         pdb = pdb_filepath,
+                                         cmap_name = "viridis")
+view_structure(pdb_filepath = pdb_filepath,
+               color_parameters = mycolor_parameters)
+
+
+```
+
+This is the end of this tutorial if you have many states and perhaps even
+downstream functional outcomes you may wish to visit the next vignette
+which covers the ideas of a conformational signature analysis (CSA) where
+you can use unsupervised and supervised learning to characterise the states.
+
+
+
+# Reproducibility
+
+The `r Biocpkg("RexMS")` package `r Citep(bib[["RexMS"]])` was made possible thanks to:
+
+* R `r Citep(bib[["R"]])`
+* `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+* `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])`
+* `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`
+* `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
+* `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`
+* `r CRANpkg("testthat")` `r Citep(bib[["testthat"]])`
+
+This package was developed using `r BiocStyle::Biocpkg("biocthis")`.
+
+Date the vignette was generated.
+
+```{r reproduce1, echo=FALSE}
+## Date the vignette was generated
+Sys.time()
+```
+
+Wallclock time spent generating the vignette.
+
+```{r reproduce2, echo=FALSE}
+## Processing time in seconds
+totalTime <- diff(c(startTime, Sys.time()))
+round(totalTime, digits = 3)
+```
+
+
+
+
+
+
+
+
+`R` session information.
+
+```{r reproduce3, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```
+
+
+
+# Bibliography
+
+This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and
+`r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+
+Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
+
+```{r vignetteBiblio, results = "asis", echo = FALSE, warning = FALSE, message = FALSE}
+## Print bibliography
+PrintBibliography(bib, .opts = list(hyperlink = "to.doc", style = "html"))
+```

@@ -412,11 +412,11 @@ RexProcess <- function(HdxData,
 
     colnames(Rex.quantiles) <- c(
         "Residues",
-        paste0(c(
+        paste0(rep(c(
             "blong_quantiles",
             "pilong_quantiles",
             "qlong_quantiles",
-            "dlong_quantiles"
+            "dlong_quantiles"), each = 3
         ), rep(c("_2.5%", "_50%", "_97.5%"), times = 4))
     )
 
