@@ -60,7 +60,7 @@ values should be recorded as NAs.
 
 # Construct labels carefully using known properties of the states (Ligands)
 # first a catagorical example
-
+library("RexMS")
 data("out_lxr_compound_proccessed")
 data("LXRalpha_compounds")
 

@@ -38,7 +38,7 @@ A ggplot object
 Function to plot the PCA results from the UnsupervisedCSA function
 }
 \examples{
-
+library("RexMS")
 library(ggfortify)
 # Construct labels carefully using known properties of the states (Ligands)
 

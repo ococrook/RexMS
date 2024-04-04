@@ -29,7 +29,7 @@ e.g. ligands. Typically used to obtain uncertainty in the conformational
 landscape.
 }
 \examples{
-
+library("RexMS")
 data(TRE_dist)
 data("out_lxr_compound_proccessed")
 data("LXRalpha_compounds")

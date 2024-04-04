@@ -35,7 +35,7 @@ signatures.
 }
 \examples{
 
-
+library("RexMS")
 data(TRE_dist)
 data("out_lxr_compound_proccessed")
 data("LXRalpha_compounds")

@@ -50,7 +50,7 @@ uncertainty in the conformational signatures.
 
   
 \dontrun{
-
+library("RexMS")
 data("LXRalpha_processed")
 data("rex_lxr")
 data("LXRalpha_compounds")

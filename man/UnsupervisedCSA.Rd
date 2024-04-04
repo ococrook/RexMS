@@ -36,7 +36,7 @@ This performs PCA on the TRE values of the RexDifferentialList and
 returns the PCA object and the TRE values in wide format.
 }
 \examples{
-
+library("RexMS")
 data("out_lxr_compound_proccessed")
 data("LXRalpha_compounds")
 
