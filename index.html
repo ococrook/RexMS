@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Residue-level statistical analysis of HDX-MS data • ReX</title>
+<title>Residue-level statistical analysis of HDX-MS data • RexMS</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,10 +13,10 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Residue-level statistical analysis of HDX-MS data">
-<meta property="og:description" content="ReX is a user-friendly software designed for scientists studying
+<meta property="og:description" content="RexMS is a user-friendly software designed for scientists studying
   proteins and their dynamics. It uses Bayesian methods to analyze data 
   from HDX-MS experiments, which helps in understanding how protein dynamics
-  at the levle of residues. ReX makes it easier to get detailed insights into
+  at the levle of residues. RexMS makes it easier to get detailed insights into
   protein behaviors, It's a powerful tool if you wish to study differences
   in protein dynamics with statistical rigour at the level of residues.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -38,18 +38,27 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">ReX</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <a class="navbar-link" href="index.html">RexMS</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="articles/ReX.html">Get started</a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/ReX.html">Introduction to RexMS</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
@@ -68,36 +77,50 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="rex">ReX<a class="anchor" aria-label="anchor" href="#rex"></a>
+<div class="page-header"><h1 id="rexms">RexMS<a class="anchor" aria-label="anchor" href="#rexms"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of <code>ReX</code> is to analyse hydrogen deuterium exchange mass spectrometry (HDX-MS) data at the residue level. The package is designed to be used with data from various platforms that have already been process at Spectrum-level. <code>ReX</code> takes the processed peptide-level data and infers the residue level deuterium uptake. The underlying model is a Bayesian non-parametric model that recasts HDX-MS data analysis as a (latent) change-point detection problem. The unique benefits of this model are the following: (1) It can provide statistical confidence at the level of residues (e.g. a probability of change) (2) Borrow statistical power from overlapping peptides (3) Infer uptakes patterns that are hidden at the peptide-level because of averaging (4) Provide global and pre-residue resolution metrics (5) It can perform single protein analysis, differential analysis and confrontational signature analysis (many states/compounds) (6) You can build predictive models with the inferred uptakes using partial least squares discriminant analysis (PLS-DA). (7) You can costumize the model to your specific needs.</p>
+<p>The goal of <code>RexMS</code> is to analyse hydrogen deuterium exchange mass spectrometry (HDX-MS) data at the residue level. The package is designed to be used with data from various platforms that have already been process at Spectrum-level. <code>RexMS</code> takes the processed peptide-level data and infers the residue level deuterium uptake. The underlying model is a Bayesian non-parametric model that recasts HDX-MS data analysis as a (latent) change-point detection problem. The unique benefits of this model are the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>It can provide statistical confidence at the level of residues (e.g. a probability of change)</p></li>
+<li><p>Borrow statistical power from overlapping peptides</p></li>
+<li><p>Infer uptake patterns that are hidden at the peptide-level because of averaging</p></li>
+<li><p>Provide global and per-residue resolution metrics</p></li>
+<li><p>It can perform single protein analysis, differential analysis and conformational signature analysis (many states/compounds), linking results to downstream functional outcomes</p></li>
+<li><p>You can build predictive models with the inferred uptakes using partial least squares discriminant analysis (PLS-DA).</p></li>
+<li><p>You can costumize the model to your specific needs.</p></li>
+</ol>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>The official documentation is available at <a href="https://ococrook.github.io/RexMS/" class="external-link">ococrook.github.io/RexMS</a>. We encourage use to look there and in particular the vignettes. We suggest reading through all of the vignettes first so you understand which part of <code>RexMS</code> you need to use.</p>
+</div>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>ReX</code> from <a href="http://bioconductor.org/" class="external-link">Bioconductor</a> using the following code:</p>
+<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>RexMS</code> from <a href="http://bioconductor.org/" class="external-link">Bioconductor</a> using the following code:</p>
 <p>Note that you cannot currently install from Bioconductor</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span></span></code></pre></div>
-<p>To install the development version of <code>ReX</code>, it’s easiest to use the <code>remotes</code> package.</p>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span></code></pre></div>
+<p>To install the development version of <code>RexMS</code>, it’s easiest to use the <code>remotes</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ococrook/ReX"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ococrook/RexMS"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>ReX has structure visualisation at part of its core functionality. Below is an example of how to use the <code>hdx_to_pdb_colours</code> function to map HDX-MS data onto a PDB file.</p>
+<p>RexMS has structure visualisation at part of its core functionality. Below is an example of how to use the <code>hdx_to_pdb_colours</code> function to map HDX-MS data onto a PDB file.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nvelden/NGLVieweR" class="external-link">NGLVieweR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># generate random HDX data</span></span>
@@ -107,7 +130,7 @@
 <span><span class="va">v2</span> <span class="op">&lt;-</span> <span class="va">v</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="fl">344</span>, <span class="fl">477</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">v2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">v2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pdb_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test_BRD4.pdb"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span>, package <span class="op">=</span> <span class="st">"ReX"</span><span class="op">)</span></span>
+<span><span class="va">pdb_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test_BRD4.pdb"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span>, package <span class="op">=</span> <span class="st">"RexMS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># generate a protection-deprotection colour mapping</span></span>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span><span class="va">v2</span>, pdb <span class="op">=</span> <span class="va">pdb_filepath</span>, cmap_name <span class="op">=</span> <span class="st">"ProtDeprot"</span><span class="op">)</span></span>
@@ -115,17 +138,17 @@
 <span><span class="co"># Note this will open in a view</span></span>
 <span><span class="fu"><a href="reference/pdb-visualisation.html">view_structure</a></span><span class="op">(</span>pdb_filepath <span class="op">=</span> <span class="va">pdb_filepath</span>, color_parameters <span class="op">=</span> <span class="va">mycolor_parameters</span><span class="op">)</span></span></code></pre></div>
 <p>The expected output is a 3D structure of the protein with the HDX-MS data mapped onto it. The colouring is based on the protection-deprotection scale.The following image is indicative and may not be the same as the output you will see.</p>
-<figure><img src="reference/figures/pdb_hdx.png" alt="Caption for the picture."><figcaption aria-hidden="true">
-Caption for the picture.
+<figure><img src="reference/figures/pdb_hdx.png" alt="An example figure generated from the RexMS package"><figcaption aria-hidden="true">
+An example figure generated from the RexMS package
 </figcaption></figure>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Below is the citation output from using <code>citation('ReX')</code> in R. Please run this yourself to check for any updates on how to cite <strong>ReX</strong>.</p>
+<p>Below is the citation output from using <code>citation('RexMS')</code> in R. Please run this yourself to check for any updates on how to cite <strong>RexMS</strong>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; To cite package 'ReX' in publications use:</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite package 'RexMS' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ococrook (2024). _Inferring residue level hydrogen deuterium exchange</span></span>
 <span><span class="co">#&gt;   with ReX_. doi:10.18129/B9.bioc.ReX</span></span>
@@ -159,24 +182,24 @@ Caption for the picture.
 <span><span class="co">#&gt;     doi = {10.1101/TODO},</span></span>
 <span><span class="co">#&gt;     url = {https://www.biorxiv.org/content/10.1101/TODO},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
-<p>Please note that the <code>ReX</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
+<p>Please note that the <code>RexMS</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the <code>ReX</code> project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the <code>RexMS</code> project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 <div class="section level2">
 <h2 id="development-tools">Development tools<a class="anchor" aria-label="anchor" href="#development-tools"></a>
 </h2>
 <ul>
-<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.17/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
+<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.18/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
 <li>Code coverage assessment is possible thanks to <a href="https://codecov.io/gh" class="external-link">codecov</a> and <em><a href="https://CRAN.R-project.org/package=covr" class="external-link">covr</a></em>.</li>
 <li>The code is styled automatically thanks to <em><a href="https://CRAN.R-project.org/package=styler" class="external-link">styler</a></em>.</li>
 <li>The documentation is formatted thanks to <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> and <em><a href="https://CRAN.R-project.org/package=roxygen2" class="external-link">roxygen2</a></em>.</li>
 </ul>
 <p>For more details, check the <code>dev</code> directory.</p>
-<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.17/biocthis" class="external-link">biocthis</a></em>.</p>
+<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.18/biocthis" class="external-link">biocthis</a></em>.</p>
 </div>
 </div>
   </div>
@@ -185,7 +208,7 @@ Caption for the picture.
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://support.bioconductor.org/tag/ReX" class="external-link">Report a bug</a></li>
+<li><a href="https://support.bioconductor.org/tag/RexMS" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -208,7 +231,7 @@ Caption for the picture.
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing ReX</a></li>
+<li><a href="authors.html#citation">Citing RexMS</a></li>
 </ul>
 </div>
 
@@ -223,15 +246,15 @@ Caption for the picture.
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/ReX" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/ReX.svg" alt="Bioc release status"></a></li>
-<li><a href="https://bioconductor.org/checkResults/devel/bioc-LATEST/ReX" class="external-link"><img src="http://www.bioconductor.org/shields/build/devel/bioc/ReX.svg" alt="Bioc devel status"></a></li>
-<li><a href="http://bioconductor.org/packages/stats/bioc/ReX/" class="external-link"><img src="https://bioconductor.org/shields/downloads/release/ReX.svg" alt="Bioc downloads rank"></a></li>
-<li><a href="https://support.bioconductor.org/tag/ReX" class="external-link"><img src="https://bioconductor.org/shields/posts/ReX.svg" alt="Bioc support"></a></li>
-<li><a href="https://bioconductor.org/packages/release/bioc/html/ReX.html#since" class="external-link"><img src="https://bioconductor.org/shields/years-in-bioc/ReX.svg" alt="Bioc history"></a></li>
-<li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/ReX/" class="external-link"><img src="https://bioconductor.org/shields/lastcommit/devel/bioc/ReX.svg" alt="Bioc last commit"></a></li>
-<li><a href="https://bioconductor.org/packages/release/bioc/html/ReX.html#since" class="external-link"><img src="https://bioconductor.org/shields/dependencies/release/ReX.svg" alt="Bioc dependencies"></a></li>
-<li><a href="https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml" class="external-link"><img src="https://github.com/ococrook/ReX/actions/workflows/R-CMD-check-bioc.yaml/badge.svg" alt="R-CMD-check-bioc"></a></li>
-<li><a href="https://app.codecov.io/gh/ococrook/ReX?branch=devel" class="external-link"><img src="https://codecov.io/gh/ococrook/ReX/branch/devel/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/RexMS" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/RexMS.svg" alt="Bioc release status"></a></li>
+<li><a href="https://bioconductor.org/checkResults/devel/bioc-LATEST/RexMS" class="external-link"><img src="http://www.bioconductor.org/shields/build/devel/bioc/RexMS.svg" alt="Bioc devel status"></a></li>
+<li><a href="http://bioconductor.org/packages/stats/bioc/RexMS/" class="external-link"><img src="https://bioconductor.org/shields/downloads/release/RexMS.svg" alt="Bioc downloads rank"></a></li>
+<li><a href="https://support.bioconductor.org/tag/RexMS" class="external-link"><img src="https://bioconductor.org/shields/posts/RexMS.svg" alt="Bioc support"></a></li>
+<li><a href="https://bioconductor.org/packages/release/bioc/html/RexMS.html#since" class="external-link"><img src="https://bioconductor.org/shields/years-in-bioc/RexMS.svg" alt="Bioc history"></a></li>
+<li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/RexMS/" class="external-link"><img src="https://bioconductor.org/shields/lastcommit/devel/bioc/RexMS.svg" alt="Bioc last commit"></a></li>
+<li><a href="https://bioconductor.org/packages/release/bioc/html/RexMS.html#since" class="external-link"><img src="https://bioconductor.org/shields/dependencies/release/RexMS.svg" alt="Bioc dependencies"></a></li>
+<li><a href="https://github.com/ococrook/RexMS/actions/workflows/R-CMD-check-bioc.yaml" class="external-link"><img src="https://github.com/ococrook/RexMS/actions/workflows/R-CMD-check-bioc.yaml/badge.svg" alt="R-CMD-check-bioc"></a></li>
+<li><a href="https://app.codecov.io/gh/ococrook/RexMS?branch=devel" class="external-link"><img src="https://codecov.io/gh/ococrook/RexMS/branch/devel/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 

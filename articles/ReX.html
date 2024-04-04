@@ -5,15 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to ReX • ReX</title>
+<title>Introduction to RexMS • RexMS</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Introduction to ReX">
-<meta property="og:description" content="ReX">
+<meta property="og:title" content="Introduction to RexMS">
+<meta property="og:description" content="RexMS">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,18 +33,27 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">ReX</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <a class="navbar-link" href="../index.html">RexMS</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../articles/ReX.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/ReX.html">Introduction to RexMS</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -63,7 +72,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Introduction to ReX</h1>
+      <h1 data-toc-skip>Introduction to RexMS</h1>
                         <h4 data-toc-skip class="author">Oliver
 Crook</h4>
             <address class="author_afil">
@@ -71,7 +80,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">3 April 2024</h4>
+            <h4 data-toc-skip class="date">4 April 2024</h4>
       
       
       <div class="hidden name"><code>ReX.Rmd</code></div>
@@ -84,46 +93,57 @@ Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@g
 <h2 id="basics">Basics<a class="anchor" aria-label="anchor" href="#basics"></a>
 </h2>
 <div class="section level3">
-<h3 id="install-rex">Install <code>ReX</code><a class="anchor" aria-label="anchor" href="#install-rex"></a>
+<h3 id="install-rexms">Install <code>RexMS</code><a class="anchor" aria-label="anchor" href="#install-rexms"></a>
 </h3>
 <p><code>R</code> is an open-source statistical environment which can be
-easily modified to enhance its functionality via packages. <em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em> is a
+easily modified to enhance its functionality via packages. <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> is an
 <code>R</code> package available via the <a href="http://bioconductor.org" class="external-link">Bioconductor</a> repository for packages.
 <code>R</code> can be installed on any operating system from <a href="https://cran.r-project.org/" class="external-link">CRAN</a> after which you can install
-<em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em> by
+<em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> by
 using the following commands in your <code>R</code> session:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Check that you have a valid Bioconductor installation</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/valid.html" class="external-link">valid</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>or from installed from github</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ococrook/RexMS"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="required-knowledge">Required knowledge<a class="anchor" aria-label="anchor" href="#required-knowledge"></a>
 </h3>
-<p><em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em>
-is based on many other packages and in particular in those that have
-implemented the infrastructure needed for dealing with RNA-seq data
-(EDIT!). That is, packages like <em><a href="https://bioconductor.org/packages/3.18/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
-(EDIT!).</p>
+<p><em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> is
+based on many other packages and in particular in those that have
+implemented the infrastructure needed for dealing with protein
+structure. That is, packages like <em><a href="https://bioconductor.org/packages/3.18/Bio3D" class="external-link">Bio3D</a></em>.</p>
 <p>If you are asking yourself the question “Where do I start using
 Bioconductor?” you might be interested in <a href="http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU" class="external-link">this
 blog post</a>.</p>
+<p>We expect you to have a working understanding of HDX-MS and its
+application. Verifying your data is important as <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> won’t
+fix problem with data acquisition or poor experiment design. If you run
+into problem using <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> first
+check syntex of your command but also the data.</p>
 </div>
 <div class="section level3">
 <h3 id="asking-for-help">Asking for help<a class="anchor" aria-label="anchor" href="#asking-for-help"></a>
 </h3>
-<p>As package developers, we try to explain clearly how to use our
+<p>As package developers, we try to explain clearl y how to use our
 packages and in which order to use the functions. But <code>R</code> and
 <code>Bioconductor</code> have a steep learning curve so it is critical
 to learn where to ask for help. The blog post quoted above mentions some
 but we would like to highlight the <a href="https://support.bioconductor.org/" class="external-link">Bioconductor support site</a>
 as the main resource for getting help: remember to use the
-<code>ReX</code> tag and check <a href="https://support.bioconductor.org/tag/ReX/" class="external-link">the older posts</a>.
+<code>RexMS</code> tag and check <a href="https://support.bioconductor.org/tag/RexMS/" class="external-link">the older posts</a>.
 Other alternatives are available such as creating GitHub issues and
 tweeting. However, please note that if you want to receive help you
 should adhere to the <a href="http://www.bioconductor.org/help/support/posting-guide/" class="external-link">posting
@@ -132,20 +152,20 @@ reproducible example and your session information so package developers
 can track down the source of the error.</p>
 </div>
 <div class="section level3">
-<h3 id="citing-rex">Citing <code>ReX</code><a class="anchor" aria-label="anchor" href="#citing-rex"></a>
+<h3 id="citing-rexms">Citing <code>RexMS</code><a class="anchor" aria-label="anchor" href="#citing-rexms"></a>
 </h3>
-<p>We hope that <em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em> will be
-useful for your research. Please use the following information to cite
-the package and the overall approach. Thank you!</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>We hope that <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> will
+be useful for your research. Please use the following information to
+cite the package and the overall approach. Thank you!</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Citation info</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; To cite package 'ReX' in publications use:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite package 'RexMS' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ococrook (2024). _Inferring residue level hydrogen deuterium exchange</span></span>
 <span><span class="co">#&gt;   with ReX_. doi:10.18129/B9.bioc.ReX</span></span>
 <span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.ReX&gt;,</span></span>
-<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.0,</span></span>
+<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.2,</span></span>
 <span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/ReX&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ococrook (2024). "Inferring residue level hydrogen deuterium exchange</span></span>
@@ -159,24 +179,89 @@ the package and the overall approach. Thank you!</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="quick-start-to-using-rex">Quick start to using <code>ReX</code><a class="anchor" aria-label="anchor" href="#quick-start-to-using-rex"></a>
+<h2 id="quick-start-to-using-rexms">Quick start to using <code>RexMS</code><a class="anchor" aria-label="anchor" href="#quick-start-to-using-rexms"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"ReX"</span><span class="op">)</span></span></code></pre></div>
-<p>Edit this as you see fit =)</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span></code></pre></div>
 <p>Here is an example of you can cite your package inside the
 vignette:</p>
 <ul>
 <li>
-<em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em>
+<em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em>
 (ococrook, 2024)</li>
 </ul>
+<p>Let’s start with a simple use cases for <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em>. We
+have a protein with peptide-level HDX-MS data and we wish to gain more
+granular information about the HDX pattern at the level of individual
+residues. We can use RexMS to perform this analysis. Let’s first load
+some simple HDX-MS data from the package.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:S4Vectors':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     first, intersect, rename, setdiff, setequal, union</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:BiocGenerics':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     combine, intersect, setdiff, union</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"BRD4_apo"</span><span class="op">)</span></span>
+<span><span class="va">BRD4_apo</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,034 × 10</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   DeutTime, Sequence, State, Charge [678]</span></span></span>
+<span><span class="co">#&gt;    DeutTime Charge State Exposure Start   End Sequence          Uptake replicate</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 0s            3 BRD4         0     1    26 MSAESGPGTRLRNLPV…    0           1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 0s            3 BRD4         0     1    26 MSAESGPGTRLRNLPV…    0           2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 0s            3 BRD4         0     1    26 MSAESGPGTRLRNLPV…    0           3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 15.00s        3 BRD4        15     1    26 MSAESGPGTRLRNLPV…   20.8         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 15.00s        3 BRD4        15     1    26 MSAESGPGTRLRNLPV…   20.7         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 15.00s        3 BRD4        15     1    26 MSAESGPGTRLRNLPV…   20.4         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 60.00s        3 BRD4        60     1    26 MSAESGPGTRLRNLPV…   20.8         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 60.00s        3 BRD4        60     1    26 MSAESGPGTRLRNLPV…   20.8         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 60.00s        3 BRD4        60     1    26 MSAESGPGTRLRNLPV…   20.4         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 600.00s       3 BRD4       600     1    26 MSAESGPGTRLRNLPV…   19.0         1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,024 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: MaxUptake &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>The data is a data frame with the following columns:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "DeutTime"  "Charge"    "State"     "Exposure"  "Start"     "End"      </span></span>
+<span><span class="co">#&gt;  [7] "Sequence"  "Uptake"    "replicate" "MaxUptake"</span></span></code></pre></div>
+<p>The data must contain the following columns:</p>
+<p>“State”, “Sequence”, “Start”, “End”, “MaxUptake”, “Exposure”,
+“replicate”, “Uptake”</p>
+<p>The function <code>cleanHDX</code> can be used to clean the data and
+remove any missing values but also check that all the required columns
+exist. The function will output an error if this simple check fails. The
+RexMS package needs you to convert data to a <code>DataFrame</code>
+object.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cleanHDX.html">cleanHDX</a></span><span class="op">(</span>res <span class="op">=</span> <span class="va">BRD4_apo</span>, clean <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>The data is now ready to take a closer look. Be careful at this point
+you may have lost a large number of peptidesif you had lots of missing
+values. At this point it will be useful to check the redundancy of the
+data. The following code chunk will perform heatmap of the peptide
+map.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coverageHeatmap.html">coverageHeatmap</a></span><span class="op">(</span>res <span class="op">=</span> <span class="va">BRD4_apo</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/heatmap-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
 </h2>
-<p>The <em><a href="https://bioconductor.org/packages/3.18/ReX" class="external-link">ReX</a></em> package
-(ococrook, 2024) was made possible thanks to:</p>
+<p>The <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em>
+package (ococrook, 2024) was made possible thanks to:</p>
 <ul>
 <li>R (R Core Team, 2023)</li>
 <li>
@@ -201,18 +286,18 @@ Cheng, Chang, and Iannone, 2024)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.18/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"ReX.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Extract the R code</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"ReX.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-03 10:06:24 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-04 09:59:48 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 7.186 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 8.403 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -224,7 +309,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-03</span></span>
+<span><span class="co">#&gt;  date     2024-04-04</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -255,7 +340,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  DelayedArray           0.28.0     <span style="color: #555555;">2023-10-24</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  desc                   1.4.3      <span style="color: #555555;">2023-12-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  digest                 0.6.35     <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  dplyr                  1.1.4      <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  dplyr                * 1.1.4      <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  evaluate               0.23       <span style="color: #555555;">2023-11-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fansi                  1.0.6      <span style="color: #555555;">2023-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap                1.1.1      <span style="color: #555555;">2023-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -268,6 +353,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  ggplot2                3.5.0      <span style="color: #555555;">2024-02-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  glue                   1.7.0      <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  gtable                 0.3.4      <span style="color: #555555;">2023-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  highr                  0.10       <span style="color: #555555;">2022-12-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  htmltools              0.5.8      <span style="color: #555555;">2024-03-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  htmlwidgets            1.6.4      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  httpuv                 1.6.15     <span style="color: #555555;">2024-03-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -312,7 +398,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  ReX                  * 0.99.0     <span style="color: #555555;">2024-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -376,7 +462,7 @@ References in R”. In: <em>The Journal of Open Source Software</em>
 <a id="bib-ococrook2024inferring"></a><a href="#cite-ococrook2024inferring">[3]</a><cite>
 ococrook. <em>Inferring residue level hydrogen deuterium exchange with
 ReX</em>. <a href="https://github.com/ococrook/ReX/ReX" class="external-link uri">https://github.com/ococrook/ReX/ReX</a> - R package version
-0.99.0. 2024. DOI:
+0.99.2. 2024. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.ReX" class="external-link">10.18129/B9.bioc.ReX</a>.
 URL:
 <a href="http://www.bioconductor.org/packages/ReX" class="external-link">http://www.bioconductor.org/packages/ReX</a>.</cite>
