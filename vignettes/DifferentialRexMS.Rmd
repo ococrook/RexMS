@@ -277,7 +277,7 @@ incorrect results. This is typical when expressing a construct of a protein or
 the structure is only a small part of the protein.
 
 ```{r,}
-require(viridis)
+library(viridis)
 # random colours
 v <- matrix(rnorm(100), nrow = 1)
 colnames(v) <- seq.int(ncol(v))

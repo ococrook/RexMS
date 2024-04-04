@@ -3,7 +3,7 @@
 \name{rex}
 \alias{rex}
 \alias{resolver}
-\title{residue-resolved HDX-MS data analysis using the Rex yes}
+\title{residue-resolved HDX-MS data analysis using Rex}
 \usage{
 rex(
   HdxData,

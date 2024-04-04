@@ -6,7 +6,7 @@
 ##' [DataFrame]). Both are then passed to the `RexProcess` function to generate
 ##' summary data for further analysis and visualisation
 ##'
-##' @title residue-resolved HDX-MS data analysis using the Rex yes
+##' @title residue-resolved HDX-MS data analysis using Rex
 ##' @param HdxData An object of class DataFrame containing the HDX-MS data
 ##' @param numIter The number of iterations for the MCMC. Default is 1000
 ##'  but recommend at least 5000 in practice
