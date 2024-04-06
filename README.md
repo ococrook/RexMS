@@ -120,8 +120,14 @@ data mapped onto it. The colouring is based on the
 protection-deprotection scale.The following image is indicative and may
 not be the same as the output you will see.
 
-![An example figure generated from the RexMS
-package](man/figures/pdb_hdx.png) \## Shiny Application
+<figure>
+<img src="man/figures/pdb_hdx.png"
+alt="An example figure generated from the RexMS package" />
+<figcaption aria-hidden="true">An example figure generated from the
+RexMS package</figcaption>
+</figure>
+
+## Shiny Application
 
 You may be interested in interesting ways to display your data or
 interact with our results. Here are links to some shiny applications
