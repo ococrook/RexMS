@@ -56,7 +56,8 @@ Suggests:
     rmarkdown,
     sessioninfo,
     testthat (>= 3.0.0),
-    viridis
+    viridis,
+    rsconnect,
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 LazyData: false
