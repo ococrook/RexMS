@@ -80,7 +80,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">4 April 2024</h4>
+            <h4 data-toc-skip class="date">6 April 2024</h4>
       
       
       <div class="hidden name"><code>ReX.Rmd</code></div>
@@ -137,7 +137,7 @@ check syntex of your command but also the data.</p>
 <div class="section level3">
 <h3 id="asking-for-help">Asking for help<a class="anchor" aria-label="anchor" href="#asking-for-help"></a>
 </h3>
-<p>As package developers, we try to explain clearl y how to use our
+<p>As package developers, we try to explain clearly how to use our
 packages and in which order to use the functions. But <code>R</code> and
 <code>Bioconductor</code> have a steep learning curve so it is critical
 to learn where to ask for help. The blog post quoted above mentions some
@@ -238,6 +238,8 @@ some simple HDX-MS data from the package.</p>
 <p>The data must contain the following columns:</p>
 <p>“State”, “Sequence”, “Start”, “End”, “MaxUptake”, “Exposure”,
 “replicate”, “Uptake”</p>
+<p>If you only have 1 replicate you can simply set <code>1</code> for
+this column.</p>
 <p>The function <code>cleanHDX</code> can be used to clean the data and
 remove any missing values but also check that all the required columns
 exist. The function will output an error if this simple check fails. The
@@ -247,15 +249,479 @@ object.</p>
 <code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cleanHDX.html">cleanHDX</a></span><span class="op">(</span>res <span class="op">=</span> <span class="va">BRD4_apo</span>, clean <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>The data is now ready to take a closer look. Be careful at this point
-you may have lost a large number of peptidesif you had lots of missing
-values. At this point it will be useful to check the redundancy of the
-data. The following code chunk will perform heatmap of the peptide
-map.</p>
+<p>If you do not have a <code>MaxUptake</code> column you can use the
+following function. You may need to use the <code>rep</code> function to
+repeat for time points.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/maxUptakes.html">maxUptakes</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 22 18 12  9 10 15 17  5  5  8 16 19 13  7 10  6  9  3 11  5  8 11 22  7 11</span></span>
+<span><span class="co">#&gt; [26] 17  4  8  9 11 12 13 19 20  5  8  9 10  9 10  5  5  6  5  6 10  8  6  6  5</span></span>
+<span><span class="co">#&gt; [51]  5 13 12  9  9  5  5 13  9  4  6  8  7  9  6  5  8 16  7  6  7 11 13 14 17</span></span>
+<span><span class="co">#&gt; [76]  5  6  5 16 17 13  6 12 16 19  9  8  7 11  5 10  6 10  9 15  4</span></span></code></pre></div>
+<p>The data is now ready to take a closer look. Be careful at this point
+you may have lost a large number of peptides if you had lots of missing
+values. At this point it will be useful to check the redundancy of the
+data. The following code chunk will perform heatmap of the peptide map.
+As we can see from the peptide below, there are two regions that are
+well convered linked by a region that is not well covered. This is a
+common problem in HDX-MS as the region between the two tandem
+bromodomains is proline rich and hence not amenable to standard
+digestion.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coverageHeatmap.html">coverageHeatmap</a></span><span class="op">(</span>res <span class="op">=</span> <span class="va">BRD4_apo</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ReX_files/figure-html/heatmap-1.png" width="700"></p>
+<p>To simplify the analysis, we only examine the first 100 residues of
+the protein. This will speed up the results in this vignette.
+Furthermore, we would recommend analysis the bromodomains
+separately.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">End</span> <span class="op">&lt;</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<p>Rex requires you to switch make to a <code>DataFrame</code> if you
+used the last line</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span></code></pre></div>
+<p>The next step is to calculate some simple quantities from the data.
+The first is the number of timepoints, the second the numerical values
+of the timepoints and the number of peptides in the analysis.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">numTimepoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Exposure</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Timepoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Exposure</span><span class="op">)</span></span>
+<span><span class="va">numPeptides</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Sequence</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We already at the point were we can apply Rex to the data. The first
+step is to understand the necessary components of the <code>rex</code>
+function. The <code>rex</code> function has a lot of possible arguments
+which are explain in the documentation. The most important are the
+following</p>
+<ul>
+<li>
+<code>HdxData</code> which is the DataFrame containing the HDX-MS
+data.</li>
+<li>
+<code>numIter</code> which is the number of iterations to run the
+algorithm. Typically this will be in the thousands - 5000 would be
+reasonable but is 100 below to speed up the algorithm.</li>
+<li>
+<code>R</code> which is the maximum residue number in the
+protein.</li>
+<li>
+<code>numtimepoints</code> which is the number of timepoints in the
+data.</li>
+<li>
+<code>timepoints</code> which is the numerical values of the
+timepoints.</li>
+<li>
+<code>seed</code> which is the seed for the random number
+generator.</li>
+<li>
+<code>tCoef</code> which is the coefficients for the timepoints.
+This account for the fact that the variance at the 0 timepoint might be
+0 (measured without error). This value is multiplied by the variance
+across timepoints to scale the variance. We recommend that the first
+value is 0 and the rest are 1. However, if you have a good reason to
+change this value you can do so.</li>
+<li>
+<code>BPPARAM</code> which is the parallel backend to use. We
+recommend using the <code>BiocParallel</code> package and the
+<code>SerialParam</code> function. This will allow you to run the
+algorithm in parallel on a single machine. If you have multiple cores
+available you can run the algorithm in parrallel to speed up the
+analysis. To do this use the <code>bpparam()</code> function from the
+<code>BiocParallel</code> package. This will allow you to register the
+default backend. For more advanced approaches you can see the
+<code>BiocParallel</code> documentation.</li>
+<li>
+<code>numChains</code> which is the number of chains to run in the
+algorithm. We recommend running at least 2 chains, which is the default.
+This will allow you to check the convergence of the algorithm. If the
+chains do not converge you can increase the number of chains and/or the
+number of iterations.</li>
+</ul>
+<p>The less important parameters are the following but still worth
+knowing about:</p>
+<ul>
+<li>
+<code>density</code> which is the density of the likelihood
+function, whilst <code>Gaussian</code> is the default we have found
+better results when using the <code>laplace</code> density. These are
+the only two options available.</li>
+<li>
+<code>R_lower</code> which is the lower bound of the residues to
+consider. This is useful if you have a protein with a signal peptide or
+a tag that you do not want to consider in the analysis. Or you have a
+construct starting at a residue other than 1.</li>
+<li>
+<code>R_upper</code> which is the upper bound of the residues to
+consider. This is useful if you want to contrain the analysis to a
+specific region of the protein.</li>
+<li>
+<code>priors</code> which is the priors for the analysis. This list
+is elaborated on later and we refer to manuscript for more details. We
+dont recommend changing this unless you have a good reason to do
+so.</li>
+<li>
+<code>phi</code> this is the max uptake you allow per residue in the
+analysis. This might be the deuterium content of the buffer or the
+maximum uptake you expect to see.</li>
+<li>
+<code>init_param</code> this is the parameter that used to help
+initialise the algorithm. The default is <code>d</code>. This is mostly
+for development purposes and we recommend leaving this as the
+default.</li>
+</ul>
+<p>Now, you can run the algorithm. The following code chunk will run the
+algorithm on the data. The algorithm will take a few minutes to run. The
+algorithm may output a warning about a package not being available, you
+can safely ignore this warning.</p>
+<p>We typically recommend running a short number of iterations first to
+check how long the analysis will take and then running the full
+analysis.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">rex_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rex.html">rex</a></span><span class="op">(</span>HdxData <span class="op">=</span> <span class="va">BRD4_apo</span>,</span>
+<span>                numIter <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>                R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">End</span><span class="op">)</span>, </span>
+<span>                density <span class="op">=</span> <span class="st">"laplace"</span>,</span>
+<span>                numtimepoints <span class="op">=</span> <span class="va">numTimepoints</span>,</span>
+<span>                timepoints <span class="op">=</span> <span class="va">Timepoints</span>,</span>
+<span>                seed <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>                tCoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">numTimepoints</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                phi <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ... </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ...</span></span></code></pre></div>
+<p>Once the algorithm has finished running you can view the results.
+First, note that <code>rex</code> produces an object of type
+<code>RexParams</code>. Just printing the object will give you a summary
+of the object.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rex_test</span></span>
+<span><span class="co">#&gt; Object of class "RexParams"</span></span>
+<span><span class="co">#&gt; Method: ReX </span></span>
+<span><span class="co">#&gt; Number of chains: 2</span></span></code></pre></div>
+<p>The object contains the following slots:</p>
+<ul>
+<li>
+<code>interval</code> which is the interval of the analysis. This is
+the interval of the residues that were analysed.</li>
+<li>
+<code>chains</code> which stores all the MCMC iterations of the
+analysis</li>
+<li>
+<code>summary</code> which is a summary of the chains and the most
+interesting for user. It is currently empty</li>
+<li>
+<code>seed</code> which is the seed used in the analysis.</li>
+<li>
+<code>priors</code> which are the priors used in the analysis.</li>
+<li>
+<code>method</code> which is the method used in the analysis. This
+will be <code>ReX</code> and is used to track development of the
+package.</li>
+</ul>
+<p>We do not recommend access the slots directly but if you are
+interested you can use the <code>@</code> . For example:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rex_test</span><span class="op">@</span><span class="va">interval</span></span>
+<span><span class="co">#&gt; [1]  1 99</span></span></code></pre></div>
+<p>The summary slot is currently empty as it has not yet been processed.
+The function <code>RexProcess</code> takes a number of arguments and
+will populate the <code>summary</code> slot. The most important
+arguments are the following:</p>
+<ul>
+<li>
+<code>HdxData</code> which is the DataFrame containing the HDX-MS
+data.</li>
+<li>
+<code>params</code> which is the <code>RexParams</code> object
+produced by the <code>rex</code> function.</li>
+<li>
+<code>range</code> which is the range of MCMC iterations to
+consider. This is useful if you want to remove the burn-in period of the
+MCMC chain.</li>
+<li>
+<code>thin</code> which is the thinning of the MCMC chain. This is
+useful if you want to reduce the size of the MCMC chain. A thin equal to
+1 will keep all the iterations. A thin equal to 5 will keep every 5th
+iteration.</li>
+<li>
+<code>whichChains</code> which is the chains to consider. This is
+useful if you want to consider only a subset of the chains. The default
+is to consider the first two chains. You may wish to remove unconverged
+chains.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rex_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rex-process.html">RexProcess</a></span><span class="op">(</span>HdxData <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span>, </span>
+<span>                        params <span class="op">=</span> <span class="va">rex_test</span>,</span>
+<span>                        range <span class="op">=</span> <span class="fl">50</span><span class="op">:</span><span class="fl">100</span>,</span>
+<span>                        thin <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        whichChains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>summary</code> slot is now populated and you can view the
+results. We breifly access the slot using <code>@</code> to show the
+results but again we recommend using accessor functions.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rex_test</span><span class="op">@</span><span class="va">summary</span></span>
+<span><span class="co">#&gt;  Object of class "RexSummary"</span></span>
+<span><span class="co">#&gt;  Number of Residues: 99 </span></span>
+<span><span class="co">#&gt;  Number of Timepoints: 6 </span></span>
+<span><span class="co">#&gt;  Number of Peptides: 19 </span></span>
+<span><span class="co">#&gt;  Number of chains: 2 </span></span>
+<span><span class="co">#&gt;  Global resolutions: 0.003357582 0.002996947</span></span></code></pre></div>
+<p>A number of functions are available to access the results. The first
+is <code>Rex.globals</code> which will give you access to the model log
+likelihood and the sigma parameter which is a measure of the variance of
+the data. The lower the value of sigma the more resolved tha data is.
+The model likelihood is a measure of how well the model fits the data.
+The higher the value the better the fit. As we can see from the results
+below in the first chain the model has fit better but the results
+between the two chains a similar. We suggest to examine this first to
+check that the chains are behaving similarly.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RexParams.html">Rex.globals</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 2 rows and 2 columns</span></span>
+<span><span class="co">#&gt;        sigma likelihood</span></span>
+<span><span class="co">#&gt;    &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1 0.00335758   -293.353</span></span>
+<span><span class="co">#&gt; 2 0.00299695   -267.178</span></span></code></pre></div>
+<p>We next consider the peptide error distribution. This allows us to
+understand the modelling error for each peptide. The function
+<code>Rex.peptideError</code> will give you the error distribution for
+each peptide i.e. the residual of the fitted model. This benifit here is
+two fold. First, making sure that the model is performing well and
+secondly any peptides that may have data that is inconsistent</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RexParams.html">Rex.peptideError</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 19 rows and 7 columns</span></span>
+<span><span class="co">#&gt;                    Peptide         0         15          60        600</span></span>
+<span><span class="co">#&gt;                &lt;character&gt; &lt;numeric&gt;  &lt;numeric&gt;   &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1   MSAESGPGTRLRNLPVMGDG..         0  -0.703474   -0.433469   1.801877</span></span>
+<span><span class="co">#&gt; 2   SGPGTRLRNLPVMGDGLETSQM         0  -0.979917   -0.612909   1.395465</span></span>
+<span><span class="co">#&gt; 3          RNLPVMGDGLETSQM         0  -1.911121   -1.919328  -0.412942</span></span>
+<span><span class="co">#&gt; 4             PVMGDGLETSQM         0   0.406422    0.153922   0.770687</span></span>
+<span><span class="co">#&gt; 5           STTQAQAQPQPANA         0  -1.697489   -2.000988  -1.304376</span></span>
+<span><span class="co">#&gt; ...                    ...       ...        ...         ...        ...</span></span>
+<span><span class="co">#&gt; 15          QFAWPFQQPVDAVK         0 -0.3131118 -0.00679573 -0.0255002</span></span>
+<span><span class="co">#&gt; 16              FAWPFQQPVD         0 -0.5846490 -0.34591339 -0.3517699</span></span>
+<span><span class="co">#&gt; 17           FAWPFQQPVDAVK         0 -0.2476062 -0.04841322 -0.0786488</span></span>
+<span><span class="co">#&gt; 18                 PFQQPVD         0  0.0618921  0.05222328  0.0712478</span></span>
+<span><span class="co">#&gt; 19                LNLPDYYK         0 -0.0230843  0.02609930 -0.0970025</span></span>
+<span><span class="co">#&gt;           3600       14400</span></span>
+<span><span class="co">#&gt;      &lt;numeric&gt;   &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1     2.676067    2.215622</span></span>
+<span><span class="co">#&gt; 2     2.230865    1.897240</span></span>
+<span><span class="co">#&gt; 3     0.259449    0.192393</span></span>
+<span><span class="co">#&gt; 4     0.504828    0.520424</span></span>
+<span><span class="co">#&gt; 5    -1.000963   -0.981169</span></span>
+<span><span class="co">#&gt; ...        ...         ...</span></span>
+<span><span class="co">#&gt; 15   0.6285702  0.37064356</span></span>
+<span><span class="co">#&gt; 16  -0.1950429 -0.46167194</span></span>
+<span><span class="co">#&gt; 17   0.3496879  0.10853145</span></span>
+<span><span class="co">#&gt; 18   0.0520880  0.00477404</span></span>
+<span><span class="co">#&gt; 19   0.0604967  0.02959979</span></span></code></pre></div>
+<p>We can produce a heatmap to quickly examine the residuals. The
+heatmap show some important features. First, there is a mixture of
+<code>blue</code> and <code>red</code> suggesting that the model is not
+biased. If the heatmap is completely red or blue this indicates some
+modelling issue. Secondly, the heatmap shows that the errors are larger
+for longer peptides. This is expected as the model is more uncertain
+about the uptake of longer peptides and the model allows for this is
+part of the fitting. The errors will also reduce by running the
+algorithm for more iterations. We suggest reporting this figure in
+manuscript or supplementary material.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPeptideError.html">plotPeptideError</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-11-1.png" width="700">
+It maybe informative view the results in a different way by scaling the
+error with peptide length. This will allow you to see if the error is
+proportional to the length of the peptide. This is useful as the model
+is more uncertain about the uptake of longer peptides. This gives a
+different view of the data and suggest that error are mostly 10% of the
+uptake values but it some cases close to 20%.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPeptideError.html">plotPeptideError</a></span><span class="op">(</span>HdxData <span class="op">=</span> <span class="va">BRD4_apo</span>,</span>
+<span>                 rex_params <span class="op">=</span> <span class="va">rex_test</span>,</span>
+<span>                 relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-12-1.png" width="700">
+The next step is to examine the residue error distribution. This allows
+us to gain a more granular understanding of the error distribution. The
+function <code>Rex.resolution</code> will give you the error
+distribution for each residue. This completements the global resolution
+metric sigma and the peptide level error metrics</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RexParams.html">Rex.resolution</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 99 rows and 16 columns</span></span>
+<span><span class="co">#&gt;      Resdiues signedARE_15 signedARE_60 signedARE_600 signedARE_3600</span></span>
+<span><span class="co">#&gt;     &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;     &lt;numeric&gt;      &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1           1          NaN          NaN           NaN            NaN</span></span>
+<span><span class="co">#&gt; 2           2          NaN          NaN           NaN            NaN</span></span>
+<span><span class="co">#&gt; 3           3   -0.0319761   -0.0197032     0.0819035       0.121639</span></span>
+<span><span class="co">#&gt; 4           4   -0.0319761   -0.0197032     0.0819035       0.121639</span></span>
+<span><span class="co">#&gt; 5           5   -0.0319761   -0.0197032     0.0819035       0.121639</span></span>
+<span><span class="co">#&gt; ...       ...          ...          ...           ...            ...</span></span>
+<span><span class="co">#&gt; 95         95          NaN          NaN           NaN            NaN</span></span>
+<span><span class="co">#&gt; 96         96  -0.00461687   0.00521986    -0.0194005      0.0120993</span></span>
+<span><span class="co">#&gt; 97         97  -0.00461687   0.00521986    -0.0194005      0.0120993</span></span>
+<span><span class="co">#&gt; 98         98  -0.00461687   0.00521986    -0.0194005      0.0120993</span></span>
+<span><span class="co">#&gt; 99         99  -0.00461687   0.00521986    -0.0194005      0.0120993</span></span>
+<span><span class="co">#&gt;     signedARE_14400     ARE_15     ARE_60   ARE_600  ARE_3600  ARE_14400</span></span>
+<span><span class="co">#&gt;           &lt;numeric&gt;  &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1               NaN        NaN        NaN       NaN       NaN        NaN</span></span>
+<span><span class="co">#&gt; 2               NaN        NaN        NaN       NaN       NaN        NaN</span></span>
+<span><span class="co">#&gt; 3           0.10071  0.0319761  0.0197032 0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; 4           0.10071  0.0319761  0.0197032 0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; 5           0.10071  0.0319761  0.0197032 0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; ...             ...        ...        ...       ...       ...        ...</span></span>
+<span><span class="co">#&gt; 95              NaN        NaN        NaN       NaN       NaN        NaN</span></span>
+<span><span class="co">#&gt; 96       0.00591996 0.00461687 0.00521986 0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 97       0.00591996 0.00461687 0.00521986 0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 98       0.00591996 0.00461687 0.00521986 0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 99       0.00591996 0.00461687 0.00521986 0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt;          TRE_15     TRE_60    TRE_600  TRE_3600  TRE_14400</span></span>
+<span><span class="co">#&gt;       &lt;numeric&gt;  &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1     0.0000000  0.0000000  0.0000000  0.000000    0.00000</span></span>
+<span><span class="co">#&gt; 2     0.0000000  0.0000000  0.0000000  0.000000    0.00000</span></span>
+<span><span class="co">#&gt; 3    -0.0319761 -0.0197032  0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; 4    -0.0319761 -0.0197032  0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; 5    -0.0319761 -0.0197032  0.0819035  0.121639    0.10071</span></span>
+<span><span class="co">#&gt; ...         ...        ...        ...       ...        ...</span></span>
+<span><span class="co">#&gt; 95   0.00000000 0.00000000  0.0000000 0.0000000 0.00000000</span></span>
+<span><span class="co">#&gt; 96  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 97  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 98  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span>
+<span><span class="co">#&gt; 99  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span></code></pre></div>
+<p>To visualise these results, we can use the following function. This
+will allow us to quickly examine the results. We suggest not be cautious
+of data outside of 3*sqrt(sigma) as the model is likely struggling or
+yet to have converged at this point. As we can see the error
+distribution is very high at around residue 68. This corresponds to the
+peptide which had high error at peptide-level error distribution. This
+is expected and the model is correctly reporting where it is struggling
+to model that data either because of lack of convergence or the data is
+unusual at the point.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># calculate a threshold for the data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="../reference/RexParams.html">Rex.globals</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span><span class="op">*</span><span class="fl">3</span></span>
+<span><span class="co">#&gt; [1] 0.1738339 0.1642331</span></span>
+<span></span>
+<span><span class="co"># virualise the residue errors</span></span>
+<span><span class="fu"><a href="../reference/plotResidueResolution.html">plotResidueResolution</a></span><span class="op">(</span><span class="va">rex_test</span>, nrow  <span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 115 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>Further analysis of <code>rex</code> outputs is possible. In the
+diagnostics slots of the <code>RexSummary</code> object, we get an
+estimator of convergence using parrallel chains. We recommend running
+iterations until the estimate is below 1.2 with results closer to 1
+being generally more stable.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rex_test</span><span class="op">@</span><span class="va">summary</span><span class="op">@</span><span class="va">diagnostics</span></span>
+<span><span class="co">#&gt;       Point est. Upper C.I.</span></span>
+<span><span class="co">#&gt; sigma   2.629461   5.502477</span></span></code></pre></div>
+<p>You can plot both sigma and the model log likelihood as a function of
+iterations to diagnose convergence issues. The plots below show that
+sigma is still decreasing and the log likelihood still increasing but
+the chains are tracking each other well. We note that all (except
+heatmaps) are object from <code>ggplot</code> and so you can customise
+them using gramamatical construction in the same way as ggplot.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/plotSigma.html">plotSigma</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotLogLikelihoods.html">plotLogLikelihoods</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-16-2.png" width="700"></p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># example costumisation</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotSigma.html">plotSigma</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span>, name <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-16-3.png" width="700">
+The <code>posteriorEstimates</code> for the parameters and their 95%
+confidence can be found using the following accessors</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RexParams.html">posteriorEstimates</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 99 rows and 5 columns</span></span>
+<span><span class="co">#&gt;      Residues     blong    pilong     qlong       dlong</span></span>
+<span><span class="co">#&gt;     &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1           1   16.3281 0.0379869 0.0812807   0.0864227</span></span>
+<span><span class="co">#&gt; 2           2   16.3281 0.0379869 0.0812807   0.0864227</span></span>
+<span><span class="co">#&gt; 3           3   16.3281 0.0379869 0.0812807   0.0864227</span></span>
+<span><span class="co">#&gt; 4           4   15.7887 0.0391645 0.0677833   0.0862207</span></span>
+<span><span class="co">#&gt; 5           5   15.7887 0.0391645 0.0677833   0.0862207</span></span>
+<span><span class="co">#&gt; ...       ...       ...       ...       ...         ...</span></span>
+<span><span class="co">#&gt; 95         95 0.0957029 0.0944723  0.523581 3.97548e-05</span></span>
+<span><span class="co">#&gt; 96         96 0.0957029 0.0944723  0.523581 3.97548e-05</span></span>
+<span><span class="co">#&gt; 97         97 0.0957029 0.0944723  0.523581 3.97548e-05</span></span>
+<span><span class="co">#&gt; 98         98 0.0957029 0.0944723  0.523581 3.97548e-05</span></span>
+<span><span class="co">#&gt; 99         99 0.0957029 0.0944723  0.523581 3.97548e-05</span></span>
+<span><span class="fu"><a href="../reference/RexParams.html">Rex.quantiles</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 99 rows and 13 columns</span></span>
+<span><span class="co">#&gt;      Residues blong_quantiles_2.5% blong_quantiles_50% blong_quantiles_97.5%</span></span>
+<span><span class="co">#&gt;     &lt;numeric&gt;            &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1           1              6.33397             19.6427               19.7184</span></span>
+<span><span class="co">#&gt; 2           2              6.33397             19.6427               19.7184</span></span>
+<span><span class="co">#&gt; 3           3              6.33397             19.6427               19.7184</span></span>
+<span><span class="co">#&gt; 4           4              6.33397             19.6427               19.7184</span></span>
+<span><span class="co">#&gt; 5           5              6.33397             19.6427               19.7184</span></span>
+<span><span class="co">#&gt; ...       ...                  ...                 ...                   ...</span></span>
+<span><span class="co">#&gt; 95         95            0.0777289           0.0965059             0.0966547</span></span>
+<span><span class="co">#&gt; 96         96            0.0777289           0.0965059             0.0966547</span></span>
+<span><span class="co">#&gt; 97         97            0.0777289           0.0965059             0.0966547</span></span>
+<span><span class="co">#&gt; 98         98            0.0777289           0.0965059             0.0966547</span></span>
+<span><span class="co">#&gt; 99         99            0.0777289           0.0965059             0.0966547</span></span>
+<span><span class="co">#&gt;     pilong_quantiles_2.5% pilong_quantiles_50% pilong_quantiles_97.5%</span></span>
+<span><span class="co">#&gt;                 &lt;numeric&gt;            &lt;numeric&gt;              &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1               0.0203128             0.021442               0.112696</span></span>
+<span><span class="co">#&gt; 2               0.0203128             0.021442               0.112696</span></span>
+<span><span class="co">#&gt; 3               0.0203128             0.021442               0.112696</span></span>
+<span><span class="co">#&gt; 4               0.0203128             0.021442               0.112696</span></span>
+<span><span class="co">#&gt; 5               0.0203128             0.021442               0.112696</span></span>
+<span><span class="co">#&gt; ...                   ...                  ...                    ...</span></span>
+<span><span class="co">#&gt; 95              0.0923607            0.0954022              0.0966571</span></span>
+<span><span class="co">#&gt; 96              0.0923607            0.0954022              0.0966571</span></span>
+<span><span class="co">#&gt; 97              0.0923607            0.0954022              0.0966571</span></span>
+<span><span class="co">#&gt; 98              0.0923607            0.0954022              0.0966571</span></span>
+<span><span class="co">#&gt; 99              0.0923607            0.0954022              0.0966571</span></span>
+<span><span class="co">#&gt;     qlong_quantiles_2.5% qlong_quantiles_50% qlong_quantiles_97.5%</span></span>
+<span><span class="co">#&gt;                &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1            0.000244014           0.0567385              0.205337</span></span>
+<span><span class="co">#&gt; 2            0.000244014           0.0567385              0.205337</span></span>
+<span><span class="co">#&gt; 3            0.000244014           0.0567385              0.205337</span></span>
+<span><span class="co">#&gt; 4            0.000244014           0.0567385              0.205337</span></span>
+<span><span class="co">#&gt; 5            0.000244014           0.0567385              0.205337</span></span>
+<span><span class="co">#&gt; ...                  ...                 ...                   ...</span></span>
+<span><span class="co">#&gt; 95              0.515409            0.540584               0.56212</span></span>
+<span><span class="co">#&gt; 96              0.515409            0.540584               0.56212</span></span>
+<span><span class="co">#&gt; 97              0.515409            0.540584               0.56212</span></span>
+<span><span class="co">#&gt; 98              0.515409            0.540584               0.56212</span></span>
+<span><span class="co">#&gt; 99              0.515409            0.540584               0.56212</span></span>
+<span><span class="co">#&gt;     dlong_quantiles_2.5% dlong_quantiles_50% dlong_quantiles_97.5%</span></span>
+<span><span class="co">#&gt;                &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1              0.0266353            0.028728              0.272239</span></span>
+<span><span class="co">#&gt; 2              0.0266353            0.028728              0.272239</span></span>
+<span><span class="co">#&gt; 3              0.0266353            0.028728              0.272239</span></span>
+<span><span class="co">#&gt; 4              0.0266353            0.028728              0.272239</span></span>
+<span><span class="co">#&gt; 5              0.0266353            0.028728              0.272239</span></span>
+<span><span class="co">#&gt; ...                  ...                 ...                   ...</span></span>
+<span><span class="co">#&gt; 95           1.62502e-05         1.62502e-05           3.12351e-05</span></span>
+<span><span class="co">#&gt; 96           1.62502e-05         1.62502e-05           3.12351e-05</span></span>
+<span><span class="co">#&gt; 97           1.62502e-05         1.62502e-05           3.12351e-05</span></span>
+<span><span class="co">#&gt; 98           1.62502e-05         1.62502e-05           3.12351e-05</span></span>
+<span><span class="co">#&gt; 99           1.62502e-05         1.62502e-05           3.12351e-05</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/RexParams.html">Rex.quantiles</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "Residues"               "blong_quantiles_2.5%"   "blong_quantiles_50%"   </span></span>
+<span><span class="co">#&gt;  [4] "blong_quantiles_97.5%"  "pilong_quantiles_2.5%"  "pilong_quantiles_50%"  </span></span>
+<span><span class="co">#&gt;  [7] "pilong_quantiles_97.5%" "qlong_quantiles_2.5%"   "qlong_quantiles_50%"   </span></span>
+<span><span class="co">#&gt; [10] "qlong_quantiles_97.5%"  "dlong_quantiles_2.5%"   "dlong_quantiles_50%"   </span></span>
+<span><span class="co">#&gt; [13] "dlong_quantiles_97.5%"</span></span></code></pre></div>
+<p>&lt;!-Need to write a function to output uptake and uncertainty with
+plots-&gt;</p>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
@@ -286,7 +752,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.18/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -295,9 +761,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-04 09:59:48 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-06 22:37:00 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 8.403 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 2.308 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -309,7 +775,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-04</span></span>
+<span><span class="co">#&gt;  date     2024-04-06</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -343,18 +809,19 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  dplyr                * 1.1.4      <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  evaluate               0.23       <span style="color: #555555;">2023-11-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fansi                  1.0.6      <span style="color: #555555;">2023-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  farver                 2.1.1      <span style="color: #555555;">2022-07-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap                1.1.1      <span style="color: #555555;">2023-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fs                     1.6.3      <span style="color: #555555;">2023-07-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  generics               0.1.3      <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  genlasso               1.6.1      <span style="color: #555555;">2022-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  GenomeInfoDb           1.38.8     <span style="color: #555555;">2024-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.18 (R 4.3.2)</span></span></span>
-<span><span class="co">#&gt;  GenomeInfoDbData       1.2.11     <span style="color: #555555;">2024-03-27</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  GenomeInfoDbData       1.2.11     <span style="color: #555555;">2024-03-31</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  GenomicRanges          1.54.1     <span style="color: #555555;">2023-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
-<span><span class="co">#&gt;  ggplot2                3.5.0      <span style="color: #555555;">2024-02-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  ggplot2              * 3.5.0      <span style="color: #555555;">2024-02-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  glue                   1.7.0      <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  gtable                 0.3.4      <span style="color: #555555;">2023-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  highr                  0.10       <span style="color: #555555;">2022-12-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  htmltools              0.5.8      <span style="color: #555555;">2024-03-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  htmltools              0.5.8.1    <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  htmlwidgets            1.6.4      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  httpuv                 1.6.15     <span style="color: #555555;">2024-03-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  httr                   1.4.7      <span style="color: #555555;">2023-08-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -363,6 +830,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  jquerylib              0.1.4      <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  jsonlite               1.8.8      <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  knitr                  1.45       <span style="color: #555555;">2023-10-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  labeling               0.4.3      <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  LaplacesDemon          16.1.6     <span style="color: #555555;">2021-07-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  later                  1.3.2      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  lattice                0.22-6     <span style="color: #555555;">2024-03-20</span> <span style="color: #555555;">[3]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -389,16 +857,16 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  pkgconfig              2.0.3      <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  pkgdown                2.0.7      <span style="color: #555555;">2022-12-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  plyr                   1.8.9      <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  promises               1.2.1      <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  promises               1.3.0      <span style="color: #555555;">2024-04-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  purrr                  1.0.2      <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  qqman                  0.1.9      <span style="color: #555555;">2023-08-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  R6                     2.5.1      <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  ragg                   1.3.0      <span style="color: #555555;">2024-03-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RColorBrewer           1.1-3      <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  RColorBrewer         * 1.1-3      <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -423,6 +891,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  utf8                   1.2.4      <span style="color: #555555;">2023-10-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  vctrs                  0.6.5      <span style="color: #555555;">2023-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  vegan                  2.6-4      <span style="color: #555555;">2022-10-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  withr                  3.0.0      <span style="color: #555555;">2024-01-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  xfun                   0.43       <span style="color: #555555;">2024-03-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  xml2                   1.3.6      <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  xtable                 1.8-4      <span style="color: #555555;">2019-04-21</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
