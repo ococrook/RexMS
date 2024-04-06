@@ -1,0 +1,571 @@
+---
+title: "Conformational Signature Analysis"
+author: 
+  - name: Oliver Crook
+    affiliation:
+    - University of Oxford
+    email: ococrook@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('RexMS')`"
+vignette: >
+  %\VignetteIndexEntry{Conformational Signature Analysis with RexMS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+# Introduction
+
+This vignette explains how to perform conformational signature analysis.
+The essential idea is when you have numerous states in which you performed
+HDX-MS and potentially a downstream outcome, you can use the conformational
+signature analysis to identify the regions of the protein that are most
+likely to be associated for the observed outcome. There are three options
+
+1) **Unsupervised Conformational Signature Analysis** - This is the most basic
+form of the analysis. It will identify the regions of the protein that are most variable
+across the states. This is useful for identifying regions that are associated
+with the variation in the data.
+2) **Supervised Conformational Signature Analysis with discrete outcomes** - This
+is a more advanced form of the analysis using a discrete outcome such as "monovalent".
+It will identify the regions of the protein that are most variable across
+the states and are also associated with the outcome. This is useful
+for identifying regions that are associated with the outcome. This is
+done by dimensionality reduction that accounts for the outcome.
+3) **Supervised Conformational Signature Analysis with continuous outcomes** - 
+This is a more advanced form of the analysis using a continuous outcome
+such as K_d. It will identify the regions of
+the protein that are most variable across the states and are also associated
+with the outcome. This is useful for identifying regions that are associated
+with the outcome. This is done by dimensionality reduction that accounts for 
+the outcome. 
+
+The trickest part of the analysis is setting up the data correctly. You can do
+this in a excel file and load as csv but we will demonstrate using R manually below.
+
+
+# Getting started
+
+First we will load the library and the data. The data is a list of dataframes
+where each dataframe is a state. Each dataframe should have the following columns
+
+1) Sequence - The peptide sequence
+2) Start - The start of the peptide
+3) End - The end of the peptide
+4) Exposure - The timepoint of the HDX-MS experiment
+5) Uptake - The deuteration of the peptide
+6) State - The state of the HDX-MS experiment
+7) MaxUptake - The maximum deuteration of the peptide
+8) replicate - The replicate of the HDX-MS experiment
+
+This is as in the single protein analysis. We suggest performing that
+analysis carefully first before proceeding to the conformational signature analysis.
+We recommend storing the reference or apo state in a separate dataframe.
+The analysis expects consistency between the experiments (e.g. replicates
+and number of timepoints, region of the protein). You will also need to name
+the states you are interested in and store them in a vector.
+
+```{r,}
+library(RexMS)
+
+# for conformation signature analysis organise data into a list
+
+data("LXRalpha_compounds") # data for different compounds as a list
+data("LXRalpha_processed") # data for the reference state
+
+# usual important terms
+numTimepoints <- length(unique(LXRalpha_compounds[[1]]$Exposure))
+Timepoints <- unique(LXRalpha_compounds[[1]]$Exposure)
+numPeptides <- length(unique(LXRalpha_compounds[[1]]$Sequence))
+R <- max(LXRalpha_compounds[[1]]$End)
+
+# names of compounds
+states <- names(LXRalpha_compounds)
+
+# let look at states
+states
+```
+Our analysis has 18 compounds and a reference state. We will use the reference state
+as the reference for the conformational signature analysis. Whichever route you
+follow the inital steps are indentical. We will start with the list in an
+`lapply` function. To each element in this list (which is an entire HDX dataset)
+we apply the `rex` function. This function will perform the usual rex model.
+There are only 3 timepoints in this analysis so we will set the `tCoef` to
+`c(0, 1, 1)`. We will also set the seed to 1 for reproducibility. We will
+use the `SerialParam` for the `BPPARAM` argument. This is because the analysis
+is not too computationally intensive. We will store the results in a list.
+For brevity we will run the analysis for 100 iterations but we recommend much 
+more (typically 5000) for final analysis. The following function take a while 
+to run so we will not run them here but pre-load the results from the package
+the code is placed for completeness.
+
+```{r, eval=FALSE}
+set.seed(1)
+rex_lxr <- lapply(LXRalpha_compounds, function(xx) {
+                
+                rex(HdxData = DataFrame(xx),
+                        numIter = 100,
+                        R = R, 
+                        numtimepoints = numTimepoints,
+                        timepoints = Timepoints,
+                        seed = 1L,
+                        tCoef = c(0, rep(1, 2)),
+                        BPPARAM = SerialParam())})
+
+```
+
+The next step is to apply `RexProcess` to the output of the `rex` function. 
+Remember there are 18 compounds so we will use `lapply` again. We will set the
+range to 50:100. This is mcmc iteration we are interested in. We will store the
+results in a list. Again, we do not actually run the code here but pre-load the
+results from the package.
+
+```{r, eval=FALSE}
+
+rex_lxr <- lapply(seq_along(rex_lxr), 
+                            function(i)
+                              RexProcess(HdxData = DataFrame(LXRalpha_compounds[[i]]),
+                                          params = rex_lxr[[i]],
+                                         range = 50:100))
+```
+
+We will now load the results from the package. The results are stored in the
+`rex_lxr` object.
+
+```{r}
+data("rex_lxr")
+```
+
+In the next step we would perform the same differential analysis as in the
+differential analysis but 18 times because there are 18 compounds. We will
+use the same reference state for each compound. We will store the results in
+a list. Again, we do not actually run the code here but pre-load the results
+from the package. Remember `params` are the various states and the
+`HdxData` is the reference state HDX data. The `params` is the output of the
+`rex` function, which has been processed. The `whichChain` is the chain of the
+analysis you are interested in using to generate the results. We will use chain 1,
+but recommend assessing the quality of multiple chains.
+
+```{r, eval=FALSE}
+out_lxr_compound_proccessed <- lapply(rex_lxr, function(xx)
+                                        processDifferential(HdxData =  DataFrame(LXRalpha_processed),
+                                                            params = xx,
+                                                            whichChain = 1))
+```
+
+We will now load the results from the package. The results are stored in the
+`out_lxr_compound_proccessed` object.
+
+```{r}
+data("out_lxr_compound_proccessed")
+```
+
+
+# Unsupervised Conformational Signature Analysis
+
+To perform the unsupervised conformational signature analysis, we will use the
+`unsupervisedCSA` function. This function will take the output of the
+`processDifferential` function. Whilst for unsupervised analysis you do not need
+to specify the outcome, we will generate the labels results anayway to highlight
+the details of setting up that analysis.
+
+For our protein there are 18 compounds and a reference state. Each of the compounds
+induce one outcome in two scenarios or the outcome is unknown (which is allowed in
+our analysis). We will generate the labels for the outcomes. We will store
+the results in a dataframe with the states as the rownames. For proteins where
+the outcome is unknown, we will set the outcome to "Unknown". For the two scenarios,
+the first is ABCA1 induction and the second is lipogencity. We will set the
+outcome to "low" or "high" for ABCA1 induction. We will set the outcome to
+"Non-Lipogenic" or "Lipogenic" for lipogenicity. Of course, you may adapt these
+outcomes to your own analysis. We will then convert the outcomes to factors
+with the levels in the order we are interested in. You can of course
+load this dataframe from something that was made in excel and covert to a
+dataframe.
+
+```{r,}
+# First set up the dataframe with unknowns and correct rownames
+labels <- data.frame(ABCA1 = rep("Unknown", length(states)),
+                     lipogenic = rep("Unknown", length(states)))
+rownames(labels) <- states
+
+# Now set the outcomes with ABCA1 induction
+labels$ABCA1[rownames(labels) %in% c("LXR.623", "AZ9", "AZ8", "AZ5")] <- "low"
+labels$ABCA1[rownames(labels) %in% c("Az1", "AZ2", "AZ3", "AZ4", "AZ6",
+                                     "AZ7", "AZ876", "T0.901317", "WAY.254011",
+                                     "F1", "GW3965", "BMS.852927")] <- "high"
+
+# Now set the outcomes with lipogenicity
+labels$lipogenic[rownames(labels) %in% c("AZ6", "AZ7", "AZ9",
+                                         "AZ8", "GW3965", "BMS.852927",
+                                                 "LXR.623")] <- "Non-Lipogenic"
+
+labels$lipogenic[rownames(labels) %in% c("AZ876", "AZ1",
+                                         "T0.901317", "F1", "WAY.254011")] <- "Lipogenic"
+
+# Now convert to factors with the correct levels
+labels$ABCA1 <- factor(labels$ABCA1,
+                       levels = c("low", "high", "Unknown"))
+labels$lipogenic <- factor(labels$lipogenic,
+                           levels = c("Non-Lipogenic", "Lipogenic", "Unknown"))
+```
+
+We will now run the unsupervised conformational signature analysis. We will
+set the `quantity` to "TRE" as this is the quantity we use to generate the signature.
+We will set the `states` to the states we are interested in. We will set the
+`whichTimepoint` to 600. This is the timepoint used to generate the conformational
+signature. We will store the results in the `ucsa` object. Since this is the 
+unsupervised analysis we do not need to specify the `labels` argument.
+
+
+```{r,}
+ucsa <- UnsupervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
+                        quantity = "TRE",
+                        states = states,
+                        whichTimepoint = 600)
+```
+
+We will now look at the results. The results are stored in a list with the
+first entry `pca_states` being the Principal Component Analysis of the analysis.
+The rotation matrix can be used as the conformational signature. This contains
+all the results from a PCA analysis. The second entry `states_wide` is a dataframe
+with the states as the columns and the residue as the rows. The values are the
+TRE values that were used to generate the conformational signature.
+
+You can perform any downstream analysis you would like with the results. For
+example, you could plot the PCA results. We will plot the first two components
+of the PCA analysis. The labels are not used unless you pass them to the 
+`pca_params` argument even if you supply a `labels` argument.
+
+Note that the results look strange because we have not run the algorith for 
+enough iterations.
+
+
+```{r,}
+library(ggfortify)
+# doesn't use the labels even though they are passed as an argument
+plotUCSA(pca_states = ucsa$pca_states,
+         states_wide = ucsa$states_wide,
+         labels = labels)
+
+# uses labels to colour the points
+plotUCSA(pca_states = ucsa$pca_states,
+         states_wide = ucsa$states_wide,
+         labels = labels,
+         pca_params = list(x = 1, # pca component 1 on x-axis
+                           y = 2, # pca component 2 on y-axis
+                           whichlabel = "ABCA1")) # colour by ABCA1
+
+
+```
+
+# Supervised Conformational Signature Analysis with discrete outcomes
+
+Until now we have not used the labels as part of the analysis only to interpret
+the results of the unsupervised analysis. Supervised conformational signature
+analysis is more advanced and uses the labels to generate the conformational
+signature. The idea is to identify the regions of the protein that are most
+variable across the states and are also associated with the outcome.
+
+To perform the supervised conformational signature analysis with discrete outcomes,
+we will use the `supervisedCSA` function. This function will take the output of the
+`processDifferential` function. We will generate the labels for the outcomes as
+before. We will store the results in a dataframe with the states as the rownames.
+For proteins where the outcome is unknown, we will set the outcome to "Unknown".
+For the two scenarios, the first is ABCA1 induction and the second is lipogencity.
+We will set the outcome to "low" or "high" for ABCA1 induction. We will set the
+outcome to "Non-Lipogenic" or "Lipogenic" for lipogenicity. Of course, you may adapt
+these outcomes to your own analysis. We will then convert the outcomes to factors
+with the levels in the order we are interested in. You can of course load this
+dataframe from something that was made in excel and covert to a dataframe.
+
+We will now run the supervised conformational signature analysis with discrete
+outcomes. We will set the `quantity` to "TRE" as this is the quantity we use to
+generate the signature. We will set the `states` to the states we are interested in.
+We will set the `whichTimepoint` to 600. This is the timepoint used to generate the
+conformational signature. We will store the results in the `scsa` object. We
+will set the `whichlabel` to "ABCA1" as this is the outcome we are interested in.
+We will also set `whichlabel` to "lipogenic" to generate the conformational signature
+for lipogenicity. Since this is the supervised analysis we need to specify the
+`labels` argument from the dataframe we generated earlier. We will set the `orthoI`
+to 1. This is the number of orthogonal components to use in the analysis. We will
+set this to 1 for simplicity. We will store the results in the `scsa` object.
+
+The analysis used the labels to generate the conformational signature by using
+orthogonal partial least squares discrimant analysis (OPLS-DA). The results return
+a formal `opls` object. This object contains the results of the analysis.
+
+Note that the results look strange because we have not run the algorith for
+enough iterations earlier. The results are allowed to contain "Unknown" outcomes.
+
+```{r,}
+scsa <- supervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
+                      quantity = "TRE",
+                      states = states,
+                      labels = labels,
+                      whichlabel = "ABCA1",
+                      whichTimepoint = 600,
+                      orthoI = 1)
+
+scsa2 <- supervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
+                      quantity = "TRE",
+                      states = states,
+                      labels = labels,
+                      whichlabel = "lipogenic",
+                      whichTimepoint = 600,
+                      orthoI = 1)
+
+```
+
+
+We can now look at the results of the analysis. The results are stored in the 
+`opls` object. For each analysis, we can plot the loading of the conformational
+signature. This is the regions of the protein that are most variable across the
+states and are also associated with the outcome. We will plot the loadings of the
+outcomes. The predictive component is the component that is associated with the
+outcome. The orthogonal component is the component that is not associated with the
+outcome. We will plot the loadings for ABCA1 and lipogenicity for both 
+predictive and orthogonal components.
+
+Note again the results look strange because we have not run the algorith for
+enough iterations earlier.
+
+```{r,}
+plotLoadingSCSA(states.plsda = scsa,
+                labels = labels,
+                whichLoading = "predictive",
+                whichlabel = "ABCA1")
+
+plotLoadingSCSA(states.plsda = scsa,
+                labels = labels,
+                whichLoading = "orthogonal",
+                whichlabel = "ABCA1")
+
+plotLoadingSCSA(states.plsda = scsa2,
+                labels = labels,
+                whichLoading = "predictive",
+                whichlabel = "lipogenic")
+
+plotLoadingSCSA(states.plsda = scsa2,
+                labels = labels,
+                whichLoading = "orthogonal",
+                whichlabel = "lipogenic")
+```
+
+You can also plot the scores of the conformational signature. This is the
+scores of the samples on the predictive and orthogonal components. We will
+plot the scores for ABCA1 and lipogenicity for both predictive and orthogonal
+components.
+
+```{r,}
+plotSCSA(states.plsda = scsa2,
+         labels = labels,
+         whichlabel = "lipogenic")
+```
+
+
+
+# Supervised Conformational Signature Analysis with continuous outcomes
+
+We can also perform the supervised conformational signature analysis with continuous
+outcomes. This is similar to the discrete outcomes but the outcome is continuous.
+To specify the labels we will generate the labels for the outcomes as before. We
+will store the results in a dataframe with the states as the rownames. For proteins
+where the outcome is unknown, we will set the outcome to `NA`. In this case,
+we will use the `ED50` as the outcome. We will log the `ED50` values. You can of
+course load this dataframe from something that was made in excel and covert to a
+dataframe. We keep these values as numeric rather than factors.
+
+```{r,}
+labels$ED50 <- NA
+labels[, "ED50"] <- log(c(4.11, NA, NA, 0.956, NA, 9.64, 1.49,
+                      5.65, 0.969, 2.10, 11.3, NA, 31.5, 341, 32.2, 17.2, NA))
+```
+
+We will now run the supervised conformational signature analysis with continuous
+outcomes. We will set the `quantity` to "TRE" as this is the quantity we use to
+generate the signature. We will set the `states` to the states we are interested in.
+We will set the `whichTimepoint` to 600. This is the timepoint used to generate the
+conformational signature. 
+
+To perform the supervised conformational signature analysis with continuous outcomes,
+we will use the `supervisedCSA` function. In this case, we will set the `type` to
+"continuous" so that it does not perform a discrete analysis. We will set the
+`whichlabel` to "ED50" as this is the outcome we are interested in.
+
+```{r,}
+scsa3 <- supervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
+                      quantity = "TRE",
+                      states = states,
+                      labels = labels,
+                      whichlabel = "ED50",
+                      whichTimepoint = 600,
+                      orthoI = 1,
+                      type = "continuous")
+```
+
+We can now look at the results of the analysis. The results are stored in the
+`opls` object. We can plot the loading of the conformational signature. This is
+the regions of the protein that are most variable across the states and are also
+associated with the outcome. We will also plot the scores of the conformational
+signature. This is the scores of the samples on the predictive and orthogonal
+components. We will plot the loadings and scores for the `ED50` outcome.
+
+```{r,}
+
+plotSCSA(states.plsda = scsa3,
+         labels = labels,
+         whichlabel = "ED50",
+         type = "continuous") + labs(col = "log ED50")
+
+plotLoadingSCSA(states.plsda = scsa3,
+                labels = labels,
+                whichLoading = "predictive",
+                whichlabel = "ED50")
+
+plotLoadingSCSA(states.plsda = scsa3,
+                labels = labels,
+                whichLoading = "orthogonal",
+                whichlabel = "ED50")
+```
+
+# Advanced analysis
+
+Until now we havent used the uncertainty in the analysis. We can use the
+uncertainty in the analysis to generate the conformational signature. We sample
+from the distribution of the parameters to generate the conformational signature.
+We will use the `sampleTREuncertainty` function. This function will take the outputs
+of the analysis and sample from the distribution of the parameters to 
+quantify the uncertainty in the conformational signature. The important 
+argument below is the `num_montecarlo` which is the number of samples to take
+from the distribution. We will set this to 5000. The ``whichSamples`` argument
+is the samples to use from the orginal analysis. We will use the first 50 samples
+- note that since the results have been processed the samples are actually the
+first 50 samples of the processed results. 
+
+We will not run the code here but pre-load the results from the package.
+
+```{r, eval=FALSE}
+TRE_dist <- sampleTREuncertainty(HdxData = LXRalpha_processed,
+                     RexParamsList = rex_lxr,
+                     quantity = "TRE",
+                     states = states,
+                     whichChain = 1,
+                     whichSamples = seq.int(1, 50),
+                     whichTimepoint = 600,
+                     num_montecarlo = 5000)
+
+```
+
+We will now load the results from the package. The results are stored in the
+`TRE_dist` object.
+
+```{r}
+data("TRE_dist")
+```
+
+To plot the results we will use the `plotTREuncertaintyLoadings` function. This function
+will take the output of the `sampleTREuncertainty` function and plot the results.
+We also need to pass the `pca_states` object from the unsupervised analysis. We will
+plot the results. This analysis reports the distribution of the loadings.
+
+```{r,}
+gg <- plotTREuncertaintyLoadings(df_all = TRE_dist,
+                                 pca_states = ucsa$pca_states,
+                                 states = states)
+gg
+
+```
+To visualise the results we can use the `plotTREuncertainty` function. This function
+will take the output of the `sampleTREuncertainty` function and plot the results.
+We also need to pass the `pca_states` object from the unsupervised analysis. 
+This plots the unsupervised analysis with the uncertainty as contours in the pca
+coordinates.
+
+Again the results suffer because of the lack of iterations in the analysis.
+
+
+```{r,}
+plotTREuncertainty(df_all = TRE_dist,
+                   pca_states = ucsa$pca_states,
+                   states = states)
+
+```
+
+
+You may be interested in plotting the results of the analys on the structure.
+This is the same set-up as before you simply need to make sure that you align
+the residue numbers correctly
+
+```{r,}
+# Using the predictive component of the supervised analysis as an example
+library(NGLVieweR)
+library(dplyr)
+
+v <- matrix(t(scsa@loadingMN), nrow = 1)
+
+# set colnames carefully to residue number by first remove the x from the rownames
+# and then coverting to numeric
+colnames(v) <- as.numeric(gsub("x", "", rownames(scsa@loadingMN)))
+pdb_filepath <- system.file("extdata", "2acl.pdb", mustWork = TRUE, 
+                            package = "RexMS")
+
+mycolor_parameters <- hdx_to_pdb_colours(dataset = v,
+                                         pdb = pdb_filepath,
+                                         cmap_name = "CSA", scale_limits = c(-0.2,0))
+
+graphics <- NGLVieweR(pdb_filepath) %>%
+  stageParameters(backgroundColor = "white", zoomSpeed = 1) %>%
+  addRepresentation("ribbon") %>%   setQuality("high") %>% 
+  addRepresentation("ribbon", param = list(color=mycolor_parameters,
+                                           backgroundColor="white"))
+
+graphics
+
+
+
+```
+
+
+
+To extract the information from the uncertainty quantification analysis: 
+
+
+```{r,}
+# Using the lower quantile as an example
+loadingquants <- gg$data
+
+v <- matrix(as.numeric(loadingquants[loadingquants$level == 0.025,
+                                     "quantile", drop = FALSE][[1]]), nrow = 1)
+colnames(v) <- seq.int(ncol(v))
+pdb_filepath <- system.file("extdata", "2acl.pdb", mustWork = TRUE, 
+                            package = "RexMS")
+
+
+mycolor_parameters <- hdx_to_pdb_colours(dataset = v,
+                                         pdb = pdb_filepath,
+                                         cmap_name = "CSA")
+
+graphics <- NGLVieweR(pdb_filepath) %>%
+  stageParameters(backgroundColor = "white", zoomSpeed = 1) %>%
+  addRepresentation("ribbon") %>%   setQuality("high") %>% 
+  addRepresentation("ribbon", param = list(color=mycolor_parameters,
+                                           backgroundColor="white"))
+
+graphics
+
+```
+
+
+
+
+
+
+
+
+
