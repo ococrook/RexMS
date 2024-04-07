@@ -8,7 +8,25 @@ last_built: 2024-04-06T22:28Z
 tutorials:
 - name: DifferentialRexMS
   title: Differential residue HDX-MS with RexMS
-  url: https://ococrook.github.io/RexMS/articles/DifferentialRexMS.html
+  url: https://ococrook.github.io/RexMS/tutorials/DifferentialRexMS.html
 - name: ConformationalSignatureAnalysis
   title: Conformational Signature Analysis with RexMS
-  url: https://ococrook.github.io/RexMS/articles/ConformationalSignatureAnalysis.html
+  url: https://ococrook.github.io/RexMS/tutorials/ConformationalSignatureAnalysis.html
+
+navbar:
+  structure:
+    left:  [reference, articles, tutorials, news]
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Introduction to RexMS
+        href: articles/ReX.html
+    tutorials:
+      text: Tutorials
+      menu:
+      - text: Differnential HDX-MS with RexMS
+        href: tutorials/DifferentialRexMS.html
+      - text: ConformationalSignatureAnalysis
+        href: tutorials/ConformationalSignatureAnalysis.html
+
