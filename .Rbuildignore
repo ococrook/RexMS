@@ -2,3 +2,5 @@
 ^README\.Rmd$
 ^\.github$
 ^codecov\.yml$
+^vignettes/DifferentialRexMS\.Rmd$
+^vignettes/ConformationalSignatureAnalysis\.Rmd$
