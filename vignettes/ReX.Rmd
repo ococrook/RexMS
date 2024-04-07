@@ -478,7 +478,23 @@ Rex.quantiles(rex_test)
 colnames(Rex.quantiles(rex_test))
 ```
 
-<!-Need to write a function to output uptake and uncertainty with plots->
+To visualise the results, we can use the following function. This will
+predict the uptake for each residue and plot the results. The function
+`plotUptake` will plot the results. The function has a number of arguments
+but the most important are the following:
+
+- `Uptake` which is the object produced by the `uptakePredict` function.
+- `facet` which is a logical value indicating whether to facet the plot
+(facets by timepoints)
+- `values` which is a vector of colours to use in the plot of timepoints
+- `nrow` which is an integer value indicating the number of rows in the facet.
+
+```{r,}
+
+Uptake <- uptakePredict(rex_test)
+plotUptake(Uptake)
+
+```
 
 
 # Reproducibility

@@ -154,3 +154,160 @@ cleanHDX <- function(res, clean = TRUE) {
 
     return(res)
 }
+
+##' Function that predict the uptake from the parameters of a Rex model
+##'
+##' @param params An object of class RexParams containing the parameters of the Rex model
+##' @return Returns a DataFrame of the predicted uptake
+##' @md
+##' @examples
+##' require(RexMS)
+##' require(dplyr)
+##' data("BRD4_apo")
+##' BRD4_apo <- BRD4_apo %>% filter(End < 40)
+##'
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+## numPeptides <- length(unique(BRD4_apo$Sequence))
+##'
+##' rex_example <- rex(HdxData = DataFrame(BRD4_apo),
+##'                 numIter = 4, # typically much larger
+##'                 R = max(BRD4_apo$End),
+##'                 numtimepoints = numTimepoints,
+##'                 timepoints = Timepoints,
+##'                 seed = 1L,
+##'                 numChains = 1L,
+##'                 tCoef = c(0, rep(1, 5)),
+##'                 BPPARAM = SerialParam())
+##' rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                           params = rex_example,
+##'                           thin = 1,
+##'                           range = 1:4,
+##'                           whichChains = c(1))
+##'                           
+##' uptakePredict(rex_example)                                      
+##' @export
+uptakePredict <- function(params){
+  
+  stopifnot("params must be a RexParams object" = is(params, "RexParams"))
+  
+  # Get the parameters
+  pe <- posteriorEstimates(params)
+  blong <- pe$blong
+  pilong <- pe$pilong
+  qlong <- pe$qlong
+  dlong <- pe$dlong
+  
+  # get timepoints
+  timepoints <- params@chains@chains[[1]]@timepoints
+  phi <- params@chains@chains[[1]]@phi
+  
+  out <- sapply(seq.int(length(blong)), function(z) {
+    doublelogisticFunction(timepoints,
+                           b = blong[z],
+                           a = phi, q = qlong[z],
+                           pi = pilong[z], d = dlong[z]
+    )
+  })
+  
+  out_long <- DataFrame(Residue = rep(pe$Residues, each = length(timepoints)),
+                        timepoints = rep(timepoints, times = length(pe$Residues)),
+                        Uptake = as.vector(out))
+  
+  return(out_long)
+  
+}
+
+##' Plot the uptake from the output of a Rex model from the uptakePredict function
+##' @param Uptake An object of class DataFrame containing the results of the
+##' uptakePredict function
+##' @param facet A logical value indicating whether to facet the plot 
+##'   (Facets by timepoints)
+##' @param values A vector of colours to use in the plot of timepoints
+##' @param nrow An integer value indicating the number of rows in the facet.
+##' @return Returns a ggplot object
+##' @md
+##' @examples
+##' require(RexMS)
+##' require(dplyr)
+##' data("BRD4_apo")
+##' BRD4_apo <- BRD4_apo %>% filter(End < 40)
+##'
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+## numPeptides <- length(unique(BRD4_apo$Sequence))
+##'
+##' rex_example <- rex(HdxData = DataFrame(BRD4_apo),
+##'                 numIter = 4, # typically much larger
+##'                 R = max(BRD4_apo$End),
+##'                 numtimepoints = numTimepoints,
+##'                 timepoints = Timepoints,
+##'                 seed = 1L,
+##'                 numChains = 1L,
+##'                 tCoef = c(0, rep(1, 5)),
+##'                 BPPARAM = SerialParam())
+##' rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                           params = rex_example,
+##'                           thin = 1,
+##'                           range = 1:4,
+##'                           whichChains = c(1))
+##'                           
+##' Uptake <- uptakePredict(rex_example)
+##' plotUptake(Uptake)                                      
+##' @export
+plotUptake <- function(Uptake,
+                       facet = FALSE,
+                       values = brewer.pal(9, "Dark2"),
+                       nrow = 2){
+  
+  stopifnot("Uptake must be a DataFrame" = is(Uptake, "DFrame"))
+  
+  gg <- ggplot(Uptake, aes(x = Residue,
+                           y = Uptake,
+                           group = timepoints,
+                           col = factor(timepoints))) +
+    geom_line(lwd = 1.1, alpha = 0.5) +
+    geom_point() + 
+    theme_minimal() +
+    labs(x = "Residues", y = "Uptake") + 
+    labs(color = "Timepoints") + 
+    scale_x_continuous(n.breaks = 10) + 
+    scale_y_continuous(n.breaks = 10, limits = c(0, 1)) + 
+    scale_color_manual(values = values )
+    
+  if (isTRUE(facet)) {
+    
+    gg <- gg + facet_wrap(~timepoints, nrow = nrow)
+    
+  }
+   
+  return(gg)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -78,4 +78,6 @@ export(prepareIndexes,
        plotLoadingSCSA,
        sampleTREuncertainty,
        plotTREuncertainty,
-       plotTREuncertaintyLoadings)
+       plotTREuncertaintyLoadings,
+       uptakePredict,
+       plotUptake)
