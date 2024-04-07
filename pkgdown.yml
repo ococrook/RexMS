@@ -5,3 +5,10 @@ articles:
   ReX: ReX.html
 last_built: 2024-04-06T22:28Z
 
+tutorials:
+- name: DifferentialRexMS
+  title: Differential residue HDX-MS with RexMS
+  url: https://ococrook.shinyapps.io/DifferentialRexMS/
+- name: ConformationalSignatureAnalysis
+  title: Conformational Signature Analysis with RexMS
+  url: https://ococrook.shinyapps.io/ConformationalSignatureAnalysis/
