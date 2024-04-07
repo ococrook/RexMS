@@ -79,6 +79,9 @@
     <loc>/reference/loglik.html</loc>
   </url>
   <url>
+    <loc>/reference/marginalEffect.html</loc>
+  </url>
+  <url>
     <loc>/reference/maxUptakes.html</loc>
   </url>
   <url>
@@ -136,6 +139,12 @@
     <loc>/reference/plotUCSA.html</loc>
   </url>
   <url>
+    <loc>/reference/plotUptake.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plotUptakeUncertainty.html</loc>
+  </url>
+  <url>
     <loc>/reference/plotVolcano.html</loc>
   </url>
   <url>
@@ -170,5 +179,8 @@
   </url>
   <url>
     <loc>/reference/uptakeGuess.html</loc>
+  </url>
+  <url>
+    <loc>/reference/uptakePredict.html</loc>
   </url>
 </urlset>

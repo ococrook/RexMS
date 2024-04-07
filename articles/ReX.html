@@ -80,7 +80,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">6 April 2024</h4>
+            <h4 data-toc-skip class="date">7 April 2024</h4>
       
       
       <div class="hidden name"><code>ReX.Rmd</code></div>
@@ -720,8 +720,64 @@ confidence can be found using the following accessors</p>
 <span><span class="co">#&gt;  [7] "pilong_quantiles_97.5%" "qlong_quantiles_2.5%"   "qlong_quantiles_50%"   </span></span>
 <span><span class="co">#&gt; [10] "qlong_quantiles_97.5%"  "dlong_quantiles_2.5%"   "dlong_quantiles_50%"   </span></span>
 <span><span class="co">#&gt; [13] "dlong_quantiles_97.5%"</span></span></code></pre></div>
-<p>&lt;!-Need to write a function to output uptake and uncertainty with
-plots-&gt;</p>
+<p>To visualise the results, we can use the following function. This
+will predict the uptake for each residue and plot the results. The
+function <code>plotUptake</code> will plot the results. The function has
+a number of arguments but the most important are the following:</p>
+<ul>
+<li>
+<code>Uptake</code> which is the object produced by the
+<code>uptakePredict</code> function.</li>
+<li>
+<code>facet</code> which is a logical value indicating whether to
+facet the plot (facets by timepoints)</li>
+<li>
+<code>values</code> which is a vector of colours to use in the plot
+of timepoints</li>
+<li>
+<code>nrow</code> which is an integer value indicating the number of
+rows in the facet.</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">Uptake</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uptakePredict.html">uptakePredict</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotUptake.html">plotUptake</a></span><span class="op">(</span><span class="va">Uptake</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in brewer.pal(9, "Dark2"): n too large, allowed maximum for palette Dark2 is 8</span></span>
+<span><span class="co">#&gt; Returning the palette you asked for with that many colors</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p>The previous plot is useful to see the general uptake but doesn’t
+incoperate the uncertainty in the model. The following plot will show
+the uptake with the uncertainty. First, we have to sample from the
+posterior distribution of the model. This is done using the
+<code>marginalEffect</code> function. The function has a number of
+arguments but the most important are the following:</p>
+<ul>
+<li>
+<code>params</code> which is the <code>RexParams</code> object
+produced by the <code>rex</code> function.</li>
+<li>
+<code>method</code> which is the method used to genrate the
+posterior samples. The default is ‘fitted’ which will give the fitted
+values and only accounts for the uncertainty in the model coefficients.
+The other option is ‘predict’ which accounts for the observation-level
+uncertainty and the uncertainty in the model parameters.</li>
+<li>
+<code>tCoef</code> which is the coefficients for the timepoints.
+This account for the fact that the variance at the 0 timepoint might be
+0 (measured without error). This value is multiplied by the variance
+across timepoints to scale the variance. We recommend that the first
+value is 0 and the rest are 1. However, if you have a good reason to
+change this value you can do so.</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/marginalEffect.html">marginalEffect</a></span><span class="op">(</span><span class="va">rex_test</span>,</span>
+<span>                          method <span class="op">=</span> <span class="st">"predict"</span>,</span>
+<span>                          tCoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">numTimepoints</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plotUptakeUncertainty.html">plotUptakeUncertainty</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in brewer.pal(9, "Dark2"): n too large, allowed maximum for palette Dark2 is 8</span></span>
+<span><span class="co">#&gt; Returning the palette you asked for with that many colors</span></span></code></pre></div>
+<p><img src="ReX_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
@@ -735,7 +791,7 @@ package (ococrook, 2024) was made possible thanks to:</p>
 (Oleś, 2023)</li>
 <li>
 <em><a href="https://CRAN.R-project.org/package=knitr" class="external-link">knitr</a></em> (Xie,
-2023)</li>
+2024)</li>
 <li>
 <em><a href="https://CRAN.R-project.org/package=RefManageR" class="external-link">RefManageR</a></em>
 (McLean, 2017)</li>
@@ -752,7 +808,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.18/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -761,9 +817,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-06 22:37:00 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-07 17:27:59 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 2.308 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 2.339 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -775,7 +831,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-06</span></span>
+<span><span class="co">#&gt;  date     2024-04-07</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -829,7 +885,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  IRanges                2.36.0     <span style="color: #555555;">2023-10-24</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  jquerylib              0.1.4      <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  jsonlite               1.8.8      <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  knitr                  1.45       <span style="color: #555555;">2023-10-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  knitr                  1.46       <span style="color: #555555;">2024-04-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  labeling               0.4.3      <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  LaplacesDemon          16.1.6     <span style="color: #555555;">2021-07-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  later                  1.3.2      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -866,7 +922,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-07</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -910,7 +966,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 </h2>
 <p>This vignette was generated using <em><a href="https://bioconductor.org/packages/3.18/BiocStyle" class="external-link">BiocStyle</a></em>
 (Oleś, 2023) with <em><a href="https://CRAN.R-project.org/package=knitr" class="external-link">knitr</a></em> (Xie,
-2023) and <em><a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a></em>
+2024) and <em><a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a></em>
 (Allaire, Xie, Dervieux et al., 2024) running behind the scenes.</p>
 <p>Citations made with <em><a href="https://CRAN.R-project.org/package=RefManageR" class="external-link">RefManageR</a></em>
 (McLean, 2017).</p>
@@ -964,9 +1020,9 @@ Information</em>. R package version 1.2.2, <a href="https://r-lib.github.io/sess
 <a href="https://github.com/r-lib/sessioninfo#readme" class="external-link">https://github.com/r-lib/sessioninfo#readme</a>.</cite>
 </p>
 <p>
-<a id="bib-xie2023knitr"></a><a href="#cite-xie2023knitr">[8]</a><cite>
+<a id="bib-xie2024knitr"></a><a href="#cite-xie2024knitr">[8]</a><cite>
 Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report
-Generation in R</em>. R package version 1.45. 2023. URL:
+Generation in R</em>. R package version 1.46. 2024. URL:
 <a href="https://yihui.org/knitr/" class="external-link">https://yihui.org/knitr/</a>.</cite>
 </p>
 </div>
