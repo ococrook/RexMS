@@ -8,7 +8,7 @@ last_built: 2024-04-06T22:28Z
 tutorials:
 - name: DifferentialRexMS
   title: Differential residue HDX-MS with RexMS
-  url: https://ococrook.shinyapps.io/DifferentialRexMS/
+  url: https://ococrook.github.io/RexMS/articles/DifferentialRexMS.html
 - name: ConformationalSignatureAnalysis
   title: Conformational Signature Analysis with RexMS
-  url: https://ococrook.shinyapps.io/ConformationalSignatureAnalysis/
+  url: https://ococrook.github.io/RexMS/articles/ConformationalSignatureAnalysis.html
