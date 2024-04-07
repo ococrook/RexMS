@@ -284,10 +284,192 @@ plotUptake <- function(Uptake,
   return(gg)
 }
 
+##' Function to sample uncertainty of the Uptake
+##' 
+##' @param params An object of class RexParams containing the parameters of
+##'  the Rex model
+##' @param method A character value indicating the method to use.
+##'  Either "fitted" or "predict". Default is "fitted" which only include
+##'  uncertainty in the model parameters and "predict" includes uncertainty
+##'  in the model parameters and the error term (e.g. observation level error)
+##' @param whichChains An integer value indicating which chain to sample from
+##' @param tCoef A numeric vector of coefficients to use in the prediction
+##'   
+##' @return Returns a list of samples 
+##' @examples
+##' require(RexMS)
+##' require(dplyr)
+##' data("BRD4_apo")
+##' BRD4_apo <- BRD4_apo %>% filter(End < 40)
+##'
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+## numPeptides <- length(unique(BRD4_apo$Sequence))
+##'
+##' rex_example <- rex(HdxData = DataFrame(BRD4_apo),
+##'                 numIter = 4, # typically much larger
+##'                 R = max(BRD4_apo$End),
+##'                 numtimepoints = numTimepoints,
+##'                 timepoints = Timepoints,
+##'                 seed = 1L,
+##'                 numChains = 1L,
+##'                 tCoef = c(0, rep(1, 5)),
+##'                 BPPARAM = SerialParam())
+##' rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                           params = rex_example,
+##'                           thin = 1,
+##'                           range = 1:4,
+##'                           whichChains = c(1))
+##' samples <- marginalEffect(rex_example)                           
+##' @export
+marginalEffect <- function(params,
+                           method = "fitted",
+                           whichChains = 1,
+                           tCoef = NULL){
+  
+  stopifnot("params must be a RexParams object" = is(params, "RexParams"))
+  
+  # get timepoints
+  timepoints <- params@chains@chains[[1]]@timepoints
+  phi <- params@chains@chains[[1]]@phi
+  numIter <- params@chains@chains[[1]]@numIter
+  Residues <- seq.int(params@interval[1], params@interval[2])
+  
+  out_long <- vector(mode = "list", length = numIter)
+  
+  if (is.null(tCoef)) {
+    tCoef <- c(0, rep(1, length(timepoints) -1))
+  }
+  
+  # Get the parameters
+  for (i in seq.int(numIter)){
+    
+    blong <- params@chains@chains[[whichChains]]@blong[, i]
+    pilong <- params@chains@chains[[whichChains]]@pilong[, i]
+    qlong <- params@chains@chains[[whichChains]]@qlong[, i]
+    dlong <- params@chains@chains[[whichChains]]@dlong[, i]
+    sigma <- params@chains@chains[[whichChains]]@Sigma[i]
+    .sd <- sqrt(sigma) * tCoef
+    
+  if (method == "fitted"){
+    
+    out <- sapply(seq.int(length(blong)), function(z) {
+      doublelogisticFunction(timepoints,
+                             b = blong[z],
+                             a = phi, q = qlong[z],
+                             pi = pilong[z], d = dlong[z])
+    })
+    
+  } else if (method == "predict"){
+    
+    if (.sd[1] == 0){
+      
+      err <- c(0, rlaplace(n = length(timepoints) - 1,
+                           location = 0,
+                           scale = .sd[-1]))
+      
+    } else {
+      
+      err <- rlaplace(n = length(timepoints),
+                      location = 0,
+                      scale = .sd)
+    }
+      
+    
+    out <- sapply(seq.int(length(blong)), function(z) {
+      doublelogisticFunction(timepoints,
+                             b = blong[z],
+                             a = phi, q = qlong[z],
+                             pi = pilong[z], d = dlong[z]) + err
+        
+    })
+    
+  }
+  
+  out_long[[i]]  <- DataFrame(Residue = rep(Residues, each = length(timepoints)),
+                              timepoints = rep(timepoints, times = length(Residues)),
+                              Uptake = as.vector(out),
+                              mcmcIter = rep(i, each = length(Residues) * length(timepoints)))
+    
+    
+  }  
+  
+  samples <- do.call(rbind, out_long)
+  
+  return(samples)
+  
+}
 
-
-
-
+##' Function to plot the uncertainty of the Uptake
+##' 
+##' @param samples An object of class DataFrame containing the samples of the Uptake
+##' @param quantiles A numeric vector of quantiles to calculate. 
+##'   Default is c(0.025, 0.05, 0.5, 0.95, 0.975)
+##' @param values A vector of colours to use in the plot of timepoints
+##' @param nrow An integer value indicating the number of rows in the facet.
+##' @return Returns a ggplot object
+##' @md
+##' @examples
+##' require(RexMS)
+##' require(dplyr)
+##' data("BRD4_apo")
+##' BRD4_apo <- BRD4_apo %>% filter(End < 40)
+##'
+##' numTimepoints <- length(unique(BRD4_apo$Exposure))
+##' Timepoints <- unique(BRD4_apo$Exposure)
+## numPeptides <- length(unique(BRD4_apo$Sequence))
+##'
+##' rex_example <- rex(HdxData = DataFrame(BRD4_apo),
+##'                 numIter = 4, # typically much larger
+##'                 R = max(BRD4_apo$End),
+##'                 numtimepoints = numTimepoints,
+##'                 timepoints = Timepoints,
+##'                 seed = 1L,
+##'                 numChains = 1L,
+##'                 tCoef = c(0, rep(1, 5)),
+##'                 BPPARAM = SerialParam())
+##' rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
+##'                           params = rex_example,
+##'                           thin = 1,
+##'                           range = 1:4,
+##'                           whichChains = c(1))
+##' samples <- marginalEffect(rex_example)
+##' plotUptakeUncertainty(samples)                           
+##' @export
+plotUptakeUncertainty <- function(samples,
+                                  quantiles = c(0.025, 0.05, 0.5, 0.95, 0.975),
+                                  values = brewer.pal(9, "Dark2"),
+                                  nrow = 2){
+  
+  stopifnot("samples must be a DataFrame" = is(samples, "DFrame"))
+  
+  df <- data.frame(samples) %>% group_by(timepoints, Residue) %>% 
+    reframe(Uptake = quantile(Uptake, quantiles),
+            quantile = quantiles)
+  
+  df <- df %>% pivot_wider(names_from = quantile, values_from = Uptake)
+  
+  gg <- df %>%
+    ggplot(aes(x = Residue,
+               y = `0.5`,
+               group = timepoints,
+               col = factor(timepoints),
+               fill = factor(timepoints))) +
+    geom_line(alpha = 1, lwd = 1.2) +
+    theme_minimal() +
+    geom_ribbon(aes(x = Residue, ymin = `0.025`, ymax = `0.975`), alpha = 0.2) +
+    geom_ribbon(aes(x = Residue, ymin = `0.05`, ymax = `0.95`), alpha = 0.5) +
+    labs(x = "Residues", y = "Uptake") +
+    scale_x_continuous(n.breaks = 10) +
+    scale_y_continuous(n.breaks = 10) +
+    facet_wrap(~timepoints, nrow = nrow) + 
+    scale_color_manual(values = values ) + 
+    scale_fill_manual(values = values ) + 
+    labs(color = "Timepoints", fill = "Timepoints")
+  
+  return(gg)
+  
+}
 
 
 

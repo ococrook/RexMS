@@ -19,7 +19,7 @@ importFrom("graphics", "image")
                "rnorm", "runif", "na.omit","stepfun", "prcomp")
 importFrom("minpack.lm", "nlsLM", "nls.lm.control")
 importFrom("BiocParallel", "bplapply", "bpparam")
-importFrom("LaplacesDemon", "dlaplace")
+importFrom("LaplacesDemon", "dlaplace", "rlaplace")
 importFrom("MASS", "fitdistr", "ginv")
 importFrom("genlasso", "trendfilter", "cv.trendfilter")
 importFrom("Biobase", "validMsg")
@@ -80,4 +80,6 @@ export(prepareIndexes,
        plotTREuncertainty,
        plotTREuncertaintyLoadings,
        uptakePredict,
-       plotUptake)
+       plotUptake,
+       marginalEffect,
+       plotUptakeUncertainty)

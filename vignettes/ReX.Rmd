@@ -496,6 +496,37 @@ plotUptake(Uptake)
 
 ```
 
+The previous plot is useful to see the general uptake but doesn't incoperate
+the uncertainty in the model. The following plot will show the uptake with
+the uncertainty. First, we have to sample from the posterior distribution of
+the model. This is done using the `marginalEffect` function. The function
+has a number of arguments but the most important are the following:
+
+- `params` which is the `RexParams` object produced by the `rex` function.
+- `method` which is the method used to genrate the posterior samples. The 
+ default is 'fitted' which will give the fitted values and only accounts for
+ the uncertainty in the model coefficients. The other option is 'predict'
+ which accounts for the observation-level uncertainty and the uncertainty in the
+ model parameters.
+- `tCoef` which is the coefficients for the timepoints. This account for the
+ fact that the variance at the 0 timepoint might be 0 (measured without error).
+ This value is multiplied by the variance across timepoints to scale the variance.
+ We recommend that the first value is 0 and the rest are 1. However, if you have
+ a good reason to change this value you can do so.
+
+
+
+```{r,}
+samples <- marginalEffect(rex_test,
+                          method = "predict",
+                          tCoef = c(0, rep(1, numTimepoints - 1)))
+
+plotUptakeUncertainty(samples)
+
+
+```
+
+
 
 # Reproducibility
 
