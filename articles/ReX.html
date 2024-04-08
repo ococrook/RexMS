@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RexMS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">7 April 2024</h4>
+            <h4 data-toc-skip class="date">8 April 2024</h4>
       
       
       <div class="hidden name"><code>ReX.Rmd</code></div>
@@ -130,13 +130,13 @@ using the following commands in your <code>R</code> session:</p>
 <p><em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> is
 based on many other packages and in particular in those that have
 implemented the infrastructure needed for dealing with protein
-structure. That is, packages like <em><a href="https://bioconductor.org/packages/3.18/Bio3D" class="external-link">Bio3D</a></em>.</p>
+structures. That is, packages like <em><a href="https://bioconductor.org/packages/3.18/Bio3D" class="external-link">Bio3D</a></em>.</p>
 <p>If you are asking yourself the question “Where do I start using
 Bioconductor?” you might be interested in <a href="http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU" class="external-link">this
 blog post</a>.</p>
 <p>We expect you to have a working understanding of HDX-MS and its
 application. Verifying your data is important as <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> won’t
-fix problem with data acquisition or poor experiment design. If you run
+fix problems with data acquisition or poor experiment design. If you run
 into problem using <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em> first
 check syntex of your command but also the data.</p>
 </div>
@@ -171,7 +171,7 @@ cite the package and the overall approach. Thank you!</p>
 <span><span class="co">#&gt;   ococrook (2024). _Inferring residue level hydrogen deuterium exchange</span></span>
 <span><span class="co">#&gt;   with ReX_. doi:10.18129/B9.bioc.ReX</span></span>
 <span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.ReX&gt;,</span></span>
-<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.2,</span></span>
+<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.3,</span></span>
 <span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/ReX&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ococrook (2024). "Inferring residue level hydrogen deuterium exchange</span></span>
@@ -189,8 +189,7 @@ cite the package and the overall approach. Thank you!</p>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"RexMS"</span><span class="op">)</span></span></code></pre></div>
-<p>Here is an example of you can cite your package inside the
-vignette:</p>
+<p>Here is an example you can cite your package inside the vignette:</p>
 <ul>
 <li>
 <em><a href="https://bioconductor.org/packages/3.18/RexMS" class="external-link">RexMS</a></em>
@@ -267,9 +266,9 @@ repeat for time points.</p>
 <p>The data is now ready to take a closer look. Be careful at this point
 you may have lost a large number of peptides if you had lots of missing
 values. At this point it will be useful to check the redundancy of the
-data. The following code chunk will perform heatmap of the peptide map.
-As we can see from the peptide below, there are two regions that are
-well convered linked by a region that is not well covered. This is a
+data. The following code chunk will produce a heatmap of the peptide
+map. As we can see from the peptide below, there are two regions that
+are well convered linked by a region that is not well covered. This is a
 common problem in HDX-MS as the region between the two tandem
 bromodomains is proline rich and hence not amenable to standard
 digestion.</p>
@@ -279,11 +278,11 @@ digestion.</p>
 <p><img src="ReX_files/figure-html/heatmap-1.png" width="700"></p>
 <p>To simplify the analysis, we only examine the first 100 residues of
 the protein. This will speed up the results in this vignette.
-Furthermore, we would recommend analysis the bromodomains
+Furthermore, we would recommend analysis of the bromodomains
 separately.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">End</span> <span class="op">&lt;</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<p>Rex requires you to switch make to a <code>DataFrame</code> if you
+<p>Rex requires you to switch back to a <code>DataFrame</code> if you
 used the last line</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span></code></pre></div>
@@ -294,11 +293,11 @@ of the timepoints and the number of peptides in the analysis.</p>
 <code class="sourceCode R"><span><span class="va">numTimepoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Exposure</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">Timepoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Exposure</span><span class="op">)</span></span>
 <span><span class="va">numPeptides</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">$</span><span class="va">Sequence</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>We already at the point were we can apply Rex to the data. The first
-step is to understand the necessary components of the <code>rex</code>
-function. The <code>rex</code> function has a lot of possible arguments
-which are explain in the documentation. The most important are the
-following</p>
+<p>We are already at the point were we can apply <code>rex</code> to the
+data. The first step is to understand the necessary components of the
+<code>rex</code> function. The <code>rex</code> function has a lot of
+possible arguments which are explained in the documentation. The most
+important are the following</p>
 <ul>
 <li>
 <code>HdxData</code> which is the DataFrame containing the HDX-MS
@@ -597,20 +596,21 @@ metric sigma and the peptide level error metrics</p>
 <span><span class="co">#&gt; 98  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span>
 <span><span class="co">#&gt; 99  -0.00461687 0.00521986 -0.0194005 0.0120993 0.00591996</span></span></code></pre></div>
 <p>To visualise these results, we can use the following function. This
-will allow us to quickly examine the results. We suggest not be cautious
+will allow us to quickly examine the results. We suggest beomg cautious
 of data outside of 3*sqrt(sigma) as the model is likely struggling or
-yet to have converged at this point. As we can see the error
-distribution is very high at around residue 68. This corresponds to the
-peptide which had high error at peptide-level error distribution. This
-is expected and the model is correctly reporting where it is struggling
-to model that data either because of lack of convergence or the data is
-unusual at the point.</p>
+yet to have converged at this point. Theoretically, we only expect 1% of
+data to exceed this value. As we can see the error distribution is very
+high at around residue 68. This corresponds to the peptide which had
+high error at peptide-level error distribution. This is expected and the
+model is correctly reporting where it is struggling to model that data
+either because of lack of convergence or the data is unusual at the
+point.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># calculate a threshold for the data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="../reference/RexParams.html">Rex.globals</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span><span class="op">*</span><span class="fl">3</span></span>
 <span><span class="co">#&gt; [1] 0.1738339 0.1642331</span></span>
 <span></span>
-<span><span class="co"># virualise the residue errors</span></span>
+<span><span class="co"># visualise the residue errors</span></span>
 <span><span class="fu"><a href="../reference/plotResidueResolution.html">plotResidueResolution</a></span><span class="op">(</span><span class="va">rex_test</span>, nrow  <span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 115 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span>
@@ -629,8 +629,8 @@ being generally more stable.</p>
 <p>You can plot both sigma and the model log likelihood as a function of
 iterations to diagnose convergence issues. The plots below show that
 sigma is still decreasing and the log likelihood still increasing but
-the chains are tracking each other well. We note that all (except
-heatmaps) are object from <code>ggplot</code> and so you can customise
+the chains are tracking each other well. We note that all plots (except
+heatmaps) are objects from <code>ggplot</code> and so you can customise
 them using gramamatical construction in the same way as ggplot.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -823,9 +823,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-07 18:26:56 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-08 14:37:56 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 2.327 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 2.314 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -837,7 +837,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-07</span></span>
+<span><span class="co">#&gt;  date     2024-04-08</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -928,7 +928,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RexMS                * 0.99.2     <span style="color: #555555;">2024-04-07</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.3     <span style="color: #555555;">2024-04-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -993,7 +993,7 @@ References in R”. In: <em>The Journal of Open Source Software</em>
 <a id="bib-ococrook2024inferring"></a><a href="#cite-ococrook2024inferring">[3]</a><cite>
 ococrook. <em>Inferring residue level hydrogen deuterium exchange with
 ReX</em>. <a href="https://github.com/ococrook/ReX/ReX" class="external-link uri">https://github.com/ococrook/ReX/ReX</a> - R package version
-0.99.2. 2024. DOI:
+0.99.3. 2024. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.ReX" class="external-link">10.18129/B9.bioc.ReX</a>.
 URL:
 <a href="http://www.bioconductor.org/packages/ReX" class="external-link">http://www.bioconductor.org/packages/ReX</a>.</cite>
