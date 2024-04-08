@@ -55,7 +55,7 @@ bib <- c(
 This vignette demonstrates how to use the `RexMS` package to perform 
 differential HDX-MS analysis. We recommend that you start with the introduction
 to RexMS vignette first so that you cover the basics. We skip some of those
-initial steps here to focus on the aspects inmportant for differential analysis.
+initial steps here to focus on the aspects important for differential analysis.
 
 # Loading data
 
@@ -81,11 +81,11 @@ Timepoints <- unique(BRD4_apo$Exposure)
 numPeptides <- length(unique(BRD4_apo$Sequence))
 ```
 
-We actually only need to run `rex` explicitly on condition we are primarily
-interested in e.g. 'ligand' vs 'apo', we can only need to model the first 
-dataset initially. If you swap the analysis around are start with `apo` first
+We actually only need to run `rex` explicitly on the condition we are primarily
+interested in e.g. 'ligand' vs 'apo', we only need to model the first 
+dataset initially. If you swap the analysis around and start with `apo` first
 your results will be inverted (e.g. report protection instead of deprotection)
-as a consequence of the data. If you need to seperate our conditions from
+as a consequence of the data. If you need to separate out conditions from
 one `csv` file it maybe useful to use `filter(State == "my protein state")`,
 where `"my protein state"` would be replace by the state you wishes to extract
 from the data. The syntax is similar to the filter line used to extract
@@ -104,6 +104,7 @@ rex_ibet <- rex(HdxData = DataFrame(BRD4_ibet),
                 R = max(BRD4_ibet$End), 
                 numtimepoints = numTimepoints,
                 timepoints = Timepoints,
+                density = "laplace",
                 seed = 1L,
                 tCoef = c(0, rep(1, 5)),
                 BPPARAM = SerialParam())
@@ -134,13 +135,13 @@ to pass the object that was created by the `rex` function for the ibet state.
 In the `HdxData` argument you want to pass the data for the apo state (or the
 state you wish to compare to). The `whichChain` argument is used to specify
 which chain you are interested in using to calculate the differential results.
-Chain 1 had a higher log-likelihood in the ligand bound state so we will use
+Chain 2 had a higher log-likelihood in the ligand bound state, so we will use
 this chain to calculate the differential results. 
 
 ```{r,}
 rex_diff <- processDifferential(params = rex_ibet, 
                                 HdxData = DataFrame(BRD4_apo),
-                                whichChain = c(1))
+                                whichChain = c(2))
 ```
 
 This results in an object of class `RexDifferential` which has five slots:
@@ -215,6 +216,24 @@ timepoints.
 gg4 <- plotTimeAveragedButterfly(diff_params = rex_diff)
 gg4
 ```
+You may also wish to interpret the probabilities carefully
+and convert them to an estimated of the expected false discovery rate - i.e. if I picked a probability threshold 
+what is the predicted number of false claims I would make. This is stored in the `Rex.eFDR` slot. This will produce
+a table of the estimated FDR at various probability thresholds. For example, for a probability threshold of 0.99. 
+The eFDR for 15 and 60 seconds is not defined (there are
+no values at this threshold for these timepoints). The eFDR for 600 second sis 0.00148 or 0.148%, which is quite low. This
+indicates that if you selected a probability threshold of 
+0.99 you would expect to make 0.148% false claims from claiming a residue was differentially protected/stabilised when it was not.
+
+```{r,}
+Rex.eFDR(rex_diff)
+```
+
+
+
+
+
+
 `RexMS` supports transferring these results to protien structures using the
 NGLVieweR package. This is a very powerful tool for visualising the results
 in the context of the protein structure. The following code will produce a
@@ -252,7 +271,7 @@ view_structure(pdb_filepath = pdb_filepath,
                representation = "spacefill")
 ```
 You can provide any values you would like to colour the structure by. For example
-using the timeaveraged probabilities.
+using the time-averaged probabilities.
 
 
 ```{r,}

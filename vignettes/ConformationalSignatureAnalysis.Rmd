@@ -22,37 +22,46 @@ vignette: >
 
 # Introduction
 
-This vignette explains how to perform conformational signature analysis.
-The essential idea is when you have numerous states in which you performed
-HDX-MS and potentially a downstream outcome, you can use the conformational
+This vignette explains how to perform conformational signature analysis (CSA).
+The essential idea is when you have an experimental design in which you have numerous states (such as ligand binding, mutants, antibodies) and in each state you performed
+HDX-MS and potentially measured a downstream outcome. You can use conformational
 signature analysis to identify the regions of the protein that are most
-likely to be associated for the observed outcome. There are three options
+likely to be associated for the observed outcome. This
+can then inform design choices. There are three options 
+currently implemented:
 
 1) **Unsupervised Conformational Signature Analysis** - This is the most basic
 form of the analysis. It will identify the regions of the protein that are most variable
 across the states. This is useful for identifying regions that are associated
-with the variation in the data.
+with the variation in the data. By performing the analysis
+in this way you will identify the states that are most similar
+and different from each other.
+
 2) **Supervised Conformational Signature Analysis with discrete outcomes** - This
-is a more advanced form of the analysis using a discrete outcome such as "monovalent".
+is a more advanced form of the analysis using a discrete outcome (such as "monovalent" or "antagonist").
 It will identify the regions of the protein that are most variable across
 the states and are also associated with the outcome. This is useful
 for identifying regions that are associated with the outcome. This is
 done by dimensionality reduction that accounts for the outcome.
+
 3) **Supervised Conformational Signature Analysis with continuous outcomes** - 
 This is a more advanced form of the analysis using a continuous outcome
-such as K_d. It will identify the regions of
+such as binding affinity. It will identify the regions of
 the protein that are most variable across the states and are also associated
 with the outcome. This is useful for identifying regions that are associated
 with the outcome. This is done by dimensionality reduction that accounts for 
-the outcome. 
+the continuous outcome. 
+
+The analysis currently supports missing values in the outcomes
+but not the HDX-MS data.
 
 The trickest part of the analysis is setting up the data correctly. You can do
-this in a excel file and load as csv but we will demonstrate using R manually below.
+this in a excel file and load as csv but we will demonstrate using R manually below. Essentially you want to create a dataset where the rownames are the different states and columns indicate the labels associated with the states. 
 
 
 # Getting started
 
-First we will load the library and the data. The data is a list of dataframes
+First, we will load the library and the data. The data is a list of dataframes
 where each dataframe is a state. Each dataframe should have the following columns
 
 1) Sequence - The peptide sequence
@@ -65,10 +74,10 @@ where each dataframe is a state. Each dataframe should have the following column
 8) replicate - The replicate of the HDX-MS experiment
 
 This is as in the single protein analysis. We suggest performing that
-analysis carefully first before proceeding to the conformational signature analysis.
+analysis carefully, first, before proceeding to the conformational signature analysis.
 We recommend storing the reference or apo state in a separate dataframe.
 The analysis expects consistency between the experiments (e.g. replicates
-and number of timepoints, region of the protein). You will also need to name
+and number of timepoints, region of the protein) but you do not need to measure the exact same peptides in each experiment. You will also need to name
 the states you are interested in and store them in a vector.
 
 ```{r,}
@@ -93,15 +102,16 @@ states
 ```
 Our analysis has 18 compounds and a reference state. We will use the reference state
 as the reference for the conformational signature analysis. Whichever route you
-follow the inital steps are indentical. We will start with the list in an
+follow (e.g. supervised or unsupervised) the initial steps are identical. We will start with the list in an
 `lapply` function. To each element in this list (which is an entire HDX dataset)
 we apply the `rex` function. This function will perform the usual rex model.
 There are only 3 timepoints in this analysis so we will set the `tCoef` to
 `c(0, 1, 1)`. We will also set the seed to 1 for reproducibility. We will
 use the `SerialParam` for the `BPPARAM` argument. This is because the analysis
-is not too computationally intensive. We will store the results in a list.
+is not too computationally intensive but if you run
+for many iterations and chains we suggest using parrallel processing. We will store the results in a list.
 For brevity we will run the analysis for 100 iterations but we recommend much 
-more (typically 5000) for final analysis. The following function take a while 
+more (typically 5000) for final analysis. The following function takes a while 
 to run so we will not run them here but pre-load the results from the package
 the code is placed for completeness.
 
@@ -114,6 +124,7 @@ rex_lxr <- lapply(LXRalpha_compounds, function(xx) {
                         R = R, 
                         numtimepoints = numTimepoints,
                         timepoints = Timepoints,
+                        density = "laplace",
                         seed = 1L,
                         tCoef = c(0, rep(1, 2)),
                         BPPARAM = SerialParam())})
@@ -122,7 +133,7 @@ rex_lxr <- lapply(LXRalpha_compounds, function(xx) {
 
 The next step is to apply `RexProcess` to the output of the `rex` function. 
 Remember there are 18 compounds so we will use `lapply` again. We will set the
-range to 50:100. This is mcmc iteration we are interested in. We will store the
+range to 50:100 - removing the first 50 as burnin, though we would typically recommend you run about 5000 iterations. This is mcmc iteration we are interested in. We will store the
 results in a list. Again, we do not actually run the code here but pre-load the
 results from the package.
 
@@ -143,7 +154,7 @@ data("rex_lxr")
 ```
 
 In the next step we would perform the same differential analysis as in the
-differential analysis but 18 times because there are 18 compounds. We will
+differential analysis tutorial but 18 times because there are 18 compounds. We will
 use the same reference state for each compound. We will store the results in
 a list. Again, we do not actually run the code here but pre-load the results
 from the package. Remember `params` are the various states and the
@@ -172,7 +183,7 @@ data("out_lxr_compound_proccessed")
 To perform the unsupervised conformational signature analysis, we will use the
 `unsupervisedCSA` function. This function will take the output of the
 `processDifferential` function. Whilst for unsupervised analysis you do not need
-to specify the outcome, we will generate the labels results anayway to highlight
+to specify the outcome, we will generate the labels results anyway to highlight
 the details of setting up that analysis.
 
 For our protein there are 18 compounds and a reference state. Each of the compounds
@@ -220,7 +231,7 @@ set the `quantity` to "TRE" as this is the quantity we use to generate the signa
 We will set the `states` to the states we are interested in. We will set the
 `whichTimepoint` to 600. This is the timepoint used to generate the conformational
 signature. We will store the results in the `ucsa` object. Since this is the 
-unsupervised analysis we do not need to specify the `labels` argument.
+unsupervised analysis, we do not need to specify the `labels` argument.
 
 
 ```{r,}
@@ -231,8 +242,8 @@ ucsa <- UnsupervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
 ```
 
 We will now look at the results. The results are stored in a list with the
-first entry `pca_states` being the Principal Component Analysis of the analysis.
-The rotation matrix can be used as the conformational signature. This contains
+first entry `pca_states` being the Principal Component Analysis of the `RexMS` results.
+The rotation matrix can be used as the conformational signature - providing the modes of conformational variation in the data. This contains
 all the results from a PCA analysis. The second entry `states_wide` is a dataframe
 with the states as the columns and the residue as the rows. The values are the
 TRE values that were used to generate the conformational signature.
@@ -242,7 +253,7 @@ example, you could plot the PCA results. We will plot the first two components
 of the PCA analysis. The labels are not used unless you pass them to the 
 `pca_params` argument even if you supply a `labels` argument.
 
-Note that the results look strange because we have not run the algorith for 
+Note that the results look strange because we have not run the algorithm for 
 enough iterations.
 
 
@@ -266,7 +277,7 @@ plotUCSA(pca_states = ucsa$pca_states,
 
 # Supervised Conformational Signature Analysis with discrete outcomes
 
-Until now we have not used the labels as part of the analysis only to interpret
+Until now, we have not used the labels as part of the analysis - only to interpret
 the results of the unsupervised analysis. Supervised conformational signature
 analysis is more advanced and uses the labels to generate the conformational
 signature. The idea is to identify the regions of the protein that are most
@@ -303,6 +314,10 @@ a formal `opls` object. This object contains the results of the analysis.
 Note that the results look strange because we have not run the algorith for
 enough iterations earlier. The results are allowed to contain "Unknown" outcomes.
 
+Note that the algorithm will output a number of warnings - 
+the first is that the number of predictive components is set to 1. This is the desire behaviour. The second is that the variance in some residue elements is below machine precision.
+This is typical for residues that were not measure in the analysis or where the uptake was 0 (such as Prolines). You do not need to worry about this as the sequence labelling is handled behind the scenes.
+
 ```{r,}
 scsa <- supervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
                       quantity = "TRE",
@@ -332,7 +347,7 @@ outcome. The orthogonal component is the component that is not associated with t
 outcome. We will plot the loadings for ABCA1 and lipogenicity for both 
 predictive and orthogonal components.
 
-Note again the results look strange because we have not run the algorith for
+Note again the results look strange because we have not run the algorithm for
 enough iterations earlier.
 
 ```{r,}
@@ -358,7 +373,7 @@ plotLoadingSCSA(states.plsda = scsa2,
 ```
 
 You can also plot the scores of the conformational signature. This is the
-scores of the samples on the predictive and orthogonal components. We will
+scores of the samples from the predictive and orthogonal components. We will
 plot the scores for ABCA1 and lipogenicity for both predictive and orthogonal
 components.
 
@@ -446,7 +461,7 @@ argument below is the `num_montecarlo` which is the number of samples to take
 from the distribution. We will set this to 5000. The ``whichSamples`` argument
 is the samples to use from the orginal analysis. We will use the first 50 samples
 - note that since the results have been processed the samples are actually the
-first 50 samples of the processed results. 
+first 50 samples of the *processed* results. 
 
 We will not run the code here but pre-load the results from the package.
 

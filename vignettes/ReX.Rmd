@@ -86,7 +86,7 @@ remotes::install_github("ococrook/RexMS")
 
 `r Biocpkg("RexMS")` is based on many other packages 
 and in particular in those that have 
-implemented the infrastructure needed for dealing with protein structure. 
+implemented the infrastructure needed for dealing with protein structures. 
 That is, packages like `r Biocpkg("Bio3D")`.
 
 If you are asking yourself the question "Where do I start using Bioconductor?"
@@ -94,7 +94,7 @@ you might be interested in
 [this blog post](http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU).
 
 We expect you to have a working understanding of HDX-MS and its application.
-Verifying your data is important as `r Biocpkg("RexMS")` won't fix problem with
+Verifying your data is important as `r Biocpkg("RexMS")` won't fix problems with
 data acquisition or poor experiment design. If you run into problem using
 `r Biocpkg("RexMS")` first check syntex of your command but also the data.
 
@@ -130,7 +130,7 @@ library("RexMS")
 ```
 
 
-Here is an example of you can cite your package inside the vignette:
+Here is an example you can cite your package inside the vignette:
 
 * `r Biocpkg("RexMS")` `r Citep(bib[["RexMS"]])`
 
@@ -189,7 +189,7 @@ maxUptakes(BRD4_apo)
 The data is now ready to take a closer look. Be careful at this point you
 may have lost a large number of peptides if you had lots of missing values.
 At this point it will be useful to check the redundancy of the data. The
-following code chunk will perform heatmap of the peptide map. As we can see
+following code chunk will produce a heatmap of the peptide map. As we can see
 from the peptide below, there are two regions that are well convered linked
 by a region that is not well covered. This is a common problem in HDX-MS
 as the region between the two tandem bromodomains is proline rich and hence
@@ -202,13 +202,13 @@ C <- coverageHeatmap(res = BRD4_apo)
 
 To simplify the analysis, we only examine the first 100 residues of the protein.
 This will speed up the results in this vignette. Furthermore, we would recommend
-analysis the bromodomains separately.
+analysis of the bromodomains separately. 
 
 ```{r "subset"}
 BRD4_apo <- data.frame(BRD4_apo) %>% filter(End < 100)
 ```
 
-Rex requires you to switch make to a `DataFrame` if you used the last line
+Rex requires you to switch back to a `DataFrame` if you used the last line
 
 ```{r,}
 BRD4_apo <- DataFrame(BRD4_apo)
@@ -224,9 +224,9 @@ Timepoints <- unique(BRD4_apo$Exposure)
 numPeptides <- length(unique(BRD4_apo$Sequence))
 ```
 
-We already at the point were we can apply Rex to the data. The first step is to
+We are already at the point were we can apply `rex` to the data. The first step is to
 understand the necessary components of the `rex` function. The `rex` function
-has a lot of possible arguments which are explain in the documentation. The most 
+has a lot of possible arguments which are explained in the documentation. The most 
 important are the following
 
 - `HdxData` which is the DataFrame containing the HDX-MS data.
@@ -425,9 +425,10 @@ Rex.resolution(rex_test)
 ```
 
 To visualise these results, we can use the following function. This will
-allow us to quickly examine the results. We suggest not be cautious of 
+allow us to quickly examine the results. We suggest beomg cautious of 
 data outside of 3*sqrt(sigma) as the model is likely struggling or yet to have
-converged at this point. As we can see the error distribution is very
+converged at this point. Theoretically, we only expect 1% of
+data to exceed this value. As we can see the error distribution is very
 high at around residue 68. This corresponds to the peptide which had high
 error at peptide-level error distribution. This is expected and the model
 is correctly reporting where it is struggling to model that data either because
@@ -437,7 +438,7 @@ of lack of convergence or the data is unusual at the point.
 # calculate a threshold for the data
 sqrt(Rex.globals(rex_test)$sigma)*3
 
-# virualise the residue errors
+# visualise the residue errors
 plotResidueResolution(rex_test, nrow  =5)
 
 ```
@@ -454,7 +455,7 @@ rex_test@summary@diagnostics
 You can plot both sigma and the model log likelihood as a function of iterations
 to diagnose convergence issues. The plots below show that sigma is still decreasing
 and the log likelihood still increasing but the chains are tracking each other 
-well. We note that all (except heatmaps) are object from `ggplot` and so you
+well. We note that all plots (except heatmaps) are objects from `ggplot` and so you
 can customise them using gramamatical construction in the same way as
 ggplot.
 

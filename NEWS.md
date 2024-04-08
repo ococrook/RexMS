@@ -1,3 +1,8 @@
+# RexMS 0.99.3
+
+* Generate all tutorial and website
+* fix spelling and grammer issues in website
+
 # RexMS 0.99.2
 
 * change package name
