@@ -87,7 +87,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">8 April 2024</h4>
+            <h4 data-toc-skip class="date">10 April 2024</h4>
       
       
       <div class="hidden name"><code>DifferentialRexMS.Rmd</code></div>
@@ -214,10 +214,10 @@ state below.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># zoom in on results a bit but adding the lim arguements</span></span>
-<span><span class="fu"><a href="../reference/plotLogLikelihoods.html">plotLogLikelihoods</a></span><span class="op">(</span><span class="va">rex_ibet</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">500</span>,<span class="op">-</span><span class="fl">250</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 105 rows containing missing values or values outside the scale range</span></span>
+<span><span class="fu"><a href="../reference/plotLogLikelihoods.html">plotLogLikelihoods</a></span><span class="op">(</span><span class="va">rex_ibet</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">500</span>,<span class="op">-</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 48 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 86 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 48 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <p><img src="DifferentialRexMS_files/figure-html/plot_results-2.png" width="700">
 To obtain differential results as compared to the apo (or some other
@@ -450,12 +450,12 @@ this function it will not extract the pdb file from the internet.</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span><span class="va">v2</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"ProtDeprot"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.714193 [INFO]  Your HDX input dataset has 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.7145 [INFO]  And excluding NA data you only have 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.714588 [INFO]  However, your input PDB has only 140 residues in total</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.71502 [INFO]  Your scale limits are  -0.46</span></span>
-<span><span class="co">#&gt;  2024-04-08 14:35:34.71502 [INFO]  Your scale limits are  0.21</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.71512 [INFO]  Negative values will be coloured in Blue, and positive ones on Red</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:40.991327 [INFO]  Your HDX input dataset has 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:40.991643 [INFO]  And excluding NA data you only have 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:40.991732 [INFO]  However, your input PDB has only 140 residues in total</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:40.992168 [INFO]  Your scale limits are  -0.46</span></span>
+<span><span class="co">#&gt;  2024-04-10 10:18:40.992168 [INFO]  Your scale limits are  0.21</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:40.992297 [INFO]  Negative values will be coloured in Blue, and positive ones on Red</span></span>
 <span><span class="fu"><a href="../reference/pdb-visualisation.html">view_structure</a></span><span class="op">(</span>pdb_filepath <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>               color_parameters <span class="op">=</span> <span class="va">mycolor_parameters</span><span class="op">)</span></span></code></pre></div>
 <div class="NGLVieweR html-widget html-fill-item" id="htmlwidget-23ebb8f6c8320b0f0d0e" style="width:700px;height:432.632880098888px;"></div>
@@ -476,12 +476,12 @@ For example using the time-averaged probabilities.</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span><span class="va">v2</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"ProtDeprot"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.915788 [INFO]  Your HDX input dataset has 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.915912 [INFO]  And excluding NA data you only have 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.916001 [INFO]  However, your input PDB has only 140 residues in total</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.916231 [INFO]  Your scale limits are  0</span></span>
-<span><span class="co">#&gt;  2024-04-08 14:35:34.916231 [INFO]  Your scale limits are  0.98</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:34.916322 [INFO]  Negative values will be coloured in Blue, and positive ones on Red</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.198174 [INFO]  Your HDX input dataset has 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.198311 [INFO]  And excluding NA data you only have 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.198407 [INFO]  However, your input PDB has only 140 residues in total</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.198655 [INFO]  Your scale limits are  0</span></span>
+<span><span class="co">#&gt;  2024-04-10 10:18:41.198655 [INFO]  Your scale limits are  0.98</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.19875 [INFO]  Negative values will be coloured in Blue, and positive ones on Red</span></span>
 <span><span class="fu"><a href="../reference/pdb-visualisation.html">view_structure</a></span><span class="op">(</span>pdb_filepath <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>               color_parameters <span class="op">=</span> <span class="va">mycolor_parameters</span><span class="op">)</span></span></code></pre></div>
 <div class="NGLVieweR html-widget html-fill-item" id="htmlwidget-87c25aa9799de85b5a0d" style="width:700px;height:432.632880098888px;"></div>
@@ -503,12 +503,12 @@ small part of the protein.</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span><span class="va">v2</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:35.048219 [INFO]  Your HDX input dataset has 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:35.04834 [INFO]  And excluding NA data you only have 99 entries</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:35.04843 [INFO]  However, your input PDB has only 140 residues in total</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:35.048664 [INFO]  Your scale limits are  -3.52</span></span>
-<span><span class="co">#&gt;  2024-04-08 14:35:35.048664 [INFO]  Your scale limits are  2.91</span></span>
-<span><span class="co">#&gt; 2024-04-08 14:35:35.048755 [INFO]  Your values will be coloured using Viridis</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.335546 [INFO]  Your HDX input dataset has 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.335679 [INFO]  And excluding NA data you only have 99 entries</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.335767 [INFO]  However, your input PDB has only 140 residues in total</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.336014 [INFO]  Your scale limits are  -3.52</span></span>
+<span><span class="co">#&gt;  2024-04-10 10:18:41.336014 [INFO]  Your scale limits are  2.91</span></span>
+<span><span class="co">#&gt; 2024-04-10 10:18:41.336105 [INFO]  Your values will be coloured using Viridis</span></span>
 <span><span class="fu"><a href="../reference/pdb-visualisation.html">view_structure</a></span><span class="op">(</span>pdb_filepath <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>               color_parameters <span class="op">=</span> <span class="va">mycolor_parameters</span><span class="op">)</span></span></code></pre></div>
 <div class="NGLVieweR html-widget html-fill-item" id="htmlwidget-bbff03aa8087ea16083f" style="width:700px;height:432.632880098888px;"></div>
@@ -547,9 +547,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.18/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-08 14:35:35 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-10 10:18:41 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 1.882 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 1.908 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -561,7 +561,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-08</span></span>
+<span><span class="co">#&gt;  date     2024-04-10</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -653,7 +653,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RexMS                * 0.99.3     <span style="color: #555555;">2024-04-08</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.3     <span style="color: #555555;">2024-04-10</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
