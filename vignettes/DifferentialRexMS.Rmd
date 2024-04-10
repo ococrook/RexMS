@@ -126,7 +126,7 @@ library(ggplot2)
 plotSigma(rex_ibet)
 
 # zoom in on results a bit but adding the lim arguements
-plotLogLikelihoods(rex_ibet) + xlim(c(25,100)) + ylim(c(-500,-250))
+plotLogLikelihoods(rex_ibet) + xlim(c(25,100)) + ylim(c(-500,-150))
 
 ```
 To obtain differential results as compared to the apo (or some other state)
