@@ -77,7 +77,7 @@ plotVolcano <- function(diff_params,
             ylab("Probability") +
             scale_color_manual(
                 values = alpha(c("darkred", "darkblue"), 0.5),
-                labels = c("Deproctetion", "Protection")
+                labels = c("Deprotection", "Protection")
             ) +
             labs(color = "") +
             guides(
@@ -117,7 +117,7 @@ plotVolcano <- function(diff_params,
             ylab("Probability") +
             scale_color_manual(
                 values = alpha(c("darkred", "darkblue"), 0.5),
-                labels = c("Deproctetion", "Protection")
+                labels = c("Deprotection", "Protection")
             ) +
             labs(color = "") +
             guides(
@@ -225,7 +225,7 @@ plotButterfly <- function(diff_params,
       ylab("Effect Size (TRE)") +
       scale_alpha_continuous(range = c(0,1)) + 
       scale_color_manual(values = c("darkred", "darkblue"), 
-                         labels = c("Deprotection", "Proctetion")) +
+                         labels = c("Deprotection", "Protection")) +
       labs(color = "", alpha = "Probability") + 
       guides(alpha = guide_legend(override.aes = list(size = 5)),
              color = guide_legend(override.aes = list(size = 5))) + 
@@ -264,7 +264,7 @@ plotButterfly <- function(diff_params,
         ylab("Effect Size (ARE)") +
         scale_alpha_continuous(range = c(0,1)) + 
         scale_color_manual(values = c("darkred", "darkblue"), 
-                           labels = c("Deprotection", "Proctetion")) +
+                           labels = c("Deprotection", "Protection")) +
         labs(color = "", alpha = "Probability") + 
         guides(alpha = guide_legend(override.aes = list(size = 5)),
                color = guide_legend(override.aes = list(size = 5))) + 
@@ -353,7 +353,7 @@ plotTimeAveragedButterfly <- function(diff_params,
     ylab("Time Averaged Effect Size (TRE)") + 
     scale_alpha_continuous(range = c(0,1)) + 
     scale_color_manual(values = c("darkred", "darkblue"),
-                       labels = c("Deprotection", "Proctetion")) +
+                       labels = c("Deprotection", "Protection")) +
     labs(color = "", alpha = "Probability") + 
     guides(alpha = guide_legend(override.aes = list(size = 5)),
            color = guide_legend(override.aes = list(size = 5))) + 
