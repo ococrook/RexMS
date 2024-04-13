@@ -701,12 +701,12 @@ sure that you align the residue numbers correctly</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">v</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"CSA"</span>, scale_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 2024-04-13 15:54:59.229715 [INFO]  Your HDX input dataset has 184 entries</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.23003 [INFO]  And excluding NA data you only have 184 entries</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.230121 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.230787 [INFO]  Your scale limits are  -0.2</span></span>
-<span><span class="co">##  2024-04-13 15:54:59.230787 [INFO]  Your scale limits are  0</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.23091 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
+<pre><code><span><span class="co">## 2024-04-13 18:41:31.411697 [INFO]  Your HDX input dataset has 184 entries</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.412006 [INFO]  And excluding NA data you only have 184 entries</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.412111 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.412776 [INFO]  Your scale limits are  -0.2</span></span>
+<span><span class="co">##  2024-04-13 18:41:31.412776 [INFO]  Your scale limits are  0</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.412872 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">graphics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/NGLVieweR.html" class="external-link">NGLVieweR</a></span><span class="op">(</span><span class="va">pdb_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/stageParameters.html" class="external-link">stageParameters</a></span><span class="op">(</span>backgroundColor <span class="op">=</span> <span class="st">"white"</span>, zoomSpeed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -732,12 +732,12 @@ analysis:</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">v</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"CSA"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 2024-04-13 15:54:59.588154 [INFO]  Your HDX input dataset has 447 entries</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.588291 [INFO]  And excluding NA data you only have 447 entries</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.588381 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.588989 [INFO]  Your scale limits are  -0.16</span></span>
-<span><span class="co">##  2024-04-13 15:54:59.588989 [INFO]  Your scale limits are  0</span></span>
-<span><span class="co">## 2024-04-13 15:54:59.589081 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
+<pre><code><span><span class="co">## 2024-04-13 18:41:31.772293 [INFO]  Your HDX input dataset has 447 entries</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.772428 [INFO]  And excluding NA data you only have 447 entries</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.772517 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.773125 [INFO]  Your scale limits are  -0.16</span></span>
+<span><span class="co">##  2024-04-13 18:41:31.773125 [INFO]  Your scale limits are  0</span></span>
+<span><span class="co">## 2024-04-13 18:41:31.773222 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">graphics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/NGLVieweR.html" class="external-link">NGLVieweR</a></span><span class="op">(</span><span class="va">pdb_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/stageParameters.html" class="external-link">stageParameters</a></span><span class="op">(</span>backgroundColor <span class="op">=</span> <span class="st">"white"</span>, zoomSpeed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
