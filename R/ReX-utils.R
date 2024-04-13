@@ -333,7 +333,7 @@ marginalEffect <- function(params,
   timepoints <- params@chains@chains[[1]]@timepoints
   phi <- params@chains@chains[[1]]@phi
   numIter <- params@chains@chains[[1]]@numIter
-  Residues <- seq.int(params@interval[1], params@interval[2])
+  Residues <- params@summary@Rex.resolution$Resdiues
   
   out_long <- vector(mode = "list", length = numIter)
   
@@ -388,7 +388,7 @@ marginalEffect <- function(params,
   
   out_long[[i]]  <- DataFrame(Residue = rep(Residues, each = length(timepoints)),
                               timepoints = rep(timepoints, times = length(Residues)),
-                              Uptake = as.vector(out),
+                              Uptake = as.vector(out[,Residues]),
                               mcmcIter = rep(i, each = length(Residues) * length(timepoints)))
     
     

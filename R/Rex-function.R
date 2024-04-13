@@ -275,17 +275,19 @@ RexProcess <- function(HdxData,
     likelihood <- vector(mode = "numeric", length = length(whichChains))
 
     ## average over mcmc interations
-    for (j in whichChains) {
-        mean_blong[j, ] <- rowMeans(params@chains[[j]]@blong[, range])
-        mean_pilong[j, ] <- rowMeans(params@chains[[j]]@pilong[, range])
-        mean_qlong[j, ] <- rowMeans(params@chains[[j]]@qlong[, range])
-        mean_dlong[j, ] <- rowMeans(params@chains[[j]]@dlong[, range])
-        sigma[j] <- mean(params@chains[[j]]@Sigma[range])
-        likelihood[j] <- mean(params@chains[[j]]@loglikelihood[range])
+    for (i in seq_along(whichChains)) {
+        j <- whichChains[i]
+        mean_blong[i, ] <- rowMeans(params@chains[[j]]@blong[, range])
+        mean_pilong[i, ] <- rowMeans(params@chains[[j]]@pilong[, range])
+        mean_qlong[i, ] <- rowMeans(params@chains[[j]]@qlong[, range])
+        mean_dlong[i, ] <- rowMeans(params@chains[[j]]@dlong[, range])
+        sigma[i] <- mean(params@chains[[j]]@Sigma[range])
+        likelihood[i] <- mean(params@chains[[j]]@loglikelihood[range])
     }
 
     # store quantiles
-    for (k in whichChains) {
+    for (i in seq_along(whichChains)) {
+        k <- whichChains[i]
         .blong_quantiles <- vapply(seq_len(R),
             function(j) {
                 quantile(
@@ -325,15 +327,16 @@ RexProcess <- function(HdxData,
     }
 
     ## take means across chains
-    blong <- colMeans(mean_blong[whichChains, , drop = FALSE])
-    pilong <- colMeans(mean_pilong[whichChains, , drop = FALSE])
-    qlong <- colMeans(mean_qlong[whichChains, , drop = FALSE])
-    dlong <- colMeans(mean_dlong[whichChains, , drop = FALSE])
+    blong <- colMeans(mean_blong[, , drop = FALSE])
+    pilong <- colMeans(mean_pilong[, , drop = FALSE])
+    qlong <- colMeans(mean_qlong[, , drop = FALSE])
+    dlong <- colMeans(mean_dlong[, , drop = FALSE])
 
     .diagnoistics <- matrix(NA, 1, 1)
     .sigma_diagnostics <- vector("list", length = length(whichChains))
-    for (j in whichChains) {
-        .sigma_diagnostics[[j]] <- coda::as.mcmc(params@chains[[j]]@Sigma[range])
+    for (i in seq_along(whichChains)) {
+        j <- whichChains[i]
+        .sigma_diagnostics[[i]] <- coda::as.mcmc(params@chains[[j]]@Sigma[range])
     }
 
     if (length(whichChains) > 1) {
