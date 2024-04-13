@@ -370,9 +370,9 @@ RexProcess <- function(HdxData,
 
     Rex.resolution <- DataFrame(
         Residues = Residues,
-        signedARE = t(signedARE),
-        ARE = t(ARE),
-        TRE = t(TRE)
+        signedARE = t(signedARE)[Residues,],
+        ARE = t(ARE)[Residues,],
+        TRE = t(TRE)[Residues,]
     )
 
     colnames(Rex.resolution) <- c(
@@ -387,10 +387,10 @@ RexProcess <- function(HdxData,
     ## store the posterior estimates
     posteriorEstimates <- DataFrame(
         Residues = Residues,
-        blong = blong,
-        pilong = pilong,
-        qlong = qlong,
-        dlong = dlong
+        blong = blong[Residues],
+        pilong = pilong[Residues],
+        qlong = qlong[Residues],
+        dlong = dlong[Residues]
     )
 
     colnames(posteriorEstimates) <- c(
@@ -404,10 +404,10 @@ RexProcess <- function(HdxData,
 
     Rex.quantiles <- DataFrame(
         Residues = Residues,
-        blong_quantiles = t(.blong_quantiles),
-        pilong_quantiles = t(.pilong_quantiles),
-        qlong_quantiles = t(.qlong_quantiles),
-        dlong_quantiles = t(.dlong_quantiles)
+        blong_quantiles = t(.blong_quantiles)[Residues,],
+        pilong_quantiles = t(.pilong_quantiles)[Residues,],
+        qlong_quantiles = t(.qlong_quantiles)[Residues,],
+        dlong_quantiles = t(.dlong_quantiles)[Residues,]
     )
 
     colnames(Rex.quantiles) <- c(
