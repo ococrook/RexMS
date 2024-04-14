@@ -325,25 +325,30 @@ plotUptake <- function(Uptake,
 marginalEffect <- function(params,
                            method = "fitted",
                            whichChains = 1,
-                           tCoef = NULL){
+                           tCoef = NULL,
+                           range = seq.int(4000,5000)){
   
   stopifnot("params must be a RexParams object" = is(params, "RexParams"))
+  
   
   # get timepoints
   timepoints <- params@chains@chains[[1]]@timepoints
   phi <- params@chains@chains[[1]]@phi
-  numIter <- params@chains@chains[[1]]@numIter
   Residues <- params@summary@Rex.resolution$Resdiues
+  numIter <- params@chains@chains[[1]]@numIter
   
-  out_long <- vector(mode = "list", length = numIter)
+  stopifnot("range is invalid" = max(range) <= numIter)
+  
+  out_long <- vector(mode = "list", length = length(range))
   
   if (is.null(tCoef)) {
     tCoef <- c(0, rep(1, length(timepoints) -1))
   }
   
   # Get the parameters
-  for (i in seq.int(numIter)){
+  for (j in seq_along(range)){
     
+    i <- range[j]
     blong <- params@chains@chains[[whichChains]]@blong[, i]
     pilong <- params@chains@chains[[whichChains]]@pilong[, i]
     qlong <- params@chains@chains[[whichChains]]@qlong[, i]
@@ -386,7 +391,7 @@ marginalEffect <- function(params,
     
   }
   
-  out_long[[i]]  <- DataFrame(Residue = rep(Residues, each = length(timepoints)),
+  out_long[[j]]  <- DataFrame(Residue = rep(Residues, each = length(timepoints)),
                               timepoints = rep(timepoints, times = length(Residues)),
                               Uptake = as.vector(out[,Residues]),
                               mcmcIter = rep(i, each = length(Residues) * length(timepoints)))
