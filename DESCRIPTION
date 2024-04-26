@@ -1,6 +1,6 @@
 Package: RexMS
 Title: Residue-level statistical analysis of HDX-MS data
-Version: 0.99.3
+Version: 0.99.4
 Date: 2024-03-04
 Authors@R: 
     person("Oliver", "Crook", , "oliver.crook@stats.ox.ac.uk", role = c("aut", "cre"),
@@ -47,7 +47,8 @@ Imports:
     vegan,
     plyr,
     ropls,
-    tidyr
+    tidyr,
+    stringr
 Suggests: 
     BiocStyle,
     ggfortify,

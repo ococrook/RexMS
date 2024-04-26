@@ -116,6 +116,17 @@ resolver <- function(res,
         R = R,
         phi = phi
     )
+    
+    # want to set to init_param to b if the initialiser used reduced model
+    condition_for_init_param <- sum(params[seq.int(R_lower, R_upper), 3] == 1,
+                                    na.rm = TRUE)
+    number_of_unique_b <- length(unique(params[seq.int(R_lower, R_upper), 1]))
+    
+    if (condition_for_init_param > number_of_unique_b) {
+        init_param <- "b"
+        message("Initial parameter set to b")
+    }
+    
 
     currentblong <- params[, 1]
     currentqlong <- params[, 2]
@@ -186,8 +197,16 @@ resolver <- function(res,
 
 
     # sampler here
+    pb <- txtProgressBar(min = 0, max = numIter, style = 3)
+    ._t <- 0
 
     for (j in seq.int(numIter)) {
+      
+      if((j %% 100) ==0){
+        setTxtProgressBar(pb, ._t)
+        ._t <- ._t + 1
+      }
+      
         currentSigma <- metropolisSigma(
             res = res,
             currentSigma = currentSigma,

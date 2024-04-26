@@ -520,7 +520,8 @@ has a number of arguments but the most important are the following:
 ```{r,}
 samples <- marginalEffect(rex_test,
                           method = "predict",
-                          tCoef = c(0, rep(1, numTimepoints - 1)))
+                          tCoef = c(0, rep(1, numTimepoints - 1)),
+                          range = 50:100)
 
 plotUptakeUncertainty(samples)
 

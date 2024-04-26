@@ -11,11 +11,11 @@
 ##'
 ##' @md
 initialiser <- function(uptake_guess,
-    timepoints,
-    numRep,
-    numtimepoints,
-    R,
-    phi) {
+                        timepoints,
+                        numRep,
+                        numtimepoints,
+                        R,
+                        phi) {
     params <- matrix(NA, ncol = 4, nrow = R)
     Err <- vector(mode = "numeric", length = R)
     for (j in seq_len(R)) {
@@ -37,6 +37,23 @@ initialiser <- function(uptake_guess,
                     ),
                     silent = TRUE
                 )
+                
+                if (inherits(out, "try-error")) {
+                    out <- try(
+                        minpack.lm::nlsLM(
+                            data = as.data.frame(data),
+                            formula = y ~ phi * ((1 - exp(-b * t^p))),
+                            start = list(b = 0.1, p = 0.1),
+                            lower = c(0, 0),
+                            upper = c(2, 0.99),
+                            algorithm = "LM",
+                            control = nls.control(maxiter = 1000)
+                        ),
+                        silent = TRUE
+                    )
+                }
+                  
+                
             } else {
                 # reduce initialising model if not many data points
                 out <- try(
@@ -66,8 +83,15 @@ initialiser <- function(uptake_guess,
                 Err[j] <- sum((predict(out) - data[, 1])^2)
 
                 if ((numtimepoints > 4)) {
+                  if (length(coef(out)) == 4) {
                     params[j, ] <- coef(out)
-                } else {
+                  } else {
+                    params[j, 1:2] <- coef(out)
+                    params[j, 3] <- 1
+                    params[j, 4] <- 0.001
+                  }
+                  
+                } else{
                     params[j, 1:2] <- coef(out)
                     params[j, 3] <- 1
                     params[j, 4] <- 0.001

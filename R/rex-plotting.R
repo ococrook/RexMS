@@ -496,13 +496,19 @@ plotPeptideError <- function(rex_params,
   rownames(df) <- Rex.peptideError(rex_params)[,1] 
   
   if (relative) {
-    df <- df / maxUptakes(res = HdxData)
+    
+    Sequence <- Rex.peptideError(rex_params)[, "Peptide"]
+    norm <- str_count(str_sub(Sequence, 3, -1)) - str_count(str_sub(Sequence, 3, -1), "P")
+    df <- df / norm
   }
+  
+  rg <- max(abs(df))
   
   pp <- pheatmap(df, 
                  cluster_rows = FALSE,
                  cluster_cols = FALSE,
-                 show_rownames = TRUE)
+                 show_rownames = TRUE,
+                 breaks = seq(-rg, rg, length.out = 100))
   
   
   return(pp)

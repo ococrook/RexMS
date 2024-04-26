@@ -4,7 +4,13 @@
 \alias{marginalEffect}
 \title{Function to sample uncertainty of the Uptake}
 \usage{
-marginalEffect(params, method = "fitted", whichChains = 1, tCoef = NULL)
+marginalEffect(
+  params,
+  method = "fitted",
+  whichChains = 1,
+  tCoef = NULL,
+  range = seq.int(4000, 5000)
+)
 }
 \arguments{
 \item{params}{An object of class RexParams containing the parameters of
@@ -18,6 +24,8 @@ in the model parameters and the error term (e.g. observation level error)}
 \item{whichChains}{An integer value indicating which chain to sample from}
 
 \item{tCoef}{A numeric vector of coefficients to use in the prediction}
+
+\item{range}{A numeric vector of the range of iterations to sample from}
 }
 \value{
 Returns a list of samples
@@ -48,5 +56,6 @@ rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
                           thin = 1,
                           range = 1:4,
                           whichChains = c(1))
-samples <- marginalEffect(rex_example)                           
+samples <- marginalEffect(rex_example,
+                          range= 1:4)                           
 }

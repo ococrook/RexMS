@@ -50,6 +50,6 @@ rex_example <- RexProcess(HdxData = DataFrame(BRD4_apo),
                           thin = 1,
                           range = 1:4,
                           whichChains = c(1))
-samples <- marginalEffect(rex_example)
+samples <- marginalEffect(rex_example, range = 1:4)
 plotUptakeUncertainty(samples)                           
 }

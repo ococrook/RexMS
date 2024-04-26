@@ -1,5 +1,10 @@
 # RexMS 0.99.3
 
+* fix max uptake bug
+* improved intialiser
+
+# RexMS 0.99.3
+
 * Generate all tutorial and website
 * fix spelling and grammer issues in website
 

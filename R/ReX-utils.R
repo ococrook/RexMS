@@ -44,10 +44,10 @@ prepareIndexes <- function(res) {
 maxUptakes <- function(res) {
   stopifnot("res must be a DataFrame" = is(res, "DFrame"))
 
-    .out <- vapply(seq_along(unique(res$Sequence)),
-        function(z) res$MaxUptake[res$Sequence == unique(res$Sequence)[z]][1],
-        FUN.VALUE = numeric(1)
-    )
+  .out <-  data.frame(res) %>%  
+    mutate(MaxUptake = str_count(str_sub(Sequence, 3, -1)) - 
+             str_count(str_sub(Sequence, 3, -1), "P")) %>% 
+    pull(MaxUptake)
     return(.out)
 }
 
@@ -294,6 +294,7 @@ plotUptake <- function(Uptake,
 ##'  in the model parameters and the error term (e.g. observation level error)
 ##' @param whichChains An integer value indicating which chain to sample from
 ##' @param tCoef A numeric vector of coefficients to use in the prediction
+##' @param range A numeric vector of the range of iterations to sample from
 ##'   
 ##' @return Returns a list of samples 
 ##' @examples
@@ -320,7 +321,8 @@ plotUptake <- function(Uptake,
 ##'                           thin = 1,
 ##'                           range = 1:4,
 ##'                           whichChains = c(1))
-##' samples <- marginalEffect(rex_example)                           
+##' samples <- marginalEffect(rex_example,
+##'                           range= 1:4)                           
 ##' @export
 marginalEffect <- function(params,
                            method = "fitted",
@@ -438,7 +440,7 @@ marginalEffect <- function(params,
 ##'                           thin = 1,
 ##'                           range = 1:4,
 ##'                           whichChains = c(1))
-##' samples <- marginalEffect(rex_example)
+##' samples <- marginalEffect(rex_example, range = 1:4)
 ##' plotUptakeUncertainty(samples)                           
 ##' @export
 plotUptakeUncertainty <- function(samples,
