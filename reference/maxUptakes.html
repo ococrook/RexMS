@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RexMS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
       </span>
     </div>
 
@@ -87,11 +87,91 @@ hdx-ms  experiment</p></dd>
 <span class="r-in"><span><span class="va">BRD4_apo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">maxUptakes</span><span class="op">(</span>res <span class="op">=</span> <span class="va">BRD4_apo</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 22 18 12  9 10 15 17  5  5  8 16 19 13  7 10  6  9  3 11 14  5  8 11 22  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] 11 17  4  6  8  9 11 12 13 19 20  5  8  9 10  9 10  5  5  6  5  6 10  8  6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51]  6  5  6  5 13 12  9  9  5  5 13  9  4  6  8  7  9  6  5  8 16  7  6  7 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] 13 14 17  5  6  5 16 17 16 13  6 12 16 19  9 21  8 12  7 11 14 19  5 10  6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] 10  9 15  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1] 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 18 18 18 18 18 18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25] 18 18 18 18 18 18 18 18 18 18 18 18 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [49] 12 12 12 12 12 12 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [73] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 15 15 15 15 15 15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [97] 15 15 15 15 15 15 15 15 15 15 15 15 17 17 17 17 17 17 17 17 17 17 17 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [121] 17 17 17 17 17 17  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [145]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  8  8  8  8  8  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [169]  8  8  8  8  8  8  8  8  8  8  8  8 16 16 16 16 16 16 16 16 16 16 16 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [193] 16 16 16 16 16 16 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [217] 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [241]  7  7  7  7  7  7  7  7  7  7  7  7 10 10 10 10 10 10 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [265] 10 10 10 10 10 10  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [289]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  4  4  4  4  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [313]  4  4  4  4  4  4  4  4  4  4  4  4 11 11 11 11 11 11 11 11 11 11 11 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [337] 11 11 11 11 11 11 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [361] 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [385]  5  5  5  5  5  5  5  5  5  5  5  5  8  8  8  8  8  8  8  8  8  8  8  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [409]  8  8  8  8  8  8 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [433] 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [457] 22 22 22 22 22 22 22 22 22 22 22 22  7  7  7  7  7  7  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [481]  7  7  7  7  7  7 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [505] 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17  4  4  4  4  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [529]  4  4  4  4  4  4  4  4  4  4  4  4  7  7  7  7  7  7  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [553]  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [577]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [601] 10 10 10 10 10 10 10 10 10 10 10 10 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [625] 12 12 12 12 12 12 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [649] 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 20 20 20 20 20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [673] 20 20 20 20 20 20 20 20 20 20 20 20 21 21 21 21 21 21 21 21 21 21 21 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [697] 21 21 21 21 21 21  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [721]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [745]  9  9  9  9  9  9  9  9  9  9  9  9 10 10 10 10 10 10 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [769] 10 10 10 10 10 10  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [793] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [817]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [841]  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [865]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [889]  6  6  6  6  6  6  6  6  6  6  6  6 10 10 10 10 10 10 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [913] 10 10 10 10 10 10  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [937]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [961]  6  6  6  6  6  6  6  6  6  6  6  6  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [985]  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1009]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1033]  5  5  5  5  5  5  5  5  5  5  5  5 13 13 13 13 13 13 13 13 13 13 13 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1057] 13 13 13 13 13 13 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1081]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1105]  9  9  9  9  9  9  9  9  9  9  9  9  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1129]  6  6  6  6  6  6  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1153] 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1177]  9  9  9  9  9  9  9  9  9  9  9  9  4  4  4  4  4  4  4  4  4  4  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1201]  4  4  4  4  4  4  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1225]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1249]  7  7  7  7  7  7  7  7  7  7  7  7  9  9  9  9  9  9  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1273]  9  9  9  9  9  9  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1297]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  8  8  8  8  8  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1321]  8  8  8  8  8  8  8  8  8  8  8  8 16 16 16 16 16 16 16 16 16 16 16 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1345] 16 16 16 16 16 16  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1369]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  7  7  7  7  7  7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1393]  7  7  7  7  7  7  7  7  7  7  7  7 11 11 11 11 11 11 11 11 11 11 11 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1417] 11 11 11 11 11 11 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1441] 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 17 17 17 17 17 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1465] 17 17 17 17 17 17 17 17 17 17 17 17  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1489]  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1513]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5 16 16 16 16 16 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1537] 16 16 16 16 16 16 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1561] 17 17 17 17 17 17 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1585] 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 13 13 13 13 13 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1609] 13 13 13 13 13 13 13 13 13 13 13 13  6  6  6  6  6  6  6  6  6  6  6  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1633]  6  6  6  6  6  6 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1657] 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 19 19 19 19 19 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1681] 19 19 19 19 19 19 19 19 19 19 19 19  9  9  9  9  9  9  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1705]  9  9  9  9  9  9 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1729] 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21  8  8  8  8  8  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1753]  8  8  8  8  8  8  8  8  8  8  8  8 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1777] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1801]  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7 11 11 11 11 11 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1825] 11 11 11 11 11 11 11 11 11 11 11 11 14 14 14 14 14 14 14 14 14 14 14 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1849] 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1873] 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1897] 19 19 19 19 19 19 19 19 19 19 19 19  5  5  5  5  5  5  5  5  5  5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1921]  5  5  5  5  5  5 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1945]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 10 10 10 10 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1969] 10 10 10 10 10 10 10 10 10 10 10 10  9  9  9  9  9  9  9  9  9  9  9  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1993]  9  9  9  9  9  9 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2017]  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -107,7 +187,7 @@ hdx-ms  experiment</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer></div>

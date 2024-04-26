@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RexMS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">13 April 2024</h4>
+            <h4 data-toc-skip class="date">26 April 2024</h4>
       
       
       <div class="hidden name"><code>ReX.Rmd</code></div>
@@ -171,7 +171,7 @@ cite the package and the overall approach. Thank you!</p>
 <span><span class="co">#&gt;   ococrook (2024). _Inferring residue level hydrogen deuterium exchange</span></span>
 <span><span class="co">#&gt;   with ReX_. doi:10.18129/B9.bioc.ReX</span></span>
 <span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.ReX&gt;,</span></span>
-<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.3,</span></span>
+<span><span class="co">#&gt;   https://github.com/ococrook/ReX/ReX - R package version 0.99.4,</span></span>
 <span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/ReX&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ococrook (2024). "Inferring residue level hydrogen deuterium exchange</span></span>
@@ -259,10 +259,78 @@ following function. You may need to use the <code>rep</code> function to
 repeat for time points.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/maxUptakes.html">maxUptakes</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 22 18 12  9 10 15 17  5  5  8 16 19 13  7 10  6  9  3 11  5  8 11 22  7 11</span></span>
-<span><span class="co">#&gt; [26] 17  4  8  9 11 12 13 19 20  5  8  9 10  9 10  5  5  6  5  6 10  8  6  6  5</span></span>
-<span><span class="co">#&gt; [51]  5 13 12  9  9  5  5 13  9  4  6  8  7  9  6  5  8 16  7  6  7 11 13 14 17</span></span>
-<span><span class="co">#&gt; [76]  5  6  5 16 17 13  6 12 16 19  9  8  7 11  5 10  6 10  9 15  4</span></span></code></pre></div>
+<span><span class="co">#&gt;    [1] 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 18 18 18 18 18 18</span></span>
+<span><span class="co">#&gt;   [25] 18 18 18 18 18 18 18 18 18 18 18 18 12 12 12 12 12 12 12 12 12 12 12 12</span></span>
+<span><span class="co">#&gt;   [49] 12 12 12 12 12 12 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;   [73] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 15 15 15 15 15 15</span></span>
+<span><span class="co">#&gt;   [97] 15 15 15 15 15 15 15 15 15 15 15 15 17 17 17 17 17 17 17 17 17 17 17 17</span></span>
+<span><span class="co">#&gt;  [121] 17 17 17 17 17 17  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [145]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt;  [169]  8  8  8  8  8  8  8  8  8  8  8  8 16 16 16 16 16 16 16 16 16 16 16 16</span></span>
+<span><span class="co">#&gt;  [193] 16 16 16 16 16 16 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19</span></span>
+<span><span class="co">#&gt;  [217] 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13  7  7  7  7  7  7</span></span>
+<span><span class="co">#&gt;  [241]  7  7  7  7  7  7  7  7  7  7  7  7 10 10 10 10 10 10 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;  [265] 10 10 10 10 10 10  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt;  [289]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  4  4  4  4  4  4</span></span>
+<span><span class="co">#&gt;  [313]  4  4  4  4  4  4  4  4  4  4  4  4 11 11 11 11 11 11 11 11 11 11 11 11</span></span>
+<span><span class="co">#&gt;  [337] 11 11 11 11 11 11  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [361]  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8 11 11 11 11 11 11</span></span>
+<span><span class="co">#&gt;  [385] 11 11 11 11 11 11 11 11 11 11 11 11 22 22 22 22 22 22 22 22 22 22 22 22</span></span>
+<span><span class="co">#&gt;  [409] 22 22 22 22 22 22  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7</span></span>
+<span><span class="co">#&gt;  [433] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 17 17 17 17 17 17</span></span>
+<span><span class="co">#&gt;  [457] 17 17 17 17 17 17 17 17 17 17 17 17  4  4  4  4  4  4  4  4  4  4  4  4</span></span>
+<span><span class="co">#&gt;  [481]  4  4  4  4  4  4  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt;  [505] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 12 12 12 12 12 12</span></span>
+<span><span class="co">#&gt;  [529] 12 12 12 12 12 12 12 12 12 12 12 12 13 13 13 13 13 13 13 13 13 13 13 13</span></span>
+<span><span class="co">#&gt;  [553] 13 13 13 13 13 13 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14</span></span>
+<span><span class="co">#&gt;  [577] 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 21 21 21 21 21 21</span></span>
+<span><span class="co">#&gt;  [601] 21 21 21 21 21 21 21 21 21 21 21 21  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [625]  5  5  5  5  5  5  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt;  [649]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;  [673] 10 10 10 10 10 10 10 10 10 10 10 10  9  9  9  9  9  9  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt;  [697]  9  9  9  9  9  9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;  [721]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [745]  5  5  5  5  5  5  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt;  [769]  6  6  6  6  6  6  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [793]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;  [817] 10 10 10 10 10 10 10 10 10 10 10 10  8  8  8  8  8  8  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt;  [841]  8  8  8  8  8  8  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt;  [865]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [889]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt;  [913]  5  5  5  5  5  5 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13</span></span>
+<span><span class="co">#&gt;  [937] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt;  [961]  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt;  [985]  9  9  9  9  9  9  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt; [1009]  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5 13 13 13 13 13 13</span></span>
+<span><span class="co">#&gt; [1033] 13 13 13 13 13 13 13 13 13 13 13 13  9  9  9  9  9  9  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt; [1057]  9  9  9  9  9  9  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4</span></span>
+<span><span class="co">#&gt; [1081]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt; [1105]  8  8  8  8  8  8  8  8  8  8  8  8  7  7  7  7  7  7  7  7  7  7  7  7</span></span>
+<span><span class="co">#&gt; [1129]  7  7  7  7  7  7  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt; [1153]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt; [1177]  5  5  5  5  5  5  5  5  5  5  5  5  8  8  8  8  8  8  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt; [1201]  8  8  8  8  8  8 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16</span></span>
+<span><span class="co">#&gt; [1225]  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt; [1249]  6  6  6  6  6  6  6  6  6  6  6  6  7  7  7  7  7  7  7  7  7  7  7  7</span></span>
+<span><span class="co">#&gt; [1273]  7  7  7  7  7  7 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11</span></span>
+<span><span class="co">#&gt; [1297] 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 14 14 14 14 14 14</span></span>
+<span><span class="co">#&gt; [1321] 14 14 14 14 14 14 14 14 14 14 14 14 17 17 17 17 17 17 17 17 17 17 17 17</span></span>
+<span><span class="co">#&gt; [1345] 17 17 17 17 17 17  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt; [1369]  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt; [1393]  5  5  5  5  5  5  5  5  5  5  5  5 16 16 16 16 16 16 16 16 16 16 16 16</span></span>
+<span><span class="co">#&gt; [1417] 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17</span></span>
+<span><span class="co">#&gt; [1441] 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt; [1465]  6  6  6  6  6  6  6  6  6  6  6  6 12 12 12 12 12 12 12 12 12 12 12 12</span></span>
+<span><span class="co">#&gt; [1489] 12 12 12 12 12 12 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16</span></span>
+<span><span class="co">#&gt; [1513] 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt; [1537]  9  9  9  9  9  9  9  9  9  9  9  9  8  8  8  8  8  8  8  8  8  8  8  8</span></span>
+<span><span class="co">#&gt; [1561]  8  8  8  8  8  8  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7</span></span>
+<span><span class="co">#&gt; [1585] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11  5  5  5  5  5  5</span></span>
+<span><span class="co">#&gt; [1609]  5  5  5  5  5  5  5  5  5  5  5  5 10 10 10 10 10 10 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt; [1633] 10 10 10 10 10 10  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6</span></span>
+<span><span class="co">#&gt; [1657] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  9  9  9  9  9  9</span></span>
+<span><span class="co">#&gt; [1681]  9  9  9  9  9  9  9  9  9  9  9  9 15 15 15 15 15 15 15 15 15 15 15 15</span></span>
+<span><span class="co">#&gt; [1705] 15 15 15 15 15 15  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4</span></span></code></pre></div>
 <p>The data is now ready to take a closer look. Be careful at this point
 you may have lost a large number of peptides if you had lots of missing
 values. At this point it will be useful to check the redundancy of the
@@ -394,8 +462,9 @@ analysis.</p>
 <span>                phi <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ... </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span>
+<span><span class="co">#&gt; Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ... </span></span>
+<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%</span></span></code></pre></div>
 <p>Once the algorithm has finished running you can view the results.
 First, note that <code>rex</code> produces an object of type
 <code>RexParams</code>. Just printing the object will give you a summary
@@ -472,7 +541,7 @@ results but again we recommend using accessor functions.</p>
 <span><span class="co">#&gt;  Number of Timepoints: 6 </span></span>
 <span><span class="co">#&gt;  Number of Peptides: 19 </span></span>
 <span><span class="co">#&gt;  Number of chains: 2 </span></span>
-<span><span class="co">#&gt;  Global resolutions: 0.002601718 0.002118301</span></span></code></pre></div>
+<span><span class="co">#&gt;  Global resolutions: 0.000854443 0.0006590341</span></span></code></pre></div>
 <p>A number of functions are available to access the results. The first
 is <code>Rex.globals</code> which will give you access to the model log
 likelihood and the sigma parameter which is a measure of the variance of
@@ -485,10 +554,10 @@ check that the chains are behaving similarly.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/RexParams.html">Rex.globals</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 2 rows and 2 columns</span></span>
-<span><span class="co">#&gt;        sigma likelihood</span></span>
-<span><span class="co">#&gt;    &lt;numeric&gt;  &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1 0.00260172   -243.584</span></span>
-<span><span class="co">#&gt; 2 0.00211830   -225.558</span></span></code></pre></div>
+<span><span class="co">#&gt;         sigma likelihood</span></span>
+<span><span class="co">#&gt;     &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1 0.000854443   -300.197</span></span>
+<span><span class="co">#&gt; 2 0.000659034   -285.358</span></span></code></pre></div>
 <p>We next consider the peptide error distribution. This allows us to
 understand the modelling error for each peptide. The function
 <code>Rex.peptideError</code> will give you the error distribution for
@@ -500,30 +569,30 @@ secondly any peptides that may have data that is inconsistent</p>
 <span><span class="co">#&gt; DataFrame with 19 rows and 7 columns</span></span>
 <span><span class="co">#&gt;                    Peptide         0         15         60        600</span></span>
 <span><span class="co">#&gt;                &lt;character&gt; &lt;numeric&gt;  &lt;numeric&gt;  &lt;numeric&gt;  &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1   MSAESGPGTRLRNLPVMGDG..         0  -0.508045 -0.0959071   1.924596</span></span>
-<span><span class="co">#&gt; 2   SGPGTRLRNLPVMGDGLETSQM         0  -0.744170 -0.2646713   1.518184</span></span>
-<span><span class="co">#&gt; 3          RNLPVMGDGLETSQM         0  -1.627567 -1.5563940  -0.290221</span></span>
-<span><span class="co">#&gt; 4             PVMGDGLETSQM         0   0.721668  0.5476462   0.917514</span></span>
-<span><span class="co">#&gt; 5           STTQAQAQPQPANA         0  -1.382244 -1.6072639  -1.157549</span></span>
+<span><span class="co">#&gt; 1   MSAESGPGTRLRNLPVMGDG..         0  0.3853510   0.518933  2.4674147</span></span>
+<span><span class="co">#&gt; 2   SGPGTRLRNLPVMGDGLETSQM         0  0.0964043   0.347456  2.0636802</span></span>
+<span><span class="co">#&gt; 3          RNLPVMGDGLETSQM         0 -0.8705394  -0.935165  0.2712123</span></span>
+<span><span class="co">#&gt; 4             PVMGDGLETSQM         0  1.4223817   1.134260  1.4566907</span></span>
+<span><span class="co">#&gt; 5           STTQAQAQPQPANA         0  0.0407361  -0.328100  0.0798027</span></span>
 <span><span class="co">#&gt; ...                    ...       ...        ...        ...        ...</span></span>
-<span><span class="co">#&gt; 15          QFAWPFQQPVDAVK         0 -0.1533083  0.1079162  0.3593983</span></span>
-<span><span class="co">#&gt; 16              FAWPFQQPVD         0 -0.4959707 -0.3222145 -0.1366722</span></span>
-<span><span class="co">#&gt; 17           FAWPFQQPVDAVK         0 -0.1477685  0.0435266  0.1711736</span></span>
-<span><span class="co">#&gt; 18                 PFQQPVD         0  0.0306388  0.0303780  0.0161934</span></span>
-<span><span class="co">#&gt; 19                LNLPDYYK         0  0.4593709  0.3966985  0.0634173</span></span>
-<span><span class="co">#&gt;            3600      14400</span></span>
-<span><span class="co">#&gt;       &lt;numeric&gt;  &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1      2.777554   2.318063</span></span>
-<span><span class="co">#&gt; 2      2.332352   1.999681</span></span>
-<span><span class="co">#&gt; 3      0.360935   0.294835</span></span>
-<span><span class="co">#&gt; 4      0.625521   0.638823</span></span>
-<span><span class="co">#&gt; 5     -0.880269  -0.862770</span></span>
-<span><span class="co">#&gt; ...         ...        ...</span></span>
-<span><span class="co">#&gt; 15   0.70116148  0.3212678</span></span>
-<span><span class="co">#&gt; 16  -0.16111964 -0.5031415</span></span>
-<span><span class="co">#&gt; 17   0.38364339  0.0670619</span></span>
-<span><span class="co">#&gt; 18   0.00873968 -0.0208830</span></span>
-<span><span class="co">#&gt; 19   0.42839263  0.2949793</span></span></code></pre></div>
+<span><span class="co">#&gt; 15          QFAWPFQQPVDAVK         0  0.0943977  0.0190658  0.2397038</span></span>
+<span><span class="co">#&gt; 16              FAWPFQQPVD         0 -0.1238997 -0.0515357 -0.0760370</span></span>
+<span><span class="co">#&gt; 17           FAWPFQQPVDAVK         0 -0.0170629 -0.1055643  0.0586430</span></span>
+<span><span class="co">#&gt; 18                 PFQQPVD         0  0.0222127  0.0054768  0.0355416</span></span>
+<span><span class="co">#&gt; 19                LNLPDYYK         0 -0.0923219 -0.0770881  0.1294793</span></span>
+<span><span class="co">#&gt;           3600      14400</span></span>
+<span><span class="co">#&gt;      &lt;numeric&gt;  &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1     3.287959   2.800008</span></span>
+<span><span class="co">#&gt; 2     2.843657   2.481972</span></span>
+<span><span class="co">#&gt; 3     0.880818   0.782274</span></span>
+<span><span class="co">#&gt; 4     1.127614   1.111452</span></span>
+<span><span class="co">#&gt; 5     0.308677   0.282831</span></span>
+<span><span class="co">#&gt; ...        ...        ...</span></span>
+<span><span class="co">#&gt; 15   0.8004400  0.4159988</span></span>
+<span><span class="co">#&gt; 16  -0.0926091 -0.4209748</span></span>
+<span><span class="co">#&gt; 17   0.4512225  0.1492286</span></span>
+<span><span class="co">#&gt; 18   0.0644328  0.0650606</span></span>
+<span><span class="co">#&gt; 19   0.4540087  0.2959782</span></span></code></pre></div>
 <p>We can produce a heatmap to quickly examine the residuals. The
 heatmap show some important features. First, there is a mixture of
 <code>blue</code> and <code>red</code> suggesting that the model is not
@@ -560,41 +629,41 @@ metric sigma and the peptide level error metrics</p>
 <span><span class="co">#&gt;     &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;     &lt;numeric&gt;      &lt;numeric&gt;</span></span>
 <span><span class="co">#&gt; 1           1          NaN          NaN           NaN            NaN</span></span>
 <span><span class="co">#&gt; 2           2          NaN          NaN           NaN            NaN</span></span>
-<span><span class="co">#&gt; 3           3    -0.023093  -0.00435941     0.0874816       0.126252</span></span>
-<span><span class="co">#&gt; 4           4    -0.023093  -0.00435941     0.0874816       0.126252</span></span>
-<span><span class="co">#&gt; 5           5    -0.023093  -0.00435941     0.0874816       0.126252</span></span>
+<span><span class="co">#&gt; 3           3     0.017516    0.0235878      0.112155       0.149453</span></span>
+<span><span class="co">#&gt; 4           4     0.017516    0.0235878      0.112155       0.149453</span></span>
+<span><span class="co">#&gt; 5           5     0.017516    0.0235878      0.112155       0.149453</span></span>
 <span><span class="co">#&gt; ...       ...          ...          ...           ...            ...</span></span>
 <span><span class="co">#&gt; 95         95          NaN          NaN           NaN            NaN</span></span>
-<span><span class="co">#&gt; 96         96    0.0918742    0.0793397     0.0126835      0.0856785</span></span>
-<span><span class="co">#&gt; 97         97    0.0918742    0.0793397     0.0126835      0.0856785</span></span>
-<span><span class="co">#&gt; 98         98    0.0918742    0.0793397     0.0126835      0.0856785</span></span>
-<span><span class="co">#&gt; 99         99    0.0918742    0.0793397     0.0126835      0.0856785</span></span>
-<span><span class="co">#&gt;     signedARE_14400    ARE_15     ARE_60   ARE_600  ARE_3600 ARE_14400</span></span>
-<span><span class="co">#&gt;           &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1               NaN       NaN        NaN       NaN       NaN       NaN</span></span>
-<span><span class="co">#&gt; 2               NaN       NaN        NaN       NaN       NaN       NaN</span></span>
-<span><span class="co">#&gt; 3          0.105367  0.023093 0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; 4          0.105367  0.023093 0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; 5          0.105367  0.023093 0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; ...             ...       ...        ...       ...       ...       ...</span></span>
-<span><span class="co">#&gt; 95              NaN       NaN        NaN       NaN       NaN       NaN</span></span>
-<span><span class="co">#&gt; 96        0.0589959 0.0918742  0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 97        0.0589959 0.0918742  0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 98        0.0589959 0.0918742  0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 99        0.0589959 0.0918742  0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt;        TRE_15      TRE_60   TRE_600  TRE_3600 TRE_14400</span></span>
-<span><span class="co">#&gt;     &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1    0.000000  0.00000000 0.0000000  0.000000  0.000000</span></span>
-<span><span class="co">#&gt; 2    0.000000  0.00000000 0.0000000  0.000000  0.000000</span></span>
-<span><span class="co">#&gt; 3   -0.023093 -0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; 4   -0.023093 -0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; 5   -0.023093 -0.00435941 0.0874816  0.126252  0.105367</span></span>
-<span><span class="co">#&gt; ...       ...         ...       ...       ...       ...</span></span>
-<span><span class="co">#&gt; 95  0.0000000   0.0000000 0.0000000 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; 96  0.0918742   0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 97  0.0918742   0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 98  0.0918742   0.0793397 0.0126835 0.0856785 0.0589959</span></span>
-<span><span class="co">#&gt; 99  0.0918742   0.0793397 0.0126835 0.0856785 0.0589959</span></span></code></pre></div>
+<span><span class="co">#&gt; 96         96   -0.0184644   -0.0154176     0.0258959      0.0908017</span></span>
+<span><span class="co">#&gt; 97         97   -0.0184644   -0.0154176     0.0258959      0.0908017</span></span>
+<span><span class="co">#&gt; 98         98   -0.0184644   -0.0154176     0.0258959      0.0908017</span></span>
+<span><span class="co">#&gt; 99         99   -0.0184644   -0.0154176     0.0258959      0.0908017</span></span>
+<span><span class="co">#&gt;     signedARE_14400    ARE_15    ARE_60   ARE_600  ARE_3600 ARE_14400</span></span>
+<span><span class="co">#&gt;           &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1               NaN       NaN       NaN       NaN       NaN       NaN</span></span>
+<span><span class="co">#&gt; 2               NaN       NaN       NaN       NaN       NaN       NaN</span></span>
+<span><span class="co">#&gt; 3          0.127273  0.017516 0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; 4          0.127273  0.017516 0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; 5          0.127273  0.017516 0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; ...             ...       ...       ...       ...       ...       ...</span></span>
+<span><span class="co">#&gt; 95              NaN       NaN       NaN       NaN       NaN       NaN</span></span>
+<span><span class="co">#&gt; 96        0.0591956 0.0184644 0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 97        0.0591956 0.0184644 0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 98        0.0591956 0.0184644 0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 99        0.0591956 0.0184644 0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt;         TRE_15     TRE_60   TRE_600  TRE_3600 TRE_14400</span></span>
+<span><span class="co">#&gt;      &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt; 1     0.000000  0.0000000  0.000000  0.000000  0.000000</span></span>
+<span><span class="co">#&gt; 2     0.000000  0.0000000  0.000000  0.000000  0.000000</span></span>
+<span><span class="co">#&gt; 3     0.017516  0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; 4     0.017516  0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; 5     0.017516  0.0235878  0.112155  0.149453  0.127273</span></span>
+<span><span class="co">#&gt; ...        ...        ...       ...       ...       ...</span></span>
+<span><span class="co">#&gt; 95   0.0000000  0.0000000 0.0000000 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; 96  -0.0184644 -0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 97  -0.0184644 -0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 98  -0.0184644 -0.0154176 0.0258959 0.0908017 0.0591956</span></span>
+<span><span class="co">#&gt; 99  -0.0184644 -0.0154176 0.0258959 0.0908017 0.0591956</span></span></code></pre></div>
 <p>To visualise these results, we can use the following function. This
 will allow us to quickly examine the results. We suggest beomg cautious
 of data outside of 3*sqrt(sigma) as the model is likely struggling or
@@ -608,7 +677,7 @@ point.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># calculate a threshold for the data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="../reference/RexParams.html">Rex.globals</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span><span class="op">*</span><span class="fl">3</span></span>
-<span><span class="co">#&gt; [1] 0.1530211 0.1380750</span></span>
+<span><span class="co">#&gt; [1] 0.08769257 0.07701498</span></span>
 <span></span>
 <span><span class="co"># visualise the residue errors</span></span>
 <span><span class="fu"><a href="../reference/plotResidueResolution.html">plotResidueResolution</a></span><span class="op">(</span><span class="va">rex_test</span>, nrow  <span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
@@ -625,7 +694,7 @@ being generally more stable.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rex_test</span><span class="op">@</span><span class="va">summary</span><span class="op">@</span><span class="va">diagnostics</span></span>
 <span><span class="co">#&gt;       Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; sigma   1.976479    5.06751</span></span></code></pre></div>
+<span><span class="co">#&gt; sigma   5.056444   12.97457</span></span></code></pre></div>
 <p>You can plot both sigma and the model log likelihood as a function of
 iterations to diagnose convergence issues. The plots below show that
 sigma is still decreasing and the log likelihood still increasing but
@@ -655,71 +724,71 @@ confidence can be found using the following accessors</p>
 <span><span class="co">#&gt; DataFrame with 99 rows and 5 columns</span></span>
 <span><span class="co">#&gt;      Residues     blong    pilong     qlong      dlong</span></span>
 <span><span class="co">#&gt;     &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1           1   6.82069 0.0324675  0.126480  0.0534172</span></span>
-<span><span class="co">#&gt; 2           2   6.00227 0.0526792  0.159350  0.0475750</span></span>
-<span><span class="co">#&gt; 3           3   8.08566 0.0368265  0.159016  0.0366055</span></span>
-<span><span class="co">#&gt; 4           4   9.89038 0.0333461  0.193950  0.0405697</span></span>
-<span><span class="co">#&gt; 5           5   6.98751 0.0413437  0.170800  0.0541040</span></span>
+<span><span class="co">#&gt; 1           1   6.74972 0.0272437 0.0647077   0.103464</span></span>
+<span><span class="co">#&gt; 2           2   6.59475 0.0274618 0.1142103   0.126825</span></span>
+<span><span class="co">#&gt; 3           3   4.38575 0.0685036 0.0783218   0.199918</span></span>
+<span><span class="co">#&gt; 4           4   4.38575 0.0685036 0.0783218   0.199918</span></span>
+<span><span class="co">#&gt; 5           5   4.38575 0.0685036 0.0783218   0.199918</span></span>
 <span><span class="co">#&gt; ...       ...       ...       ...       ...        ...</span></span>
-<span><span class="co">#&gt; 95         95  0.292659 0.0783819  0.452775 0.00173252</span></span>
-<span><span class="co">#&gt; 96         96  0.144266 0.0548728  0.421258 0.00103237</span></span>
-<span><span class="co">#&gt; 97         97  0.144266 0.0548728  0.421258 0.00103237</span></span>
-<span><span class="co">#&gt; 98         98  0.144266 0.0548728  0.421258 0.00103237</span></span>
-<span><span class="co">#&gt; 99         99  0.144266 0.0548728  0.421258 0.00103237</span></span>
+<span><span class="co">#&gt; 95         95 0.0951668 0.0891995  0.493664 0.00379693</span></span>
+<span><span class="co">#&gt; 96         96 0.0951668 0.0891995  0.493664 0.00379693</span></span>
+<span><span class="co">#&gt; 97         97 0.0951668 0.0891995  0.493664 0.00379693</span></span>
+<span><span class="co">#&gt; 98         98 0.0951668 0.0891995  0.493664 0.00379693</span></span>
+<span><span class="co">#&gt; 99         99 0.0951668 0.0891995  0.493664 0.00379693</span></span>
 <span><span class="fu"><a href="../reference/RexParams.html">Rex.quantiles</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 99 rows and 13 columns</span></span>
 <span><span class="co">#&gt;      Residues blong_quantiles_2.5% blong_quantiles_50% blong_quantiles_97.5%</span></span>
 <span><span class="co">#&gt;     &lt;numeric&gt;            &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1           1             0.311153             4.95835               5.00151</span></span>
-<span><span class="co">#&gt; 2           2             0.311153             2.48924               9.47251</span></span>
-<span><span class="co">#&gt; 3           3             7.112866             7.13956               7.14836</span></span>
-<span><span class="co">#&gt; 4           4             9.443852             9.56660              13.22306</span></span>
-<span><span class="co">#&gt; 5           5             2.993915             3.08735              23.45757</span></span>
+<span><span class="co">#&gt; 1           1              5.25513             5.28380               5.37414</span></span>
+<span><span class="co">#&gt; 2           2              2.84099             2.91453              14.28432</span></span>
+<span><span class="co">#&gt; 3           3              3.60033             3.84386              14.28432</span></span>
+<span><span class="co">#&gt; 4           4              3.60033             3.84386              14.28432</span></span>
+<span><span class="co">#&gt; 5           5              3.60033             3.84386              14.28432</span></span>
 <span><span class="co">#&gt; ...       ...                  ...                 ...                   ...</span></span>
-<span><span class="co">#&gt; 95         95            0.0795173            0.081215             0.0843775</span></span>
-<span><span class="co">#&gt; 96         96            0.0795173            0.081215             0.0843775</span></span>
-<span><span class="co">#&gt; 97         97            0.0795173            0.081215             0.0843775</span></span>
-<span><span class="co">#&gt; 98         98            0.0795173            0.081215             0.0843775</span></span>
-<span><span class="co">#&gt; 99         99            0.0795173            0.081215             0.0843775</span></span>
+<span><span class="co">#&gt; 95         95            0.0736492           0.0736492             0.0964907</span></span>
+<span><span class="co">#&gt; 96         96            0.0736492           0.0736492             0.0964907</span></span>
+<span><span class="co">#&gt; 97         97            0.0736492           0.0736492             0.0964907</span></span>
+<span><span class="co">#&gt; 98         98            0.0736492           0.0736492             0.0964907</span></span>
+<span><span class="co">#&gt; 99         99            0.0736492           0.0736492             0.0964907</span></span>
 <span><span class="co">#&gt;     pilong_quantiles_2.5% pilong_quantiles_50% pilong_quantiles_97.5%</span></span>
 <span><span class="co">#&gt;                 &lt;numeric&gt;            &lt;numeric&gt;              &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1              0.00641711           0.00655756              0.1465967</span></span>
-<span><span class="co">#&gt; 2              0.00882976           0.05940219              0.1465967</span></span>
-<span><span class="co">#&gt; 3              0.02523181           0.02592187              0.0284355</span></span>
-<span><span class="co">#&gt; 4              0.01605964           0.01737286              0.0242445</span></span>
-<span><span class="co">#&gt; 5              0.00869836           0.03600500              0.0425007</span></span>
+<span><span class="co">#&gt; 1              0.00713580           0.00743176             0.00756529</span></span>
+<span><span class="co">#&gt; 2              0.00330676           0.00864668             0.00911421</span></span>
+<span><span class="co">#&gt; 3              0.00330676           0.05015542             0.05300984</span></span>
+<span><span class="co">#&gt; 4              0.00330676           0.05015542             0.05300984</span></span>
+<span><span class="co">#&gt; 5              0.00330676           0.05015542             0.05300984</span></span>
 <span><span class="co">#&gt; ...                   ...                  ...                    ...</span></span>
-<span><span class="co">#&gt; 95              0.0982683            0.0994919               0.102952</span></span>
-<span><span class="co">#&gt; 96              0.0982683            0.0994919               0.102952</span></span>
-<span><span class="co">#&gt; 97              0.0982683            0.0994919               0.102952</span></span>
-<span><span class="co">#&gt; 98              0.0982683            0.0994919               0.102952</span></span>
-<span><span class="co">#&gt; 99              0.0982683            0.0994919               0.102952</span></span>
+<span><span class="co">#&gt; 95              0.0849266            0.0923487               0.100863</span></span>
+<span><span class="co">#&gt; 96              0.0849266            0.0923487               0.100863</span></span>
+<span><span class="co">#&gt; 97              0.0849266            0.0923487               0.100863</span></span>
+<span><span class="co">#&gt; 98              0.0849266            0.0923487               0.100863</span></span>
+<span><span class="co">#&gt; 99              0.0849266            0.0923487               0.100863</span></span>
 <span><span class="co">#&gt;     qlong_quantiles_2.5% qlong_quantiles_50% qlong_quantiles_97.5%</span></span>
 <span><span class="co">#&gt;                &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1             0.04803903            0.100633              0.132892</span></span>
-<span><span class="co">#&gt; 2             0.00222684            0.196432              0.264549</span></span>
-<span><span class="co">#&gt; 3             0.11186185            0.136785              0.222299</span></span>
-<span><span class="co">#&gt; 4             0.00526254            0.334841              0.392485</span></span>
-<span><span class="co">#&gt; 5             0.05357227            0.172521              0.241798</span></span>
+<span><span class="co">#&gt; 1              0.0400276           0.0676500             0.0954764</span></span>
+<span><span class="co">#&gt; 2              0.0485835           0.1307959             0.3949226</span></span>
+<span><span class="co">#&gt; 3              0.0308749           0.0785021             0.3949226</span></span>
+<span><span class="co">#&gt; 4              0.0308749           0.0785021             0.3949226</span></span>
+<span><span class="co">#&gt; 5              0.0308749           0.0785021             0.3949226</span></span>
 <span><span class="co">#&gt; ...                  ...                 ...                   ...</span></span>
-<span><span class="co">#&gt; 95              0.557676            0.560245              0.571292</span></span>
-<span><span class="co">#&gt; 96              0.557676            0.560245              0.571292</span></span>
-<span><span class="co">#&gt; 97              0.557676            0.560245              0.571292</span></span>
-<span><span class="co">#&gt; 98              0.557676            0.560245              0.571292</span></span>
-<span><span class="co">#&gt; 99              0.557676            0.560245              0.571292</span></span>
+<span><span class="co">#&gt; 95              0.492544            0.517205              0.526689</span></span>
+<span><span class="co">#&gt; 96              0.492544            0.517205              0.526689</span></span>
+<span><span class="co">#&gt; 97              0.492544            0.517205              0.526689</span></span>
+<span><span class="co">#&gt; 98              0.492544            0.517205              0.526689</span></span>
+<span><span class="co">#&gt; 99              0.492544            0.517205              0.526689</span></span>
 <span><span class="co">#&gt;     dlong_quantiles_2.5% dlong_quantiles_50% dlong_quantiles_97.5%</span></span>
 <span><span class="co">#&gt;                &lt;numeric&gt;           &lt;numeric&gt;             &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt; 1              0.0513856          0.05214873             0.0889754</span></span>
-<span><span class="co">#&gt; 2              0.0072545          0.00912501             0.1481295</span></span>
-<span><span class="co">#&gt; 3              0.0194603          0.02219554             0.0232231</span></span>
-<span><span class="co">#&gt; 4              0.0100903          0.03677317             0.0409282</span></span>
-<span><span class="co">#&gt; 5              0.0509255          0.05291644             0.0711402</span></span>
+<span><span class="co">#&gt; 1               0.149152            0.155072              0.159957</span></span>
+<span><span class="co">#&gt; 2               0.105806            0.233839              0.236176</span></span>
+<span><span class="co">#&gt; 3               0.105806            0.269484              0.270401</span></span>
+<span><span class="co">#&gt; 4               0.105806            0.269484              0.270401</span></span>
+<span><span class="co">#&gt; 5               0.105806            0.269484              0.270401</span></span>
 <span><span class="co">#&gt; ...                  ...                 ...                   ...</span></span>
-<span><span class="co">#&gt; 95           1.21041e-05         1.21041e-05           1.21041e-05</span></span>
-<span><span class="co">#&gt; 96           1.21041e-05         1.21041e-05           1.21041e-05</span></span>
-<span><span class="co">#&gt; 97           1.21041e-05         1.21041e-05           1.21041e-05</span></span>
-<span><span class="co">#&gt; 98           1.21041e-05         1.21041e-05           1.21041e-05</span></span>
-<span><span class="co">#&gt; 99           1.21041e-05         1.21041e-05           1.21041e-05</span></span>
+<span><span class="co">#&gt; 95            0.00113674          0.00705811             0.0117008</span></span>
+<span><span class="co">#&gt; 96            0.00113674          0.00705811             0.0117008</span></span>
+<span><span class="co">#&gt; 97            0.00113674          0.00705811             0.0117008</span></span>
+<span><span class="co">#&gt; 98            0.00113674          0.00705811             0.0117008</span></span>
+<span><span class="co">#&gt; 99            0.00113674          0.00705811             0.0117008</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/RexParams.html">Rex.quantiles</a></span><span class="op">(</span><span class="va">rex_test</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "Residues"               "blong_quantiles_2.5%"   "blong_quantiles_50%"   </span></span>
 <span><span class="co">#&gt;  [4] "blong_quantiles_97.5%"  "pilong_quantiles_2.5%"  "pilong_quantiles_50%"  </span></span>
@@ -778,7 +847,8 @@ change this value you can do so.</li>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/marginalEffect.html">marginalEffect</a></span><span class="op">(</span><span class="va">rex_test</span>,</span>
 <span>                          method <span class="op">=</span> <span class="st">"predict"</span>,</span>
-<span>                          tCoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">numTimepoints</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                          tCoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">numTimepoints</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                          range <span class="op">=</span> <span class="fl">50</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotUptakeUncertainty.html">plotUptakeUncertainty</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in brewer.pal(9, "Dark2"): n too large, allowed maximum for palette Dark2 is 8</span></span>
@@ -823,9 +893,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"RexMS.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-04-13 18:46:19 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-04-26 16:11:33 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 2.399 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 3.083 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -837,7 +907,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-13</span></span>
+<span><span class="co">#&gt;  date     2024-04-26</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -852,7 +922,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  BiocParallel           1.36.0     <span style="color: #555555;">2023-10-24</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  BiocStyle            * 2.30.0     <span style="color: #555555;">2023-10-24</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  bitops                 1.0-7      <span style="color: #555555;">2021-04-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  bookdown               0.38       <span style="color: #555555;">2024-03-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  bookdown               0.39       <span style="color: #555555;">2024-04-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  bslib                  0.7.0      <span style="color: #555555;">2024-03-29</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  cachem                 1.0.8      <span style="color: #555555;">2023-05-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  calibrate              1.7.7      <span style="color: #555555;">2020-06-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -873,15 +943,15 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  fansi                  1.0.6      <span style="color: #555555;">2023-12-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  farver                 2.1.1      <span style="color: #555555;">2022-07-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap                1.1.1      <span style="color: #555555;">2023-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  fs                     1.6.3      <span style="color: #555555;">2023-07-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  fs                     1.6.4      <span style="color: #555555;">2024-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  generics               0.1.3      <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  genlasso               1.6.1      <span style="color: #555555;">2022-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  GenomeInfoDb           1.38.8     <span style="color: #555555;">2024-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.18 (R 4.3.2)</span></span></span>
 <span><span class="co">#&gt;  GenomeInfoDbData       1.2.11     <span style="color: #555555;">2024-04-06</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  GenomicRanges          1.54.1     <span style="color: #555555;">2023-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
-<span><span class="co">#&gt;  ggplot2              * 3.5.0      <span style="color: #555555;">2024-02-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  ggplot2              * 3.5.1      <span style="color: #555555;">2024-04-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  glue                   1.7.0      <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  gtable                 0.3.4      <span style="color: #555555;">2023-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  gtable                 0.3.5      <span style="color: #555555;">2024-04-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  highr                  0.10       <span style="color: #555555;">2022-12-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  htmltools              0.5.8.1    <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  htmlwidgets            1.6.4      <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -917,7 +987,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  pheatmap               1.0.12     <span style="color: #555555;">2019-01-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  pillar                 1.9.0      <span style="color: #555555;">2023-03-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  pkgconfig              2.0.3      <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  pkgdown                2.0.8      <span style="color: #555555;">2024-04-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
+<span><span class="co">#&gt;  pkgdown                2.0.9      <span style="color: #555555;">2024-04-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  plyr                   1.8.9      <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  promises               1.3.0      <span style="color: #555555;">2024-04-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  purrr                  1.0.2      <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -928,7 +998,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">#&gt;  RexMS                * 0.99.3     <span style="color: #555555;">2024-04-13</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  RexMS                * 0.99.4     <span style="color: #555555;">2024-04-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
@@ -993,7 +1063,7 @@ References in R”. In: <em>The Journal of Open Source Software</em>
 <a id="bib-ococrook2024inferring"></a><a href="#cite-ococrook2024inferring">[3]</a><cite>
 ococrook. <em>Inferring residue level hydrogen deuterium exchange with
 ReX</em>. <a href="https://github.com/ococrook/ReX/ReX" class="external-link uri">https://github.com/ococrook/ReX/ReX</a> - R package version
-0.99.3. 2024. DOI:
+0.99.4. 2024. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.ReX" class="external-link">10.18129/B9.bioc.ReX</a>.
 URL:
 <a href="http://www.bioconductor.org/packages/ReX" class="external-link">http://www.bioconductor.org/packages/ReX</a>.</cite>
@@ -1051,7 +1121,7 @@ Generation in R</em>. R package version 1.46. 2024. URL:
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

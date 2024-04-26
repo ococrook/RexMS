@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RexMS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
       </span>
     </div>
 
@@ -63,7 +63,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">marginalEffect</span><span class="op">(</span><span class="va">params</span>, method <span class="op">=</span> <span class="st">"fitted"</span>, whichChains <span class="op">=</span> <span class="fl">1</span>, tCoef <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">marginalEffect</span><span class="op">(</span></span>
+<span>  <span class="va">params</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"fitted"</span>,</span>
+<span>  whichChains <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  tCoef <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="fl">4000</span>, <span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,6 +92,10 @@ in the model parameters and the error term (e.g. observation level error)</p></d
 
 <dt>tCoef</dt>
 <dd><p>A numeric vector of coefficients to use in the prediction</p></dd>
+
+
+<dt>range</dt>
+<dd><p>A numeric vector of the range of iterations to sample from</p></dd>
 
 </dl></div>
     <div id="value">
@@ -130,12 +140,14 @@ in the model parameters and the error term (e.g. observation level error)</p></d
 <span class="r-in"><span>                tCoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Fold 1 ... Fold 2 ... Fold 3 ... Fold 4 ... Fold 5 ... </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%</span>
 <span class="r-in"><span><span class="va">rex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="rex-process.html">RexProcess</a></span><span class="op">(</span>HdxData <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span><span class="va">BRD4_apo</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                          params <span class="op">=</span> <span class="va">rex_example</span>,</span></span>
 <span class="r-in"><span>                          thin <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                          range <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span></span>
 <span class="r-in"><span>                          whichChains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu">marginalEffect</span><span class="op">(</span><span class="va">rex_example</span><span class="op">)</span>                           </span></span>
+<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu">marginalEffect</span><span class="op">(</span><span class="va">rex_example</span>,</span></span>
+<span class="r-in"><span>                          range<span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>                           </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -150,7 +162,7 @@ in the model parameters and the error term (e.g. observation level error)</p></d
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer></div>
