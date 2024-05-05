@@ -51,9 +51,9 @@
 ##'
 ##' @export
 processDifferential <- function(HdxData,
-    params,
-    whichChain = 1,
-    num_montecarlo = 5000) {
+                                params,
+                                whichChain = 1,
+                                num_montecarlo = 5000) {
     # check for comptability
     stopifnot(
         "Residues are incompatible between expreiments" =
@@ -125,9 +125,9 @@ processDifferential <- function(HdxData,
 
     Rex.estimates <- DataFrame(
         Residues = Residues,
-        signedARE = t(signedARE),
-        ARE = t(ARE),
-        TRE = t(TRE)
+        signedARE = t(signedARE)[Residues,],
+        ARE = t(ARE)[Residues,],
+        TRE = t(TRE)[Residues,]
     )
 
     colnames(Rex.estimates) <- c(
@@ -142,8 +142,8 @@ processDifferential <- function(HdxData,
 
     Rex.probs <- DataFrame(
         Residues = Residues,
-        probs = t(probs),
-        totalprobs = totalprobs
+        probs = t(probs)[Residues,],
+        totalprobs = totalprobs[Residues]
     )
 
     colnames(Rex.probs) <- c(

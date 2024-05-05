@@ -10,6 +10,7 @@
 ##' @return Returns exchange indexes as a list
 ##'
 error_prediction <- function(res, blong, pilong, qlong, dlong, phi) {
+  
     timepoints <- unique(res$Exposure)
     out_res <- sapply(seq.int(length(blong)), function(z) {
         doublelogisticFunction(timepoints,
@@ -18,9 +19,14 @@ error_prediction <- function(res, blong, pilong, qlong, dlong, phi) {
             pi = pilong[z], d = dlong[z]
         )
     })
+    
     numtimepoints <- length(unique(res$Exposure))
     numRep <- table(res$Sequence)[1] / numtimepoints
-
+    
+    min_index <- min(res$Start)
+    max_index <- max(res$End)
+    colnames(out_res) <- seq(min_index, max_index)
+    
 
     diff_coupling <- matrix(NA, nrow = length(unique(res$Sequence)), ncol = numtimepoints)
 
@@ -32,7 +38,7 @@ error_prediction <- function(res, blong, pilong, qlong, dlong, phi) {
         seq <- strsplit(unique(res$Sequence)[j], "")[[1]]
         seq <- seq[-c(1:2)]
         index <- which(seq != "P") + start + 1
-        mu <- rowSums(out_res[, index])
+        mu <- rowSums(out_res[, as.character(index)])
 
         diff_coupling[j, ] <- mu - colMeans(matrix(res$Uptake[res$Sequence == unique(res$Sequence)[j]], nrow = numRep))
     }
