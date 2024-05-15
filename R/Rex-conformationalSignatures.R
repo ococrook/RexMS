@@ -324,7 +324,7 @@ supervisedCSA <- function(RexDifferentialList,
     
   }
   
-  cross_val <- min(7, ncol(df_reduced)/2)
+  cross_val <- min(7, floor(ncol(df_reduced)/2))
   
   if (type == "catagorical") {
     

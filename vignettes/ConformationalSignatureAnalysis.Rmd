@@ -333,7 +333,8 @@ scsa2 <- supervisedCSA(RexDifferentialList = out_lxr_compound_proccessed,
                       labels = labels,
                       whichlabel = "lipogenic",
                       whichTimepoint = 600,
-                      orthoI = 1)
+                      orthoI = 1,
+                      type = "catagorical")
 
 ```
 
