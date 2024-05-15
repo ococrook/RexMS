@@ -346,6 +346,7 @@ RexProcess <- function(HdxData,
         rownames(.diagnoistics) <- c("sigma")
     }
 
+    names(blong) <- names(pilong) <- names(qlong) <- names(dlong) <- seq.int(R)
 
     # make error predictions
     err <- error_prediction(

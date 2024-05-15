@@ -10,6 +10,8 @@
 ##' @param pca_params The parameters to use for the PCA. 
 ##' Default is list(scale = FALSE, center = TRUE)
 ##' 
+##' 
+##' 
 ##' @return A list containing the PCA object and the TRE values in wide format
 ##' 
 ##' @examples
@@ -47,21 +49,24 @@ UnsupervisedCSA <- function(RexDifferentialList,
   
   timepoints <- as.numeric(gsub(".*?([0-9]+).*", "\\1", colnames(TRE[[1]])))
   
+  residue_list <- lapply(RexDifferentialList, function(x) x@Rex.estimates$Resdiues)
+  
   df_TRE <- DataFrame(TRE = do.call(rbind, TRE),
                       probs = do.call(rbind, probs),
-                      Residues = rep(seq.int(nrow(TRE[[1]])),
-                                     times = length(states)),
-                      states = rep(states,
-                                   each = nrow(TRE[[1]])))
+                      Residues = unlist(residue_list),
+                      states = rep(states, times = sapply(residue_list, length)))
   
-  values_from <- grep(paste0(quantity, "_", whichTimepoint), colnames(df_TRE))
+  values_from <- grep(paste0(quantity, "_", whichTimepoint), colnames(df_TRE))[1]
   
   TRE_states_wide <- data.frame(df_TRE) %>% 
     pivot_wider(names_from = states,
                 values_from = all_of(values_from),
                 id_cols = "Residues")
   
-  pca_states <- prcomp(t(TRE_states_wide[, -1]),
+  quant_df <- t(TRE_states_wide[, -1])
+  quant_df_full <- quant_df[,colSums(is.na(quant_df)) == 0 ]
+  
+  pca_states <- prcomp(quant_df_full,
                        scale = pca_params$scale,
                        center = pca_params$center)
   
@@ -287,16 +292,16 @@ supervisedCSA <- function(RexDifferentialList,
   
   timepoints <- as.numeric(gsub(".*?([0-9]+).*", "\\1", colnames(TRE[[1]])))
   
+  residue_list <- lapply(RexDifferentialList, function(x) x@Rex.estimates$Resdiues)
+  
   df_TRE <- DataFrame(TRE = do.call(rbind, TRE),
                       probs = do.call(rbind, probs),
-                      Residues = rep(seq.int(nrow(TRE[[1]])),
-                                     times = length(states)),
-                      states = rep(states,
-                                   each = nrow(TRE[[1]])))
+                      Residues = unlist(residue_list),
+                      states = rep(states, times = sapply(residue_list, length)))
   
   df_opls <- cbind(df_TRE, labels[df_TRE$states, ])
   
-  values_from <- grep(paste0(quantity, "_", whichTimepoint), colnames(df_opls))
+  values_from <- grep(paste0(quantity, "_", whichTimepoint), colnames(df_opls))[1]
   
   opls_states_wide <- data.frame(df_opls) %>% 
     pivot_wider(names_from = states,
@@ -305,13 +310,13 @@ supervisedCSA <- function(RexDifferentialList,
   
   if (type == "catagorical") {
     
-    col_subset <-  seq.int(nrow(labels))[labels[,whichlabel] != "Unknown"] + 1
+    col_subset <-  seq.int(nrow(labels))[labels[, whichlabel] != "Unknown"] + 1
     df_reduced <- opls_states_wide[,
                                    col_subset]
     annotations <- labels[labels[, whichlabel] != "Unknown", whichlabel]
   } else {
     
-    col_subset <-  seq.int(nrow(labels))[!is.na(as.numeric(labels[,whichlabel]))] + 1
+    col_subset <-  seq.int(nrow(labels))[!is.na(as.numeric(labels[, whichlabel]))] + 1
     df_reduced <- opls_states_wide[,
                                    col_subset]
     annotations <- as.numeric(labels[!is.na(as.numeric(labels[, whichlabel])),
@@ -319,13 +324,29 @@ supervisedCSA <- function(RexDifferentialList,
     
   }
   
+  cross_val <- min(7, ncol(df_reduced)/2)
+  
   if (type == "catagorical") {
-    states.plsda <- opls(x = t(df_reduced),
+    
+    df_reduced <- data.frame(df_reduced)
+    rownames(df_reduced) <- opls_states_wide$Residues
+    df <- t(df_reduced)
+    df_na_remove <- df[, colSums(is.na(df)) == 0]
+    
+    states.plsda <- opls(x = df_na_remove,
                          y =  factor(as.numeric(annotations)),
+                         crossvalI = cross_val,
                          orthoI = orthoI)
   } else {
-    states.plsda <- opls(x = t(df_reduced),
+    
+    df_reduced <- data.frame(df_reduced)
+    rownames(df_reduced) <- opls_states_wide$Residues
+    df <- t(df_reduced)
+    df_na_remove <- df[, colSums(is.na(df)) == 0]
+    
+    states.plsda <- opls(x = df_na_remove,
                          y =  as.numeric(annotations),
+                         crossvalI = cross_val,
                          orthoI = orthoI)
   }
   
@@ -525,9 +546,9 @@ plotLoadingSCSA <- function(states.plsda,
   
   df_loadings <- data.frame(loadings1 = states.plsda@loadingMN[,1], 
                             loadings2 = states.plsda@orthoLoadingMN[,1],
-                            residues = rownames(states.plsda@loadingMN))
+                            residues = as.numeric(rownames(states.plsda@loadingMN)))
   
-  df_loadings$residues <- as.numeric(sub(".", "", df_loadings$residues))
+  #df_loadings$residues <- as.numeric(sub(".", "", df_loadings$residues))
   
   if (whichLoading == "predictive") {
     df_loadings$loadings1 <- states.plsda@loadingMN[,1]

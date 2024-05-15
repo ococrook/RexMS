@@ -25,7 +25,11 @@ error_prediction <- function(res, blong, pilong, qlong, dlong, phi) {
     
     min_index <- min(res$Start)
     max_index <- max(res$End)
-    colnames(out_res) <- seq(min_index, max_index)
+    
+    colnames(out_res) <- names(blong)
+    
+    # subset only to columns observed in this data
+    out_res <- out_res[, as.character(seq(min_index, max_index))]
     
 
     diff_coupling <- matrix(NA, nrow = length(unique(res$Sequence)), ncol = numtimepoints)

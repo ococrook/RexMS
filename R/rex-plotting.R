@@ -435,7 +435,7 @@ plotResidueResolution <- function(rex_params,
     geom_point(alpha = 0.9, size = 2) + 
     theme_bw() + 
     geom_line() + 
-    ylim(0, max(abs(df_butterfly$ARE))*1.1) +
+    ylim(0, max(abs(df_butterfly$ARE), na.rm = TRUE )*1.1) +
     ylab("ARE") + 
     facet_wrap(.~timepoints, nrow = nrow) +
     scale_alpha_continuous(range = c(0,1)) + 

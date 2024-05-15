@@ -82,7 +82,9 @@ processDifferential <- function(HdxData,
     pilong <- params@summary@posteriorEstimates$pilong
     qlong <- params@summary@posteriorEstimates$qlong
     dlong <- params@summary@posteriorEstimates$dlong
-    sigma <- params@summary@Rex.globals$sigma[whichChain]
+    sigma <- params@summary@Rex.globals$sigma[1]
+    
+    names(blong) <- names(pilong) <- names(qlong) <- names(dlong) <- Residues
 
     err <- error_prediction(
         res = HdxData,

@@ -210,6 +210,9 @@ uptakePredict <- function(params){
     )
   })
   
+  # put 0s for prolines
+  out[, is.na(params@summary@Rex.resolution[,2])] <- 0
+  
   out_long <- DataFrame(Residue = rep(pe$Residues, each = length(timepoints)),
                         timepoints = rep(timepoints, times = length(pe$Residues)),
                         Uptake = as.vector(out))
@@ -393,9 +396,13 @@ marginalEffect <- function(params,
     
   }
   
+  # put 0s for prolines
+  out_sub <- out[,Residues]
+  out_sub[, is.na(params@summary@Rex.resolution[, 2])] <- 0  
+    
   out_long[[j]]  <- DataFrame(Residue = rep(Residues, each = length(timepoints)),
                               timepoints = rep(timepoints, times = length(Residues)),
-                              Uptake = as.vector(out[,Residues]),
+                              Uptake = as.vector(out_sub),
                               mcmcIter = rep(i, each = length(Residues) * length(timepoints)))
     
     
