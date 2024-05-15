@@ -282,6 +282,9 @@ processTREuncertainty <- function(HdxData,
         qlong <- params@chains@chains[[whichChain]]@qlong[, i]
         dlong <- params@chains@chains[[whichChain]]@dlong[, i]
 
+        
+        names(blong) <- names(pilong) <- names(qlong) <- names(dlong) <- Residues
+        
         err <- error_prediction(
             res = HdxData,
             blong = blong,
