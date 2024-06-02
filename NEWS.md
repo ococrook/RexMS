@@ -1,3 +1,8 @@
+# RexMS 0.99.7
+
+* fix bugs for when data doesnt start at residue 1
+* fix bugs for proline uptakes
+
 # RexMS 0.99.3
 
 * fix max uptake bug
