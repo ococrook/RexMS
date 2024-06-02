@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RexMS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ Crook</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:ococrook@gmail.com" class="email">ococrook@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">15 May 2024</h4>
+            <h4 data-toc-skip class="date">2 June 2024</h4>
       
       
       <div class="hidden name"><code>ConformationalSignatureAnalysis.Rmd</code></div>
@@ -702,12 +702,12 @@ sure that you align the residue numbers correctly</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">v</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"CSA"</span>, scale_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 2024-05-15 14:04:43.213603 [INFO]  Your HDX input dataset has 184 entries</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.213977 [INFO]  And excluding NA data you only have 184 entries</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.214072 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.214852 [INFO]  Your scale limits are  -0.2</span></span>
-<span><span class="co">##  2024-05-15 14:04:43.214852 [INFO]  Your scale limits are  0</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.214962 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
+<pre><code><span><span class="co">## 2024-06-02 13:30:28.850248 [INFO]  Your HDX input dataset has 184 entries</span></span>
+<span><span class="co">## 2024-06-02 13:30:28.850552 [INFO]  And excluding NA data you only have 184 entries</span></span>
+<span><span class="co">## 2024-06-02 13:30:28.850642 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
+<span><span class="co">## 2024-06-02 13:30:28.851295 [INFO]  Your scale limits are  -0.2</span></span>
+<span><span class="co">##  2024-06-02 13:30:28.851295 [INFO]  Your scale limits are  0</span></span>
+<span><span class="co">## 2024-06-02 13:30:28.851391 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">graphics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/NGLVieweR.html" class="external-link">NGLVieweR</a></span><span class="op">(</span><span class="va">pdb_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/stageParameters.html" class="external-link">stageParameters</a></span><span class="op">(</span>backgroundColor <span class="op">=</span> <span class="st">"white"</span>, zoomSpeed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -733,12 +733,12 @@ analysis:</p>
 <span><span class="va">mycolor_parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pdb-visualisation.html">hdx_to_pdb_colours</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">v</span>,</span>
 <span>                                         pdb <span class="op">=</span> <span class="va">pdb_filepath</span>,</span>
 <span>                                         cmap_name <span class="op">=</span> <span class="st">"CSA"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 2024-05-15 14:04:43.617715 [INFO]  Your HDX input dataset has 447 entries</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.61787 [INFO]  And excluding NA data you only have 447 entries</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.617973 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.618643 [INFO]  Your scale limits are  -0.16</span></span>
-<span><span class="co">##  2024-05-15 14:04:43.618643 [INFO]  Your scale limits are  0</span></span>
-<span><span class="co">## 2024-05-15 14:04:43.618751 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
+<pre><code><span><span class="co">## 2024-06-02 13:30:29.216062 [INFO]  Your HDX input dataset has 447 entries</span></span>
+<span><span class="co">## 2024-06-02 13:30:29.216193 [INFO]  And excluding NA data you only have 447 entries</span></span>
+<span><span class="co">## 2024-06-02 13:30:29.216285 [INFO]  However, your input PDB has only 1827 residues in total</span></span>
+<span><span class="co">## 2024-06-02 13:30:29.216867 [INFO]  Your scale limits are  -0.16</span></span>
+<span><span class="co">##  2024-06-02 13:30:29.216867 [INFO]  Your scale limits are  0</span></span>
+<span><span class="co">## 2024-06-02 13:30:29.21696 [INFO]  Your values will be coloured using custom format</span></span></code></pre>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">graphics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/NGLVieweR.html" class="external-link">NGLVieweR</a></span><span class="op">(</span><span class="va">pdb_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/NGLVieweR/man/stageParameters.html" class="external-link">stageParameters</a></span><span class="op">(</span>backgroundColor <span class="op">=</span> <span class="st">"white"</span>, zoomSpeed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -759,7 +759,7 @@ analysis:</p>
 <span><span class="co">##  collate  en_US.UTF-8</span></span>
 <span><span class="co">##  ctype    en_US.UTF-8</span></span>
 <span><span class="co">##  tz       UTC</span></span>
-<span><span class="co">##  date     2024-05-15</span></span>
+<span><span class="co">##  date     2024-06-02</span></span>
 <span><span class="co">##  pandoc   3.1.1 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -848,7 +848,7 @@ analysis:</p>
 <span><span class="co">##  RColorBrewer           1.1-3      <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">##  Rcpp                   1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">##  RCurl                  1.98-1.14  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
-<span><span class="co">##  RexMS                * 0.99.4     <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">##  RexMS                * 0.99.7     <span style="color: #555555;">2024-06-02</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  rlang                  1.1.3      <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">##  rlog                   0.1.0      <span style="color: #555555;">2021-02-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
 <span><span class="co">##  rmarkdown              2.26       <span style="color: #555555;">2024-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.3.0)</span></span></span>
